@@ -1,0 +1,48 @@
+{% extends "baseAfterLogin.html" %}
+{% block body %}
+{% load crispy_forms_tags %}
+{% load custom %}
+<div class="row">
+<div class="col">
+    <div class="item-detail">
+        <h2> Member Details </h2>
+        <p>{{ item.societyName }}</p>
+    </div>
+
+    <div class="py-2 px-4">
+    <table>
+      <tr>
+          {% for display_items in display_charges %}
+          
+          <td>{{ display_items }}</td>
+        
+        {% endfor %}
+      </tr>
+        
+        {% for query_item in query_results %}
+        <tr> 
+          {% for display_items in display_charges %}
+
+              <td>{{ query_item|get_obj_attr:display_items }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+</div>
+
+<div class="col">
+  <form class="position-relative float-right px-4 w-10 p-3" method="POST" action="societyMembers">
+    {% csrf_token %}
+   
+    {% for field in form %}
+            {%if field.label in display_charges%}            
+                <p>
+                {{ field|as_crispy_field }}</p>
+            {%endif%}
+        {% endfor %}
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div>
+</div>
+{% endblock %}

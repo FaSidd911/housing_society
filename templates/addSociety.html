@@ -1,0 +1,46 @@
+{% extends 'baseAfterLogin.html' %}
+
+{% block title %}Add Society{% endblock title %}
+
+{% block body %}
+<div class="row">
+  <div class="col">
+<table>
+  <tr>
+      <th>Society Name</th>
+      <th>Registration Name</th>
+      <th>Address</th>
+  </tr>
+  {% for item in query_results %}
+  <tr> 
+      <td><a href='society/{{ item.societyName }}'>{{ item.societyName }}</a></td>
+      <td>{{ item.regno }}</td>
+      <td>{{ item.address }}</td>
+
+  </tr>
+  {% endfor %}
+</table>
+  </div>
+<div class="col">
+<div class="py-2 px-4"></div>
+<form class="position-relative float-right px-4 w-10 p-3" method="POST" action="addSociety">
+    {% csrf_token %}
+    <h1>Add New Society</h1>
+    <div>
+      <label for="societyName" class="form-label">Society Name: </label>
+      <input type="input" class="form-control h-25" name="societyName" aria-describedby="" required="True">
+    </div>
+    <div class="mb-3">
+      <label for="regno" class="form-label">Reg. No</label>
+      <input type="input" class="form-control h-25" name="regno" required="True">
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <textarea class="form-control h-25" row="3"  name="address" ></textarea>
+      </div>
+    <button type="submit" class="btn btn-primary">Next</button>
+  </form>
+</div>
+</div>
+
+{% endblock body %}
