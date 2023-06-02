@@ -20,21 +20,21 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
+# @login_required
 def homeAfterLogin(request):
-    logout(request)
+    print(request.user)
     return render(request,'homeAfterLogin.html')
 
 def login(request):
-    if request.method == "POST":
+    if request.method=='POST':
         form = AuthenticationForm(request, data=request.POST)
-        print('here')
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 auth_login(request,user)
-                messages.info(request, f"You are now logged in as {username}.")
+                print(request, f"You are now logged in as {username}.")
                 query_results = SocietyList.objects.filter(user=user)   
                 return render(request, "addSociety.html",{'query_results':query_results})
             else:
@@ -50,6 +50,7 @@ def login(request):
 def addSociety(request):
     print('inside addSociety')
     user = request.user
+    print(user)
     if request.method == "POST":
         societyName = request.POST.get('societyName')
         societyNameExists = False#SocietyList.objects.filter(Q(societyName=societyName) | Q(user=user))
@@ -58,6 +59,9 @@ def addSociety(request):
         regno = request.POST.get('regno')
         address = request.POST.get('address')
         user = user
+        request.session['societyName'] = societyName
+        request.session['regno'] = regno
+        request.session['address'] = address
         context={'societyName':societyName
                  ,'regno':regno
                  ,'address':address
@@ -71,12 +75,12 @@ def addSociety(request):
 def societyMembers(request, item_name):
     print('inside SocietyMenmbers')
     user = request.user
-    societyName = item_name
+    memberSocietyName = item_name
     context={}
     context['form']= MembersForm()
     form = MembersForm(request.POST)
     members_dict = {}
-    members_dict['societyName']=societyName
+    members_dict['societyName']=memberSocietyName
     if request.method == "POST":
         print('inside post')
         if form.is_valid():
@@ -90,8 +94,9 @@ def societyMembers(request, item_name):
         form = MembersForm()
         return HttpResponseRedirect(request.path_info)
     item = get_object_or_404(SocietyList, societyName=item_name)
-    query_results = MembersList.objects.filter(user=user,societyName=societyName)
-    charges_fields = SocietyList.objects.get(user=user,societyName=societyName)
+    print(item)
+    query_results = MembersList.objects.filter(user=user,memberSocietyName=item)
+    charges_fields = SocietyList.objects.get(user=user,societyName=item)
     society_charges=charges_fields.charges_fields
     society_charges = json.loads(society_charges.replace('\'','"'))
     display_charges=['memberName','flatno','openingBalance','closingBalance']
@@ -125,9 +130,9 @@ def selectChargesFields(request):
         snkng = request.POST.get('snkng')    
         nccpncy = request.POST.get('nccpncy')    
         pnlty = request.POST.get('pnlty')
-        societyName=request.POST.get('societyName')
-        regno=request.POST.get('regno')
-        address=request.POST.get('address')
+        societyName = request.session['societyName'] 
+        regno = request.session['regno'] 
+        address = request.session['address'] 
         selected_fields = [elcty,wtrbll,prkng,mncpl,snkng,nccpncy,pnlty]
         selected_fields = [x for x in selected_fields if x!=None]  
         context['selected_fields']=selected_fields  
@@ -151,7 +156,7 @@ def addDefaultCharges(request):
                 charges_dict = {}
                 for key, value in form.cleaned_data.items():
                     charges_dict[key]=value
-                societyName = request.POST.get('societyName') 
+                societyName = request.session['societyName'] 
                 query_res = SocietyList.objects.get(societyName=societyName) 
                 query_res.charges_fields = charges_dict
                 query_res.save()
