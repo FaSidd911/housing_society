@@ -94,14 +94,13 @@ def societyMembers(request, item_name):
         form = MembersForm()
         return HttpResponseRedirect(request.path_info)
     item = get_object_or_404(SocietyList, societyName=item_name)
-    print(item)
     query_results = MembersList.objects.filter(user=user,memberSocietyName=item)
     charges_fields = SocietyList.objects.get(user=user,societyName=item)
     society_charges=charges_fields.charges_fields
     society_charges = json.loads(society_charges.replace('\'','"'))
     display_charges=['memberName','flatno','openingBalance','closingBalance']
     for k,v in society_charges.items():
-        if v !='':
+        if v is not None:
             display_charges.append(k)
     context['display_charges'] = display_charges
     # query_results=query_results.values()[0]
