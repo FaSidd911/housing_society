@@ -74,7 +74,6 @@ def addSociety(request):
 
 # @login_required
 def societyMembers(request, item_name):
-    print('inside SocietyMenmbers')
     user = request.user
     memberSocietyName = item_name
     context={}
@@ -93,7 +92,6 @@ def societyMembers(request, item_name):
         members_dict['user'] = user
         new_member = MembersList(**members_dict)
         new_member.save() 
-        form = MembersForm()
         return HttpResponseRedirect(request.path_info)
     query_results = MembersList.objects.filter(user=user,memberSocietyName=item)
     charges_fields = SocietyList.objects.get(user=user,societyName=item)
@@ -101,14 +99,12 @@ def societyMembers(request, item_name):
     society_charges = json.loads(society_charges.replace('\'','"'))
     display_charges=['memberName','flatno','openingBalance','closingBalance']
     for k,v in society_charges.items():
-        if v is not None:
+        if v !='':
             display_charges.append(k)
     context['display_charges'] = display_charges
-    # query_results=query_results.values()[0]
-    # for k,v in query_results.items():
-    #     if v is None:
-    #         query_results.pop(k)
-    # print(query_results)
+    initial_data = {'elcty':'0'}
+    form = MembersForm(society_charges)
+
     context = {
         'item': item,
         'query_results': query_results,

@@ -47,3 +47,7 @@ class MembersForm(forms.Form):
     nccpncy = forms.CharField(label='nccpncy', required=False)
     pnlty = forms.CharField(label='pnlty', required=False)
     
+    def __init__(self, *args, **kwargs):
+        super(MembersForm, self).__init__(*args, **kwargs)
+        self.fields['elcty'].initial = '0'
+    
