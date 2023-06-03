@@ -53,7 +53,8 @@ def addSociety(request):
     print(user)
     if request.method == "POST":
         societyName = request.POST.get('societyName')
-        societyNameExists = False#SocietyList.objects.filter(Q(societyName=societyName) | Q(user=user))
+        societyNameExists = SocietyList.objects.filter(user= user, societyName=societyName)
+        print(societyNameExists)
         if societyNameExists:
             return HttpResponseRedirect('addSociety')
         regno = request.POST.get('regno')
@@ -80,7 +81,8 @@ def societyMembers(request, item_name):
     context['form']= MembersForm()
     form = MembersForm(request.POST)
     members_dict = {}
-    members_dict['societyName']=memberSocietyName
+    item = get_object_or_404(SocietyList,user=user, societyName=item_name)
+    members_dict['memberSocietyName']=item
     if request.method == "POST":
         print('inside post')
         if form.is_valid():
@@ -93,7 +95,6 @@ def societyMembers(request, item_name):
         new_member.save() 
         form = MembersForm()
         return HttpResponseRedirect(request.path_info)
-    item = get_object_or_404(SocietyList, societyName=item_name)
     query_results = MembersList.objects.filter(user=user,memberSocietyName=item)
     charges_fields = SocietyList.objects.get(user=user,societyName=item)
     society_charges=charges_fields.charges_fields
@@ -156,7 +157,7 @@ def addDefaultCharges(request):
                 for key, value in form.cleaned_data.items():
                     charges_dict[key]=value
                 societyName = request.session['societyName'] 
-                query_res = SocietyList.objects.get(societyName=societyName) 
+                query_res = SocietyList.objects.get(user = request.user , societyName=societyName) 
                 query_res.charges_fields = charges_dict
                 query_res.save()
                 return redirect('/addSociety')
