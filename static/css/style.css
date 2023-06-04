@@ -1443,3 +1443,30 @@ section {
   .requiredField{
     display: none;
   }
+
+
+
+
+
+
+
+ .socMember {
+    display: block;
+    max-width: 70%;
+    overflow: scroll; 
+    float: left;  
+}
+
+ td, th { 
+    padding: 6px; 
+    border: 1px solid #ccc; 
+    text-align: right; 
+  }
+
+  .item-detail
+{
+  
+    float: right;  
+}
+
+ 

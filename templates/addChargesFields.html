@@ -8,14 +8,16 @@
     <div class="form-check mx-5"  >
     <form method="POST" action="addDefaultCharges">
             {% csrf_token %}
+            <table class="table">
             {% for field in form %}
             {%if field.label in selected_fields%}
-            
-                {{ field.label }}
-                {{ field }}
+            <tr>
+               <td> {{ field.label }}</td>
+               <td>   {{ field }}</td>
+            </tr>
             {%endif%}
         {% endfor %}
-        <!-- <input type="hidden" id="custId" name="societyName" value={{societyName}}> -->
+            </table>
         <button type="submit" class="btn btn-primary">Add</button>
   </form>
     </div>

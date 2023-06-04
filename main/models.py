@@ -19,21 +19,21 @@ class SocietyList(models.Model):
 class MembersList(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
     memberSocietyName = models.ForeignKey(SocietyList,on_delete=models.CASCADE)
-    memberName = models.CharField(max_length=500)
-    flatno = models.CharField(max_length=122)
-    openingBalance = models.IntegerField()
-    closingBalance = models.IntegerField()  
-    elcty = models.CharField(max_length=122,blank=True, null=True)
-    wtrbll = models.CharField(max_length=122,blank=True, null=True)
-    prkng = models.CharField(max_length=122,blank=True, null=True)
-    mncpl = models.CharField(max_length=122,blank=True, null=True)
-    snkng = models.CharField(max_length=122,blank=True, null=True)
-    nccpncy = models.CharField(max_length=122,blank=True, null=True)
-    pnlty = models.CharField(max_length=122,blank=True, null=True)
+    Member_Name = models.CharField(max_length=500)
+    Flat_No = models.CharField(max_length=122)
+    Opening_Balance = models.IntegerField()
+    Closing_Balance = models.IntegerField()  
+    Electricity_Charges = models.CharField(max_length=122,blank=True, null=True)
+    Water_Charges = models.CharField(max_length=122,blank=True, null=True)
+    Maintainance_Charges = models.CharField(max_length=122,blank=True, null=True)
+    Municipal_Tax = models.CharField(max_length=122,blank=True, null=True)
+    Sinking_Fund = models.CharField(max_length=122,blank=True, null=True)
+    Repair_Fund = models.CharField(max_length=122,blank=True, null=True)
+    Service_Charges = models.CharField(max_length=122,blank=True, null=True)
     date_add_member = models.DateField()
 
     def __str__(self):
-        return self.memberName
+        return self.Member_Name
     
 # class ChargesList(models.Model):
 #     elcty = models.CharField(max_length=122)
@@ -47,4 +47,4 @@ class MembersList(models.Model):
 #     user = models.CharField(max_length=122,blank=True, null=True)
     
 #     def __str__(self):
-#         return self.memberName
+#         return self.Member_Name

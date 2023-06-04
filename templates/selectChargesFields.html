@@ -9,36 +9,34 @@
     <form method="POST" action="selectChargesFields">
     {% csrf_token %}
       <p>
-      <input class="form-check-input" type="checkbox" id="check1" name="elcty" value="elcty" checked>
+      <input class="form-check-input" type="checkbox" id="check1" name="Electricity_Charges" value="Electricity_Charges" checked>
       <label class="form-check-label">Electricity Charges</label>
       </p>
       <p>      
-      <input class="form-check-input" type="checkbox" id="check1" name="wtrbll" value="wtrbll" checked>
+      <input class="form-check-input" type="checkbox" id="check1" name="Water_Charges" value="Water_Charges" checked>
       <label class="form-check-label">Water Bill</label>
       </p>
       <p>      
-      <input class="form-check-input" type="checkbox" id="check1" name="prkng" value="prkng" checked>
+      <input class="form-check-input" type="checkbox" id="check1" name="Municipal_Tax" value="Municipal_Tax" checked>
       <label class="form-check-label">Parking</label>
       </p>
       <p>     
-      <input class="form-check-input" type="checkbox" id="check1" name="mncpl" value="mncpl" checked>
+      <input class="form-check-input" type="checkbox" id="check1" name="Maintainance_Charges" value="Maintainance_Charges" checked>
       <label class="form-check-label">Municipal Charges</label>
       </p>
       <p>      
-      <input class="form-check-input" type="checkbox" id="check1" name="snkng" value="snkng" checked>
+      <input class="form-check-input" type="checkbox" id="check1" name="Service_Charges" value="Service_Charges" checked>
       <label class="form-check-label">Sinking</label>
       </p>
       <p>      
-      <input class="form-check-input" type="checkbox" id="check1" name="nccpncy" value="nccpncy" checked>
+      <input class="form-check-input" type="checkbox" id="check1" name="Sinking_Fund" value="Sinking_Fund" checked>
       <label class="form-check-label">Non Occupancy</label>
       </p>
       <p>      
-      <input class="form-check-input" type="checkbox" id="check1" name="pnlty" value="pnlty" checked>
+      <input class="form-check-input" type="checkbox" id="check1" name="Repair_Fund" value="Repair_Fund" checked>
       <label class="form-check-label">Penalty</label>
       </p>
-      <!-- <input type="hidden" id="soc" name="societyName" value={{societyName}}>
-      <input type="hidden" id="reg" name="regno" value={{regno}}>
-      <input type="hidden" id="addr" name="address" value={{address}}> -->
+      
       <button type="submit" class="btn btn-primary">Add</button>
   </form>
     </div>

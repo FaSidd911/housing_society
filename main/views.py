@@ -83,13 +83,18 @@ def societyMembers(request, item_name):
     item = get_object_or_404(SocietyList,user=user, societyName=item_name)
     members_dict['memberSocietyName']=item
     if request.method == "POST":
-        print('inside post')
         if form.is_valid():
             for key, value in form.cleaned_data.items():
                 if value!='':
                     members_dict[key]=value
         members_dict['date_add_member'] = datetime.today()
         members_dict['user'] = user
+        memberNameExists = MembersList.objects.filter(
+            user= user, 
+            memberSocietyName=  item,
+            Member_Name=members_dict['Member_Name'])
+        if memberNameExists:
+            return HttpResponseRedirect('societyMembers')
         new_member = MembersList(**members_dict)
         new_member.save() 
         return HttpResponseRedirect(request.path_info)
@@ -97,12 +102,11 @@ def societyMembers(request, item_name):
     charges_fields = SocietyList.objects.get(user=user,societyName=item)
     society_charges=charges_fields.charges_fields
     society_charges = json.loads(society_charges.replace('\'','"'))
-    display_charges=['memberName','flatno','openingBalance','closingBalance']
+    display_charges=['Member_Name','Flat_No','Opening_Balance','Closing_Balance']
     for k,v in society_charges.items():
         if v !='':
             display_charges.append(k)
     context['display_charges'] = display_charges
-    initial_data = {'elcty':'0'}
     form = MembersForm(society_charges)
 
     context = {
@@ -119,17 +123,18 @@ def selectChargesFields(request):
         print('inside selectChargesFields')
         context={}
         context['form']= ChargesForm()
-        elcty = request.POST.get('elcty')
-        wtrbll = request.POST.get('wtrbll')    
-        prkng = request.POST.get('prkng')    
-        mncpl = request.POST.get('mncpl')    
-        snkng = request.POST.get('snkng')    
-        nccpncy = request.POST.get('nccpncy')    
-        pnlty = request.POST.get('pnlty')
+        Electricity_Charges = request.POST.get('Electricity_Charges')
+        Water_Charges = request.POST.get('Water_Charges')    
+        Service_Charges = request.POST.get('Service_Charges')    
+        Municipal_Tax = request.POST.get('Municipal_Tax')    
+        Sinking_Fund = request.POST.get('Sinking_Fund')    
+        Repair_Fund = request.POST.get('Repair_Fund')    
+        Maintainance_Charges = request.POST.get('Maintainance_Charges')
         societyName = request.session['societyName'] 
         regno = request.session['regno'] 
         address = request.session['address'] 
-        selected_fields = [elcty,wtrbll,prkng,mncpl,snkng,nccpncy,pnlty]
+        selected_fields = [Electricity_Charges,Water_Charges,Service_Charges,Municipal_Tax,
+                           Sinking_Fund,Repair_Fund,Maintainance_Charges]
         selected_fields = [x for x in selected_fields if x!=None]  
         context['selected_fields']=selected_fields  
         context['societyName']  = societyName    

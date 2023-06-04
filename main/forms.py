@@ -23,31 +23,30 @@ class Meta:
     model = User
     fields = ["username", "first_name"]
     
-    
-
-class ChargesForm(forms.Form):
-    elcty = forms.CharField(label='elcty', required=False)
-    wtrbll = forms.CharField(label='wtrbll', required=False)
-    prkng = forms.CharField(label='prkng', required=False)
-    mncpl = forms.CharField(label='mncpl', required=False)
-    snkng = forms.CharField(label='snkng', required=False)
-    nccpncy = forms.CharField(label='nccpncy', required=False)
-    pnlty = forms.CharField(label='pnlty', required=False)
-    
+       
 class MembersForm(forms.Form):
-    memberName = forms.CharField(label='memberName')
-    flatno = forms.CharField(label='flatno')
-    openingBalance = forms.CharField(label='openingBalance')
-    closingBalance = forms.CharField(label='closingBalance')
-    elcty = forms.CharField(label='elcty', required=False)
-    wtrbll = forms.CharField(label='wtrbll', required=False)
-    prkng = forms.CharField(label='prkng', required=False)
-    mncpl = forms.CharField(label='mncpl', required=False)
-    snkng = forms.CharField(label='snkng', required=False)
-    nccpncy = forms.CharField(label='nccpncy', required=False)
-    pnlty = forms.CharField(label='pnlty', required=False)
+    Member_Name = forms.CharField(label='Member_Name')
+    Flat_No = forms.CharField(label='Flat_No')
+    Opening_Balance = forms.IntegerField(label='Opening_Balance')
+    Closing_Balance = forms.IntegerField(label='Closing_Balance')
+    Electricity_Charges = forms.CharField(label='Electricity_Charges', required=False)
+    Municipal_Tax = forms.CharField(label='Municipal_Tax', required=False)
+    Water_Charges = forms.CharField(label='Water_Charges', required=False)
+    Maintainance_Charges = forms.CharField(label='Maintainance_Charges', required=False)
+    Service_Charges = forms.CharField(label='Service_Charges', required=False)
+    Sinking_Fund = forms.CharField(label='Sinking_Fund', required=False)
+    Repair_Fund = forms.CharField(label='Repair_Fund', required=False)
     
     def __init__(self, *args, **kwargs):
         super(MembersForm, self).__init__(*args, **kwargs)
-        self.fields['elcty'].initial = '0'
-    
+        self.fields['Electricity_Charges'].initial = '0'
+        
+
+class ChargesForm(forms.Form):
+    Electricity_Charges = forms.CharField(label='Electricity_Charges', required=False)
+    Municipal_Tax = forms.CharField(label='Municipal_Tax', required=False)
+    Water_Charges = forms.CharField(label='Water_Charges', required=False)
+    Maintainance_Charges = forms.CharField(label='Maintainance_Charges', required=False)
+    Service_Charges = forms.CharField(label='Service_Charges', required=False)
+    Sinking_Fund = forms.CharField(label='Sinking_Fund', required=False)
+    Repair_Fund = forms.CharField(label='Repair_Fund', required=False)   

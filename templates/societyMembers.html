@@ -2,15 +2,11 @@
 {% block body %}
 {% load crispy_forms_tags %}
 {% load custom %}
-<div class="row">
-<div class="col">
-    <div class="item-detail">
-        <h2> Member Details </h2>
-        <p>{{ item.societyName }}</p>
-    </div>
 
-    <div class="py-2 px-4">
-    <table class="table">
+
+   <table class="socMember">
+      <h2> Member Details </h2>
+      <p>{{ item.societyName }}</p>
       <tr>
           {% for display_items in display_charges %}
           
@@ -28,13 +24,14 @@
         </tr>
         {% endfor %}
       </table>
-    </div>
-</div>
+  
+    
 
-<div class="col">
-  <form class="position-relative float-right px-4 w-10 p-3" method="POST" action="societyMembers">
+
+  <div class="item-detail">
+  <form class="px-4 w-10 p-3" method="POST" action="societyMembers">
     {% csrf_token %}
-   
+    <h2> Add Member </h2>
     {% for field in form %}
             {%if field.label in display_charges%}            
                 <p>
@@ -44,5 +41,6 @@
     <button type="submit" class="btn btn-primary">Add</button>
   </form>
 </div>
-</div>
+
+
 {% endblock %}
