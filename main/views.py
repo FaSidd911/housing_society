@@ -8,7 +8,7 @@ from .models import SocietyList,MembersList
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
-from .forms import ChargesForm,MembersForm
+from .forms import ChargesForm,MembersForm,EditSocietyForm
 import json
 
 # Create your views here.
@@ -48,15 +48,13 @@ def login(request):
 
 # @login_required
 def addSociety(request):
-    print('inside addSociety')
     user = request.user
-    print(user)
     if request.method == "POST":
         societyName = request.POST.get('societyName')
         societyNameExists = SocietyList.objects.filter(user= user, societyName=societyName)
         print(societyNameExists)
         if societyNameExists:
-            return HttpResponseRedirect('addSociety')
+            return HttpResponseRedirect(request.path_info)
         regno = request.POST.get('regno')
         address = request.POST.get('address')
         user = user
@@ -163,4 +161,34 @@ def addDefaultCharges(request):
                 query_res.save()
                 return redirect('/addSociety')
             
-            
+def editSociety(request,name):
+    
+    if request.method == 'POST': 
+            form = EditSocietyForm(request.POST)
+            if form.is_valid():
+                changes_dict = {}
+                for key, value in form.cleaned_data.items():
+                    changes_dict[key]=value
+                societyNameExists = SocietyList.objects.filter(user= request.user, societyName=changes_dict['Society_Name'])
+                print(societyNameExists)
+                if societyNameExists:
+                    return HttpResponseRedirect(request.path_info)
+                editSocietyFields = SocietyList.objects.get(user=request.user,societyName=name)
+                editSocietyFields.societyName=changes_dict['Society_Name']
+                editSocietyFields.regno=changes_dict['Reg_No']
+                editSocietyFields.address=changes_dict['Address']
+                editSocietyFields.save()                
+                return HttpResponseRedirect('/addSociety')
+    
+    editSocietyFields = SocietyList.objects.get(user=request.user,societyName=name)
+    societyDetails ={}
+    societyDetails['Society_Name']=editSocietyFields.societyName
+    societyDetails['Reg_No']=editSocietyFields.regno
+    societyDetails['Address']=editSocietyFields.address
+    form = EditSocietyForm(societyDetails)
+    context = {'form': form}
+    return render(request,'editSociety.html', context)
+
+def deleteSociety(request,name):
+    SocietyList.objects.filter(user=request.user,societyName=name).delete()
+    return HttpResponseRedirect('/addSociety')

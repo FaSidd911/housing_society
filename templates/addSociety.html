@@ -9,13 +9,15 @@
   <tr>
       <th scope="col">Society Name</th>
       <th scope="col">Registration Name</th>
-      <th scope="col">Address</th>
+      <th scope="col">Address</th> 
   </tr>
   {% for item in query_results %}
   <tr> 
       <td><a href='society/{{ item.societyName }}'>{{ item.societyName }}</a></td>
       <td>{{ item.regno }}</td>
       <td>{{ item.address }}</td>
+      <td><a href="{% url 'editSociety' name=item.societyName %}" class="btn btn-info" role="button">Edit</a></td>
+      <td><a href="{% url 'deleteSociety' name=item.societyName %}" class="btn btn-danger" role="button">Delete</a></td>
 
   </tr>
   {% endfor %}

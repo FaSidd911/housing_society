@@ -7,16 +7,6 @@ from crispy_forms.layout import Submit, Layout, Field
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control-lg'}))
     password = forms.CharField(max_length=63, widget=forms.PasswordInput)
-    
-    # def __init__(self, *args, **kwargs):
-    #     super(LoginForm, self).__init__(*args, **kwargs)
-    #     self.helper = FormHelper()
-    #     self.helper.layout = Layout(
-    #         Field('username', css_class='form-control-lg'),
-    #         Field('password', css_class='form-control-lg')
-    #     )
-    
-
 
     
 class Meta:
@@ -50,3 +40,8 @@ class ChargesForm(forms.Form):
     Service_Charges = forms.CharField(label='Service_Charges', required=False)
     Sinking_Fund = forms.CharField(label='Sinking_Fund', required=False)
     Repair_Fund = forms.CharField(label='Repair_Fund', required=False)   
+
+class EditSocietyForm(forms.Form):
+    Society_Name = forms.CharField(label='Society_Name')
+    Reg_No = forms.CharField(label='Reg_No')
+    Address = forms.CharField(label='Address')

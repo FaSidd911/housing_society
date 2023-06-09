@@ -1,0 +1,26 @@
+{% extends 'baseAfterLogin.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Society{% endblock title %}
+
+{% block body %}
+  </div>
+<div class="col">
+<div class="py-2 px-4"></div>
+<form class="position-relative float-right px-4 w-10 p-3" method="POST" action="editSociety">
+    {% csrf_token %}
+    <h1>Edit Society Details</h1>
+    <table class="table">
+      {% for field in form %}
+      <tr>
+         <td> {{ field.label }}</td>
+         <td>   {{ field }}</td>
+      </tr>
+      {% endfor %}
+            </table>
+<button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div>
+</div>
+
+{% endblock body %}

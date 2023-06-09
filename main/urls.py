@@ -14,4 +14,7 @@ urlpatterns = [
     path('selectChargesFields',views.selectChargesFields),
     path('addDefaultCharges',views.addDefaultCharges),
     path('homeAfterLogin',views.homeAfterLogin),
+    path("editSociety/<str:name>/", views.editSociety, name='editSociety'),
+    path("editSociety/<str:name>/editSociety", views.editSociety, name='editSociety'),
+    path("deleteSociety/<str:name>/", views.deleteSociety, name='deleteSociety'),
 ]
