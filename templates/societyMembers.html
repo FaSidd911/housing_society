@@ -21,6 +21,8 @@
 
               <td>{{ query_item|get_obj_attr:display_items }}</td>
             {% endfor %}
+            <td><a href="{% url 'editMemberDetails' name=item.societyName memberName=query_item %}" class="btn btn-info" role="button">Edit</a></td>
+            <td><a href="{% url 'deleteMember' name=item.societyName memberName=query_item %}" class="btn btn-danger" role="button">Delete</a></td>
         </tr>
         {% endfor %}
       </table>

@@ -45,3 +45,17 @@ class EditSocietyForm(forms.Form):
     Society_Name = forms.CharField(label='Society_Name')
     Reg_No = forms.CharField(label='Reg_No')
     Address = forms.CharField(label='Address')
+    
+    
+class EditMembersForm(forms.Form):
+    Member_Name = forms.CharField(label='Member_Name')
+    Flat_No = forms.CharField(label='Flat_No')
+    Opening_Balance = forms.IntegerField(label='Opening_Balance')
+    Closing_Balance = forms.IntegerField(label='Closing_Balance')
+    Electricity_Charges = forms.CharField(label='Electricity_Charges', required=False)
+    Municipal_Tax = forms.CharField(label='Municipal_Tax', required=False)
+    Water_Charges = forms.CharField(label='Water_Charges', required=False)
+    Maintainance_Charges = forms.CharField(label='Maintainance_Charges', required=False)
+    Service_Charges = forms.CharField(label='Service_Charges', required=False)
+    Sinking_Fund = forms.CharField(label='Sinking_Fund', required=False)
+    Repair_Fund = forms.CharField(label='Repair_Fund', required=False)

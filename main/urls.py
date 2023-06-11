@@ -17,4 +17,10 @@ urlpatterns = [
     path("editSociety/<str:name>/", views.editSociety, name='editSociety'),
     path("editSociety/<str:name>/editSociety", views.editSociety, name='editSociety'),
     path("deleteSociety/<str:name>/", views.deleteSociety, name='deleteSociety'),
+    path("editMemberDetails/<str:name>/<str:memberName>/", views.editMemberDetails, name='editMemberDetails'),
+    path("editMemberDetails/<str:name>/<str:memberName>/editMemberDetails", views.editMemberDetails, name='editMemberDetails'),
+    path("deleteMember/<str:name>/<str:memberName>", views.deleteMember, name='deleteMember'),  
+    path('editMemberDetails/<str:name>/<str:memberName>/editSociety',views.editMemberDetails,name='editMemberDetails'),
+    path('editMemberDetails/<str:name>/<str:memberName>/societyMembers',views.editMemberDetails,name='editMemberDetails'),
+    
 ]

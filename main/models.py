@@ -35,6 +35,7 @@ class MembersList(models.Model):
     def __str__(self):
         return self.Member_Name
     
+    
 # class ChargesList(models.Model):
 #     elcty = models.CharField(max_length=122)
 #     wtrbll = models.CharField(max_length=122)

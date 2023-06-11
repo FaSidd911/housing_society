@@ -8,7 +8,7 @@ from .models import SocietyList,MembersList
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
-from .forms import ChargesForm,MembersForm,EditSocietyForm
+from .forms import ChargesForm,MembersForm,EditSocietyForm,EditMembersForm
 import json
 
 # Create your views here.
@@ -192,3 +192,49 @@ def editSociety(request,name):
 def deleteSociety(request,name):
     SocietyList.objects.filter(user=request.user,societyName=name).delete()
     return HttpResponseRedirect('/addSociety')
+
+def deleteMember(request,name, memberName):
+    print(memberName)
+    MembersList.objects.filter(
+        user=request.user,
+        memberSocietyName=SocietyList.objects.get(
+            user=request.user,
+            societyName=name), 
+        Member_Name=memberName ).delete()
+    return HttpResponseRedirect('/society/' + name)
+
+def editMemberDetails(request,name,memberName):
+    item = get_object_or_404(SocietyList,user=request.user, societyName=name) 
+    if request.method == 'POST': 
+            form = EditMembersForm(request.POST)
+            if form.is_valid():
+                members_dict = {}
+                for key, value in form.cleaned_data.items():
+                    members_dict[key]=value
+                memberNameExists = MembersList.objects.filter(
+                    user= request.user, 
+                    memberSocietyName=  item,
+                    Member_Name=members_dict['Member_Name'])
+                if memberNameExists:
+                    return HttpResponseRedirect('societyMembers')
+                MembersList.objects.filter(user=request.user,memberSocietyName=item, Member_Name=memberName).update(**members_dict)              
+                return HttpResponseRedirect('/society/'+ item.societyName)
+    
+    # query_results = MembersList.objects.filter(user=request.user,memberSocietyName=item, Member_Name=memberName)  
+    society_charges=item.charges_fields
+    society_charges = json.loads(society_charges.replace('\'','"'))
+    display_charges=['Member_Name','Flat_No','Opening_Balance','Closing_Balance']
+    for k,v in society_charges.items():
+        if v !='':
+            display_charges.append(k)
+    context={}
+    context['display_charges'] = display_charges
+    form = MembersForm(society_charges)
+
+    context = {
+        'item': name,
+        # 'query_results': query_results,
+        'form': form,
+        'display_charges' : display_charges
+     }
+    return render(request,'editSociety.html', context)

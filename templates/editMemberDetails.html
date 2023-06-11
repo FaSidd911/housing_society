@@ -1,0 +1,25 @@
+{% extends "baseAfterLogin.html" %}
+{% block body %}
+{% load crispy_forms_tags %}
+{% load custom %}
+
+
+    
+
+
+  <div class="item-detail">
+  <form class="px-4 w-10 p-3" method="POST" action="editMemberDetails">
+    {% csrf_token %}
+    <h2> Add Member </h2>
+    {% for field in form %}
+            {%if field.label in display_charges%}            
+                <p>
+                {{ field|as_crispy_field }}</p>
+            {%endif%}
+        {% endfor %}
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div>
+
+
+{% endblock %}
