@@ -92,10 +92,10 @@ def societyMembers(request, item_name):
             memberSocietyName=  item,
             Member_Name=members_dict['Member_Name'])
         if memberNameExists:
-            return HttpResponseRedirect('societyMembers')
+            return redirect('society'+ item_name +'societyMembers')
         new_member = MembersList(**members_dict)
         new_member.save() 
-        return HttpResponseRedirect(request.path_info)
+        return redirect('/society/'+ item_name +'/societyMembers')
     query_results = MembersList.objects.filter(user=user,memberSocietyName=item)
     charges_fields = SocietyList.objects.get(user=user,societyName=item)
     society_charges=charges_fields.charges_fields
@@ -170,9 +170,9 @@ def editSociety(request,name):
                 for key, value in form.cleaned_data.items():
                     changes_dict[key]=value
                 societyNameExists = SocietyList.objects.filter(user= request.user, societyName=changes_dict['Society_Name'])
-                print(societyNameExists)
-                if societyNameExists:
-                    return HttpResponseRedirect(request.path_info)
+                # print(societyNameExists)
+                # if societyNameExists:
+                #     return HttpResponseRedirect(request.path_info)
                 editSocietyFields = SocietyList.objects.get(user=request.user,societyName=name)
                 editSocietyFields.societyName=changes_dict['Society_Name']
                 editSocietyFields.regno=changes_dict['Reg_No']
@@ -211,12 +211,12 @@ def editMemberDetails(request,name,memberName):
                 members_dict = {}
                 for key, value in form.cleaned_data.items():
                     members_dict[key]=value
-                memberNameExists = MembersList.objects.filter(
-                    user= request.user, 
-                    memberSocietyName=  item,
-                    Member_Name=members_dict['Member_Name'])
-                if memberNameExists:
-                    return HttpResponseRedirect('societyMembers')
+                # memberNameExists = MembersList.objects.filter(
+                #     user= request.user, 
+                #     memberSocietyName=  item,
+                #     Member_Name=members_dict['Member_Name'])
+                # if memberNameExists:
+                #     return HttpResponseRedirect('societyMembers')
                 MembersList.objects.filter(user=request.user,memberSocietyName=item, Member_Name=memberName).update(**members_dict)              
                 return HttpResponseRedirect('/society/'+ item.societyName)
     

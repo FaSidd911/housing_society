@@ -35,9 +35,9 @@
     {% csrf_token %}
     <h2> Add Member </h2>
     {% for field in form %}
-            {%if field.label in display_charges%}            
-                <p>
-                {{ field|as_crispy_field }}</p>
+            {%if field.label in display_charges%}  
+                <p>{{ field.label}}</p>          
+                <p>{{ field|as_crispy_field }}</p>
             {%endif%}
         {% endfor %}
     <button type="submit" class="btn btn-primary">Add</button>
