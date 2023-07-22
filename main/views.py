@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
 from .forms import ChargesForm,MembersForm,EditSocietyForm,EditMembersForm
 import json
+import pandas as pd
 
 # Create your views here.
 
@@ -67,7 +68,7 @@ def addSociety(request):
                  } 
 
         return render(request, 'selectChargesFields.html',context)       
-    query_results = SocietyList.objects.filter(user=user)   
+    query_results = SocietyList.objects.filter(user=user)
     return render(request, 'addSociety.html',{'query_results':query_results})
 
 # @login_required
@@ -238,3 +239,10 @@ def editMemberDetails(request,name,memberName):
         'display_charges' : display_charges
      }
     return render(request,'editSociety.html', context)
+
+def uploadMemberDetails(request,name):
+    if request.method == 'POST':
+        members_list_df = pd.read_csv(request.FILES['file'],index_col=False)
+        # contentOfFile = file1.read()
+    print(members_list_df.to_dict())
+    print()

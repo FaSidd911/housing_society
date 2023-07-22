@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-# Create your models here.
+import uuid
 from django.db import models
 
 
 class SocietyList(models.Model):
+    society_id = models.AutoField( primary_key = True, editable = True)
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
     societyName = models.CharField(max_length=500)
     regno = models.CharField(max_length=122)
@@ -17,6 +17,7 @@ class SocietyList(models.Model):
         return self.societyName
     
 class MembersList(models.Model):
+    member_id = models.AutoField( primary_key = True, editable = True)
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
     memberSocietyName = models.ForeignKey(SocietyList,on_delete=models.CASCADE)
     Member_Name = models.CharField(max_length=500)

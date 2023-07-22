@@ -22,5 +22,6 @@ urlpatterns = [
     path("deleteMember/<str:name>/<str:memberName>", views.deleteMember, name='deleteMember'),  
     path('editMemberDetails/<str:name>/<str:memberName>/editSociety',views.editMemberDetails,name='editMemberDetails'),
     path('editMemberDetails/<str:name>/<str:memberName>/societyMembers',views.editMemberDetails,name='editMemberDetails'),
+    path('society/<str:name>/uploadMemberDetails',views.uploadMemberDetails, name='item'),
     
 ]
