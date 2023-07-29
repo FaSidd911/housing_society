@@ -37,7 +37,7 @@ def login(request):
                 auth_login(request,user)
                 print(request, f"You are now logged in as {username}.")
                 query_results = SocietyList.objects.filter(user=user)   
-                return render(request, "addSociety.html",{'query_results':query_results})
+                return render(request, "society_detail.html",{'query_results':query_results})
             else:
                 messages.error(request,"Invalid username or password.")
         else:
@@ -190,9 +190,7 @@ def editSociety(request,name):
     context = {'form': form}
     return render(request,'editSociety.html', context)
 
-def deleteSociety(request,name):
-    SocietyList.objects.filter(user=request.user,societyName=name).delete()
-    return HttpResponseRedirect('/addSociety')
+
 
 def deleteMember(request,name, memberName):
     print(memberName)
@@ -246,3 +244,57 @@ def uploadMemberDetails(request,name):
         # contentOfFile = file1.read()
     print(members_list_df.to_dict())
     print()
+    
+#---------------------------------------------------------------------------------------------------    
+
+
+
+
+
+def society_detail(request):
+    user = request.user      
+    query_results = SocietyList.objects.filter(user=user)
+    return render(request, 'society_detail.html',{'query_results':query_results})
+
+def add_new_society(request):
+    user = request.user
+    if request.method == "POST":
+        societyName = request.POST.get('Society_name')
+        societyNameExists = SocietyList.objects.filter(user= user, societyName=societyName)
+        print(societyNameExists)
+        if societyNameExists:
+            return HttpResponseRedirect(request.path_info)
+        panno = request.POST.get('PAN_Number')
+        regno = request.POST.get('Registration_Number')
+        gstno = request.POST.get('GST_Number')
+        ctsno = request.POST.get('CTS_Number')
+        address = request.POST.get('address')
+        user = user
+        
+        new_society = SocietyList(
+                    societyName=societyName, 
+                    regno=regno, 
+                    address=address, 
+                    date_add_society=datetime.today(),
+                    user = user,
+                    panno=panno,
+                    gstno=gstno,
+                    ctsno=ctsno
+                    # charges_fields= json.dumps(selected_fields)
+            )
+        new_society.save()
+        # request.session['Society_name'] = societyName
+        # request.session['PAN_Number'] = panno
+        # request.session['Registration_Number'] = regno
+        # context={'societyName':societyName
+        #          ,'regno':regno
+        #          ,'address':address
+        #          } 
+
+        return redirect('/society_detail')       
+
+    return render(request,'add_new_society.html')
+
+def deleteSociety(request,name):
+    SocietyList.objects.filter(user=request.user,societyName=name).delete()
+    return HttpResponseRedirect('/society_detai')
