@@ -242,4 +242,58 @@
     });
   });
 
+  /*
+	    Sidebar
+	*/
+      $('.dismiss, .overlay').on('click', function() {
+        $('.sidebar').removeClass('active');
+        $('.overlay').removeClass('active');
+    });
+
+    $('.open-menu').on('click', function(e) {
+      e.preventDefault();
+        $('.sidebar').addClass('active');
+        $('.overlay').addClass('active');
+        // close opened sub-menus
+        $('.collapse.show').toggleClass('show');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    });
+    /* change sidebar style */
+    $('a.btn-customized-dark').on('click', function(e) {
+    e.preventDefault();
+    $('.sidebar').removeClass('light');
+    });
+    $('a.btn-customized-light').on('click', function(e) {
+    e.preventDefault();
+    $('.sidebar').addClass('light');
+    });
+    /* replace the default browser scrollbar in the sidebar, in case the sidebar menu has a height that is bigger than the viewport */
+    $('.sidebar').mCustomScrollbar({
+    theme: "minimal-dark"
+    });
+
+
 })()
+
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("search");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("socTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    let rowTds = tr[i].getElementsByTagName("td")
+    for (j = 0; j < rowTds.length; j++){
+      td = tr[i].getElementsByTagName("td")[j];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          break;
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }       
+  }
+}
+

@@ -24,4 +24,9 @@ urlpatterns = [
     path('editMemberDetails/<str:name>/<str:memberName>/societyMembers',views.editMemberDetails,name='editMemberDetails'),
     path('society/<str:name>/uploadMemberDetails',views.uploadMemberDetails, name='item'),
     
+    #---------------------------------------------------------------------------------------------------
+    
+    path("society_detail", views.society_detail,name="society_detail"),
+    path('add_new_society',views.add_new_society),
+    
 ]

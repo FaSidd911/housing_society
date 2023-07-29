@@ -9,9 +9,12 @@ class SocietyList(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
     societyName = models.CharField(max_length=500)
     regno = models.CharField(max_length=122)
+    ctsno = models.CharField(max_length=122)
+    panno = models.CharField(max_length=122)
+    gstno = models.CharField(max_length=122)
     address = models.TextField()
+    status = models.CharField(max_length=122, default="Active")
     date_add_society = models.DateField()
-    charges_fields=models.CharField(max_length=122, blank=True, null=True)
 
     def __str__(self):
         return self.societyName
