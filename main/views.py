@@ -9,8 +9,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
 from .forms import ChargesForm,MembersForm,EditSocietyForm,EditMembersForm
-import json
+import json,os
 import pandas as pd
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
@@ -297,4 +299,51 @@ def add_new_society(request):
 
 def deleteSociety(request,name):
     SocietyList.objects.filter(user=request.user,societyName=name).delete()
-    return HttpResponseRedirect('/society_detai')
+    return HttpResponseRedirect('/society_detail')
+
+def upload_doc_temp(request,name):
+    request.session['Society_name'] = name
+    return HttpResponseRedirect('/upload_doc')
+
+def upload_doc(request):
+    path = settings.MEDIA_ROOT + '/' + request.user.username + '/' +  request.session['Society_name']
+    if not os.path.exists(path):
+            os.makedirs(path)
+    fs = FileSystemStorage(path)   
+    files = os.listdir(path)
+    file_names = {}
+    file_addr={}
+    for f in files:
+        if os.path.splitext(f)[0]=='Pan':
+            file_names['pan']= f
+            file_addr['pan']= path + '/' + f
+        if os.path.splitext(f)[0]=='GST':
+            file_names['gst']= f
+            file_addr['gst']= path + '/' + f
+        if os.path.splitext(f)[0]=='CTS':
+            file_names['cts']= f
+            file_addr['cts']= path + '/' + f
+        if os.path.splitext(f)[0]=='Others':
+            file_names['oth']= f
+            file_addr['oth']= path + '/' + f
+    context={
+        'file_addr':file_addr,
+        'file_names':file_names
+    } 
+    if request.method == 'POST':
+        if 'pan_card' in request.FILES.keys():
+            myfile = request.FILES['pan_card']        
+            file_name = "Pan." + myfile.name.split(".")[1]
+        elif 'gst' in request.FILES.keys():
+            myfile = request.FILES['gst']        
+            file_name = "GST." + myfile.name.split(".")[1]
+        elif 'cts' in request.FILES.keys():
+            myfile = request.FILES['cts']        
+            file_name = "CTS." + myfile.name.split(".")[1]
+        elif 'others' in request.FILES.keys():
+            myfile = request.FILES['others']        
+            file_name = "Others." + myfile.name.split(".")[1]
+        else:
+            return render(request,'upload_docs.html',context)
+        filename = fs.save(file_name, myfile)
+    return render(request,'upload_docs.html',context)

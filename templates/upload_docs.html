@@ -75,69 +75,94 @@
     <div class="container">
       <div class="row gy-4 justify-content-between">
         <div class="col-lg-5  d-flex flex-column justify-content-top">
-          <h1>Add New Society</h1>
+          <h1>Upload Documents</h1>
         </div >
+      </div>   
+        <div class = "row">
+          <div class = "col-md-6">
+            <label for="Upload_doc">Upload Document - PAN</label>
+            <form method="post" action="upload_doc" enctype="multipart/form-data">
+              {% csrf_token %}
+               <div class="input-group">
+                 <input type="file" class="form-control" name= "pan_card" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" mandatory>
+                 <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
+               </div>
+              </form>
+        </div>
+        <div class = "col-sm-4">
+          <p>&nbsp</p>
+             <div class="justify-content-center">
+              {%if file_names.pan != "" %}                
+              <p><a href= {{file_addr.pan}} download="">{{file_names.pan}}</a></p>
+              {% endif %}
+             </div>
+      </div>  
       </div>
-      <form  method="POST" action="add_new_society" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="date" >Date</label>
-                        <div class="input-group date" id="datePicker">
-                            <input type="date" class="form-control" id="datePicker1" disabled="True">
-                            <span class="input-group-append">
-                                <span class="input-group-text bg-white">
-                                    <i class="bi bi-calendar-event-fill"></i>
-                                </span>
-                            </span>
-                        </div>
-                </div>
-                <div class="form-group col-md-3">
-                  <label for="name">Society ID</label>
-                  <input type="text" name="Society_ID" class="form-control" id="Society_ID" placeholder="Society_ID" value = '001' disabled=" True">
-                </div>
-                <div class="col-md-6">
-                  <label for="name"></label>
-                  <div class="input-group">
-                      <span class="input-group-text">
-                          <span class="bi bi-houses-fill"></span>
-                      </span>
-                      <input type="text" name="Society_name" class="form-control" id="Society_name" placeholder="Society_name">
-                  </div>
-                </div>
+      <div class = "row">
+            <div class = "col-md-6">
+                <label for="Upload_doc">Upload Document - GST </label>
+                <form method="post" action="upload_doc" enctype="multipart/form-data">
+                  {% csrf_token %}
+                   <div class="input-group">
+                     <input type="file" class="form-control" name= "gst" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                     <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
+                   </div>
+                  </form>
+            </div>
+            <div class = "col-sm-4">
+              <p>&nbsp</p>
+                 <div class="justify-content-center">
+                  {%if file_names.gst != "" %}                
+                  <p><a href= {{file_addr.gst}} download="">{{file_names.gst}}</a></p>
+              {% endif %}
+                 </div>
+          </div> 
+          </div>
+          <div class = "row">
+            <div class = "col-md-6">
+              <label for="Upload_doc">Upload Document - CTS </label>
+              <form method="post" action="upload_doc" enctype="multipart/form-data">
+                {% csrf_token %}
+                 <div class="input-group">
+                   <input type="file" class="form-control" name= "cts" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                   <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
+                 </div>
+                </form>
+          </div>
+          <div class = "col-sm-4">
+            <p>&nbsp</p>
+               <div class="justify-content-center">
+                {%if file_names.cts != "" %}                
+                <p><a href= {{file_addr.cts}} download="">{{file_names.cts}}</a></p>
+            {% endif %}
+               </div>
+        </div> 
         </div>
         <div class = "row">
-          <div class="form-group col-md-3">
-            <label for="number">PAN #</label>
-            <input type="text" name="PAN_Number" class="form-control" id="PAN_Number" placeholder="PAN_Number" required>
-          </div>
-          <div class="form-group col-md-3">
-            <label for="number">Registration #</label>
-            <input type="text" name="Registration_Number" class="form-control" id="Registration_Number" placeholder="Registration_Number" required>
-          </div>
-          <div class="form-group col-md-3">
-            <label for="number">GST #</label>
-            <input type="text" name="GST_Number" class="form-control" id="GST_Number" placeholder="GST_Number" required>
-          </div>
-          <div class="form-group col-md-3">
-            <label for="number">CTS #</label>
-            <input type="text" name="CTS_Number" class="form-control" id="CTS_Number" placeholder="CTS_Number" required>
-          </div>
+          <div class = "col-md-6">
+            <label for="Upload_doc">Upload Document - Other </label>
+            <form method="post" action="upload_doc" enctype="multipart/form-data">
+              {% csrf_token %}
+               <div class="input-group">
+                 <input type="file" class="form-control" name= "others" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                 <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
+               </div>
+              </form>
         </div>
-        <div class = "row">
-          <div class="form-group col-md-6">
-            <label for="address">Address</label>
-            <textarea class="form-control" rows="3" id="address" name="address"></textarea>
-          </div>
-        </div>
+        <div class = "col-sm-4">
+          <p>&nbsp</p>
+             <div class="justify-content-center">
+              {%if file_names.oth != "" %}                
+              <p><a href= {{file_addr.oth}} download="">{{file_names.oth}}</a></p>
+          {% endif %}
+             </div>
+      </div> 
+      </div>
         <div class = "row justify-content-end">
           <div class="col-sm-2" >
-            <button class="btn btn-submit" type="submit"> 
-              Submit
-            </button>
+            
           </div>
         </div> 
-      </form>
     </div>  
 
   </section>

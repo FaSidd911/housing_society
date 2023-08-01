@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path ,re_path
 from main import views 
 from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index),
@@ -28,5 +30,10 @@ urlpatterns = [
     
     path("society_detail", views.society_detail,name="society_detail"),
     path('add_new_society',views.add_new_society),
+    path('upload_doc',views.upload_doc, name="upload_doc"),
+    path('upload_doc_temp',views.upload_doc_temp, name="upload_doc_temp"),
+    path('upload_doc_temp/<str:name>',views.upload_doc_temp, name="upload_doc_temp"),
     
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
