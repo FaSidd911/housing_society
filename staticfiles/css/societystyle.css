@@ -466,7 +466,7 @@ body {
     #hero {
       height: calc(100vh - 72px);
     }
-   
+  
     #hero .animated {
       animation: none;
     }
@@ -629,7 +629,7 @@ body {
   # sidebar Section
   --------------------------------------------------------------*/
 
-  #sidebar {
+  .sidebar {
     width: 250px;
     height: 100vh; 
     position: fixed; 
@@ -649,8 +649,8 @@ body {
     width: 35px; 
     height: 35px; 
     position: absolute; 
-    top: 10px; 
-    right: 10px; 
+    top: 15px; 
+    left: 50px; 
     transition: all .3s; 
     background: #fef8f5; 
     border-radius: 4px; 
@@ -665,29 +665,76 @@ body {
     color: #4e4039; 
   }
   
-  .sidebar .logo { 
-    padding: 40px 20px; 
-    border-bottom: 1px solid #444; 
-    transition: all .3s; }
+  .sidebar .logo h1 { 
+    padding: 20px 20px 40px 100px;; 
+    transition: all .3s; 
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: 2px;
+    }
   
-  .sidebar .logo a {
-    display: inline-block;
-    width: 172px;
-    height: 34px;
-    background: url(../img/logo.png) left top no-repeat;
-    border: 0;
-    text-indent: -999999px;
+  .sidebar .logo h1 a ,
+  .sidebar .logo h1 a:hover {
+    color: #7a6960;
+    text-decoration: none;
   }
   
-  .sidebar ul.menu-elements { padding: 10px 0; 
+  .sidebar .dropdown {
+    padding: 0px 20px 0 20px; 
+  }
+  
+  .sidebar .bx {
+    margin: 2px 5px 2px 5px;
+    float: left;
+  }  
+
+  .sidebar .btn-get-started {
+    font-family: "Raleway", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    padding: 5px 15px 5px 5px;
+    border-radius: 3px;
+    transition: 0.5s;
+    color: #fff;
+    background: #eb5d1e;
+    width: 100%;
+  }
+  
+  .sidebar .btn-get-started h4 {
+    font-family: "Raleway", sans-serif;
+    color: #fff;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    margin: 0.3rem ;
+    float:left;
+  }
+
+  .sidebar .bi-chevron-double-down {
+    margin: 2px 5px 2px 5px;
+    float: right;
+  } 
+
+  .sidebar .btn-get-started:hover {
+    background: #ef7f4d;
+  }
+
+  .sidebar .menu-elements { 
+    padding: 10px 0; 
     border-bottom: 1px solid #444; 
     transition: all .3s; 
   }
   
   .sidebar ul li a {
     display: block; 
-    padding: 10px 20px;
-    border: 0; color: #fff;
+    padding: 1px 20px;
+    border: 0; color: #4e4039;
   }
   .sidebar ul li a:hover,
   .sidebar ul li a:focus,
@@ -725,9 +772,115 @@ body {
       transform: translateY(-50%);
   }
   
-  .sidebar .to-top { padding: 20px; text-align: center; }
+  .sidebar .to-logout { 
+    padding: 20px; 
+    text-align: center; }
 
-  #btn-group{
 
-  flex-wrap: wrap;
+  /***** Dark overlay *****/
+
+.overlay {
+  display: none; 
+  position: fixed; 
+  width: 100vw; 
+  height: 100vh; 
+  background: rgba(101, 100, 100, 0.584); 
+  z-index: 998; opacity: 0; 
+  transition: all .5s ease-in-out;
 }
+
+.overlay.active { 
+  display: block; 
+  opacity: 1; 
+}
+
+
+ /*--------------------------------------------------------------
+  # add-charges Section
+  --------------------------------------------------------------*/
+  #add-charges {
+    width: 100%;
+    height: 100%;
+    background: #fef8f5;
+    border-bottom: 2px solid #fcebe3;
+    margin: 72px 0 -72px 0;
+  }
+  
+  #add-charges h1 {
+    font-family: "Open Sans", sans-serif;
+    margin: 20px 0px 20px 0px;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 56px;
+    color: #4e4039;
+  }
+   
+  #add-charges .icon-box {
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 20px 0;
+    background: #fff;
+    box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
+    transition: all 0.3s ease-in-out;
+    border-radius: 15px;
+    text-align: center;
+    border-bottom: 3px solid #fff;
+  }
+  
+  #add-charges .icon-box:hover {
+    transform: translateY(-5px);
+    border-color: #ef7f4d;
+  }
+  
+  #add-charges .icon i {
+    font-size: 48px;
+    line-height: 1;
+    margin-bottom: 15px;
+    color: #ef7f4d;
+  }
+  
+  #add-charges .title {
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 0rem;
+  }
+
+  #add-charges .btn-group {
+    overflow-wrap: normal;
+  }
+  
+  #add-charges .title a {
+    color: #111;
+  }
+  
+
+  @media (max-width: 991px) {
+    #add-charges {
+      height: calc(100vh - 72px);
+    }
+  
+  }
+    
+  @media (max-width: 768px) {
+     #add-charges h1 {
+      font-size: 28px;
+      line-height: 36px;
+    }
+  }
+
+  @media (max-height: 900px) {
+    #add-charges {
+      height: 80%;
+    }
+  }
+  
+  @keyframes up-down {
+    0% {
+      transform: translateY(10px);
+    }
+  
+    100% {
+      transform: translateY(-10px);
+    }
+  }  

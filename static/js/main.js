@@ -275,6 +275,7 @@
 
 })()
 
+
 function myFunction() {
   var input, filter, table, tr, td, i;
   input = document.getElementById("search");
@@ -297,3 +298,9 @@ function myFunction() {
   }
 }
 
+
+
+var table = $('#socTable').DataTable({
+  pageLength : 5,
+  lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
+})

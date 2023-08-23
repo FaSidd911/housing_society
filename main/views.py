@@ -347,3 +347,7 @@ def upload_doc(request):
             return render(request,'upload_docs.html',context)
         filename = fs.save(file_name, myfile)
     return render(request,'upload_docs.html',context)
+
+
+def add_charges(request):
+    return render(request,'add_charges.html')
