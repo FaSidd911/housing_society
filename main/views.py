@@ -293,7 +293,7 @@ def add_new_society(request):
         #          ,'address':address
         #          } 
 
-        return redirect('/society_detail')       
+        return render(request,'add_charges.html')      
 
     return render(request,'add_new_society.html')
 
