@@ -49,6 +49,42 @@
  </head>
  
  <body>
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+                  
+    <!-- close sidebar menu -->
+    <div class="dismiss">
+      <button class="btn btn-light" type="button" >
+        <i class="bi bi-list" ></i>
+      </button>
+    </div>
+
+    <div class="logo">
+      <h1 class="text-light">
+          <a href=""><span><b>Orange</b></span></a>
+      </h1>
+    </div>
+
+    <div class="dropdown">
+      <button class="btn btn-light btn-get-started scrollto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bx bx-plus bx-sm"></i>
+        <h4>Add New </h4>
+        <a class="bi bi-chevron-double-down"></a>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <li><a class="dropdown-item " href="/add_new_society">Society</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Members</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/add_charges">Charges</a></li>
+      </ul>
+    </div>
+</nav>  
+<!-- Dark overlay -->
+  <div class="overlay"></div>
+</div>
+<!-- End sidebar -->
  
    <!-- ======= Header ======= -->
    <header id="header" class="fixed-top d-flex align-items-center">
@@ -57,7 +93,9 @@
        <div class="logo">
          <h1 class="text-light">
          <!--<a href="index.html"><img src="{%static '/img/logo.png' %}" alt="" class="img-fluid"></a>-->
-         <a class="bi bi-list" href="/sidebar"></a>
+         <<a class="btn btn-light open-menu" href="#" role="button">
+          <i class="bi bi-list" href=""></i>
+         </a>
              <a href=""><span><b>Orange</b></span></a>
          </h1>
          <!-- Uncomment below if you prefer to use an image logo -->

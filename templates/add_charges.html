@@ -31,7 +31,6 @@
  
    <!-- Template Main CSS File -->
    <link href="{% static '/css/societystyle.css' %}" rel="stylesheet">
-
  
  </head>
  
@@ -64,7 +63,7 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Members</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Charges</a></li>
+              <li><a class="dropdown-item" href="/add_charges">Charges</a></li>
             </ul>
           </div>
       </nav>  
@@ -104,75 +103,116 @@
         <div class="container">
             <div class="row gy-4 justify-content-between">
                 <div class="col-lg-5  d-flex flex-column justify-content-top">
-                <h1>Add Charges</h1>
+                <h1>Select Charges</h1>
                 </div >
             </div>
-            <form>
-                <div class="btn-group flex-wrap  justify-content-start text-start w-100 my-5">
-                    <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-                      <div class="icon-box">
-                          <h3 class="title"><a href="">Minicipal Tax</a></h3>
-                        </div>
-                    </div>
-                    <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="icon-box">
-                          <h3 class="title"><a href="">Water Charges</a></h3>                       
-                        </div>
-                    </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="icon-box">
-                          <h3 class="title"><a href="">Maintainance Charges</a></h3>
-                        </div>
-                      </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
-                        <div class="icon-box">
-                          <h3 class="title"><a href="">Service Charges</a></h3>
-                        </div>
-                      </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="icon-box">
-                          <h3 class="title"><a href="">Sinking Funds</a></h3>
-                        </div>
-                      </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
-                        <div class="icon-box">
-                          <h3 class="title"><a href="">Repair Funds</a></h3>
-                        </div>
-                      </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="icon-box">
-                            <h3 class="title"><a href="">Parking Charges</a></h3>
-                        </div>
-                      </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="icon-box">
-                            <h3 class="title"><a href="">Property Tax Paid</a></h3>                       
-                        </div>
-                      </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
-                          <div class="icon-box">
-                            <h3 class="title"><a href="">Maintainance Charges</a></h3>
-                          </div>
-                      </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
-                        <div class="icon-box">
-                            <h3 class="title"><a href="">Service Charges</a></h3>
-                        </div>
-                      </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="icon-box">
-                          <h3 class="title"><a href="">Water Charges Paid</a></h3>
-                        </div>
-                      </div>
-                      <div class="btn d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
-                        <div class="icon-box">
-                          <h3 class="title"><a href="">Repair & Maintainence Charges</a></h3>
-                        </div>
-                      </div>                        
+            <form action="add_value" method="POST">
+              {% csrf_token %}
+              <div class="btn-group flex-wrap justify-content-start text-start w-100 my-4">
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <h3 class="title"><a href="">Municiple Charges</a></h3>                       
                 </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                    <h3 class="title"><a href="">Water Charges</a></h3>                       
+                  </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <h3 class="title"><a href="">Maintainance Charges</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <h3 class="title"><a href="">Service Charges</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <h3 class="title"><a href="">Sinking Funds</a></h3>
+                  </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <h3 class="title"><a href="">Repair Funds</a></h3>
+                  </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <h3 class="title"><a href="">Parking Charges</a></h3>
+                  </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                    <h3 class="title"><a href="">Property Tax Paid</a></h3>                       
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <h3 class="title"><a href="">Water Charges Paid</a></h3>
+                  </div>	
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400"> 
+                    <h3 class="title"><a href="">Repair & Maintainence Charges</a></h3>
+                </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300"> 
+                    <h3 class="title"><a href="">Conveyance</a></h3>
+                  </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <h3 class="title"><a href="">Gardening Expenses</a></h3>
+                  </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <h3 class="title"><a href="">Bank Charges</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                    <h3 class="title"><a href="">Plumbing Expenses</a></h3>                       
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <h3 class="title"><a href="">Salary to Staff</a></h3>
+                  </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <h3 class="title"><a href="">Printing & Stationary</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <h3 class="title"><a href="">Security Charges</a></h3>
+                  </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <h3 class="title"><a href="">Electricity Charges</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <h3 class="title"><a href="">Telephone Charges</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200"> 
+                    <h3 class="title"><a href="">Meeting Expenses</a></h3>                       
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <h3 class="title"><a href="">Depreciation</a></h3>                       
+                </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <h3 class="title"><a href="">Repair & Maintainence - Electrical</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <h3 class="title"><a href="">Postage & Courier Charges</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch"data-bs-toggle="button"  data-aos="zoom-in" data-aos-delay="300">
+                    <h3 class="title"><a href="">Accounting Charges</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <h3 class="title"><a href="">Staff Welfare</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <h3 class="title"><a href="">Audit Fees</a></h3>
+                </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <h3 class="title"><a href="">Membership & Subscription Charges</a></h3>
+                </div>
+                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">  
+                    <h3 class="title"><a href="">Interest from Bank Savings Account</a></h3>
+                  </div>
+                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <h3 class="title"><a href="">Miscellaneous Charges</a></h3>
+                  </div>
+              </div>
+              <div class = "row justify-content-end">
+                <div class="col-sm-2" >
+                  <button class="btn btn-submit" type="submit"> 
+                    Add Charges
+                  </button>
+                </div>
+              </div> 
             </form>
-        </div>
-    </section>
+        </div>   
+    </section><!-- End charges Section -->
+    
+    <script>
+      $( "#btn-charges" ).on( "click", function() {
+        $( this ).toggleClass( "active" );
+      });
+    </script>
 
   <!-- Vendor JS Files -->
   <script src="{% static '/vendor/aos/aos.js' %}"></script>
