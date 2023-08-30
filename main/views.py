@@ -4,7 +4,7 @@ from django.contrib.auth import login as auth_login,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from datetime import datetime
-from .models import SocietyList,MembersList
+from .models import SocietyList,MembersList,DefaultChargesList
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
@@ -23,10 +23,7 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
-# @login_required
-def homeAfterLogin(request):
-    print(request.user)
-    return render(request,'homeAfterLogin.html')
+
 
 def login(request):
     if request.method=='POST':
@@ -261,39 +258,20 @@ def society_detail(request):
 def add_new_society(request):
     user = request.user
     if request.method == "POST":
-        societyName = request.POST.get('Society_name')
+        soc_details = {}
+        societyName= request.POST.get('Society_name')
+        soc_details['societyName'] = societyName
         societyNameExists = SocietyList.objects.filter(user= user, societyName=societyName)
         print(societyNameExists)
         if societyNameExists:
             return HttpResponseRedirect(request.path_info)
-        panno = request.POST.get('PAN_Number')
-        regno = request.POST.get('Registration_Number')
-        gstno = request.POST.get('GST_Number')
-        ctsno = request.POST.get('CTS_Number')
-        address = request.POST.get('address')
-        user = user
-        
-        new_society = SocietyList(
-                    societyName=societyName, 
-                    regno=regno, 
-                    address=address, 
-                    date_add_society=datetime.today(),
-                    user = user,
-                    panno=panno,
-                    gstno=gstno,
-                    ctsno=ctsno
-                    # charges_fields= json.dumps(selected_fields)
-            )
-        new_society.save()
-        # request.session['Society_name'] = societyName
-        # request.session['PAN_Number'] = panno
-        # request.session['Registration_Number'] = regno
-        # context={'societyName':societyName
-        #          ,'regno':regno
-        #          ,'address':address
-        #          } 
-
-        return render(request,'add_charges.html')      
+        soc_details['panno'] = request.POST.get('PAN_Number')
+        soc_details['regno'] = request.POST.get('Registration_Number')
+        soc_details['gstno'] = request.POST.get('GST_Number')
+        soc_details['ctsno'] = request.POST.get('CTS_Number')
+        soc_details['address'] = request.POST.get('address')
+        request.session['soc_details'] = soc_details
+        return redirect('/add_charges')      
 
     return render(request,'add_new_society.html')
 
@@ -351,3 +329,31 @@ def upload_doc(request):
 
 def add_charges(request):
     return render(request,'add_charges.html')
+
+def add_value(request):
+    context={}
+    selected_charges={}
+    context['form']= ChargesForm()
+    for key in request.POST:
+        if request.POST[key] != "":
+            selected_charges[key] = request.POST[key]
+    selected_charges.pop("csrfmiddlewaretoken")
+    context['selected_charges'] = selected_charges
+    request.session['selected_charges'] = selected_charges
+    return render(request,'add_value.html',context)
+
+def persist_society_details(request):
+    if request.method == "POST":
+        selected_charges = request.session['selected_charges'] 
+        soc_details = request.session['soc_details'] 
+        user = request.user
+        
+        soc_details['user'] = user
+        selected_charges['user'] = user
+        soc_details['date_add_society'] = datetime.today()
+        new_society = SocietyList(**soc_details)
+        new_society.save()
+        selected_charges['chargesSocietyName'] = SocietyList.objects.get(user = user , societyName=soc_details['societyName']) 
+        selected_charges = DefaultChargesList(**selected_charges)
+        selected_charges.save()
+        redirect('society_detail')

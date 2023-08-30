@@ -106,67 +106,39 @@
           </div>
         </div>
         <div class = "row">
-          <table class="col-lg-5 flex-column table">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Value</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Mark</td>
-                <td>
-                  <input type="text" name="enter_value" class="form-control" id="enter_value" placeholder="Enter Value" required>
-                </td>
-                <td>
-                  <div class="dropdown">
-                    <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi bi-three-dots-vertical" ></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                      <li><a class="dropdown-item " href="#">Edit</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Delete</a></li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>
-                  <div class="dropdown">
-                    <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi bi-three-dots-vertical" ></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                      <li><a class="dropdown-item " href="#">Edit</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Delete</a></li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>
-                  <div class="dropdown">
-                    <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi bi-three-dots-vertical" ></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                      <li><a class="dropdown-item " href="#">Edit</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Delete</a></li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <form method="POST" action="persist_society_details">
+            {% csrf_token %}
+            <table class="col-lg-5 flex-column table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Value</th> 
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for field in form %}
+                {%if field.label in selected_charges%}
+                  <tr>
+                  <td>{{ field.label }}</td>
+                  <td>{{ field}}</td>
+                  <td>
+                    <div class="dropdown">
+                      <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical" ></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item " href="#">Edit</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                      </ul>
+                    </div>
+                  </td>
+                  </tr>
+                {%endif%}
+                {% endfor %}
+              </tbody>
+            </table>
         </div>
         <div class = "row justify-content-end">
           <div class="col-sm-2" >
@@ -175,6 +147,7 @@
             </button>
           </div>
         </div>
+      </form>
        </div>
     </section>
     

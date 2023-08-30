@@ -34,6 +34,8 @@ urlpatterns = [
     path('upload_doc_temp',views.upload_doc_temp, name="upload_doc_temp"),
     path('upload_doc_temp/<str:name>',views.upload_doc_temp, name="upload_doc_temp"),
     path('add_charges', views.add_charges),
+    path('add_value', views.add_value),
+    path('persist_society_details', views.persist_society_details),
     
 ]
 

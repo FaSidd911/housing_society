@@ -109,92 +109,92 @@
             <form action="add_value" method="POST">
               {% csrf_token %}
               <div class="btn-group flex-wrap justify-content-start text-start w-100 my-4">
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
-                  <h3 class="title"><a href="">Municiple Charges</a></h3>                       
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Municipal_Tax()"  id ="Municipal_Tax_btn" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <input type="hidden" name ="Municipal_Tax"  id="Municipal_Tax" ><h3 class="title">Municiple Charges</h3>                       
                 </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
-                    <h3 class="title"><a href="">Water Charges</a></h3>                       
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Water_Charges()"  id ="Water_Charges_btn"  data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <input type="hidden" name ="Water_Charges"  id="Water_Charges" ><h3 class="title">Water Charges</h3>                       
                   </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
-                    <h3 class="title"><a href="">Maintainance Charges</a></h3>
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Maintainance_Charges()"  id ="Maintainance_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Maintainance_Charges"  id="Maintainance_Charges" ><h3 class="title">Maintainance Charges</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
-                    <h3 class="title"><a href="">Service Charges</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Service_Charges()"  id ="Service_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                  <input type="hidden" name ="Service_Charges"  id="Service_Charges" ><h3 class="title">Service Charges</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
-                    <h3 class="title"><a href="">Sinking Funds</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Sinking_Funds()"  id ="Sinking_Funds_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Sinking_Funds"  id="Sinking_Funds" ><h3 class="title">Sinking Funds</h3>
                   </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
-                    <h3 class="title"><a href="">Repair Funds</a></h3>
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Repair_Funds()"  id ="Repair_Funds_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Repair_Funds"  id="Repair_Funds" ><h3 class="title">Repair Funds</h3>
                   </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
-                    <h3 class="title"><a href="">Parking Charges</a></h3>
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Parking_Charges()"  id ="Parking_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <input type="hidden" name ="Parking_Charges"  id="Parking_Charges" ><h3 class="title">Parking Charges</h3>
                   </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
-                    <h3 class="title"><a href="">Property Tax Paid</a></h3>                       
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Property_Tax()"  id ="Property_Tax_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                    <input type="hidden" name ="Property_Tax"  id="Property_Tax" ><h3 class="title">Property Tax Paid</h3>                       
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
-                    <h3 class="title"><a href="">Water Charges Paid</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Water_Charges_Paid()"  id ="Water_Charges_Paid_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Water_Charges_Paid"  id="Water_Charges_Paid" ><h3 class="title">Water Charges Paid</h3>
                   </div>	
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400"> 
-                    <h3 class="title"><a href="">Repair & Maintainence Charges</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Repair_Maintainence_Maintainence_Charges()"  id ="Repair_&_Maintainence_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400"> 
+                  <input type="hidden" name ="Repair_&_Maintainence_Maintainence_Charges"  id="Repair_&_Maintainence_Charges" ><h3 class="title">Repair & Maintainence Charges</h3>
                 </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300"> 
-                    <h3 class="title"><a href="">Conveyance</a></h3>
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Conveyance()"  id ="Conveyance_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300"> 
+                    <input type="hidden" name ="Conveyance"  id="Conveyance" ><h3 class="title">Conveyance</h3>
                   </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
-                    <h3 class="title"><a href="">Gardening Expenses</a></h3>
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Gardening_Expenses()"  id ="Gardening_Expenses_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Gardening_Expenses"  id="Gardening_Expenses" ><h3 class="title">Gardening Expenses</h3>
                   </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
-                    <h3 class="title"><a href="">Bank Charges</a></h3>
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Bank_Charges()"  id ="Bank_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <input type="hidden" name ="Bank_Charges"  id="Bank_Charges" ><h3 class="title">Bank Charges</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
-                    <h3 class="title"><a href="">Plumbing Expenses</a></h3>                       
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Plumbing_Expenses()"  id ="Plumbing_Expenses_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <input type="hidden" name ="Plumbing_Expenses"  id="Plumbing_Expenses" ><h3 class="title">Plumbing Expenses</h3>                       
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
-                    <h3 class="title"><a href="">Salary to Staff</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Salary_to_Staff()"  id ="Salary_to_Staff_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Salary_to_Staff"  id="Salary_to_Staff" ><h3 class="title">Salary to Staff</h3>
                   </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
-                    <h3 class="title"><a href="">Printing & Stationary</a></h3>
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Printing_Stationary()"  id ="Printing_&_Stationary_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Printing_&_Stationary"  id="Printing_&_Stationary" ><h3 class="title">Printing & Stationary</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
-                    <h3 class="title"><a href="">Security Charges</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Security_Charges()"  id ="Security_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Security_Charges"  id="Security_Charges" ><h3 class="title">Security Charges</h3>
                   </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
-                    <h3 class="title"><a href="">Electricity Charges</a></h3>
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Electricity_Charges()"  id ="Electricity_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Electricity_Charges"  id="Electricity_Charges" ><h3 class="title">Electricity Charges</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
-                    <h3 class="title"><a href="">Telephone Charges</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Telephone_Charges()"  id ="Telephone_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                  <input type="hidden" name ="Telephone_Charges"  id="Telephone_Charges" ><h3 class="title">Telephone Charges</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200"> 
-                    <h3 class="title"><a href="">Meeting Expenses</a></h3>                       
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Meeting_Expenses()"  id ="Meeting_Expenses_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200"> 
+                  <input type="hidden" name ="Meeting_Expenses"  id="Meeting_Expenses" ><h3 class="title">Meeting Expenses</h3>                       
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
-                  <h3 class="title"><a href="">Depreciation</a></h3>                       
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Depreciation()"  id ="Depreciation_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <input type="hidden" name ="Depreciation"  id="Depreciation" ><h3 class="title">Depreciation</h3>                       
                 </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
-                    <h3 class="title"><a href="">Repair & Maintainence - Electrical</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Repair_Maintainence_Electrical()"  id ="Repair_Maintainence_Electrical_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Repair_&_Maintainence_Electrical"  id="Repair_&_Maintainence_Electrical" ><h3 class="title">Repair & Maintainence - Electrical</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
-                    <h3 class="title"><a href="">Postage & Courier Charges</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Postage_Courier_Charges()"  id ="Postage_&_Courier_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                  <input type="hidden" name ="Postage_&_Courier_Charges"  id="Postage_&_Courier_Charges" ><h3 class="title">Postage & Courier Charges</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch"data-bs-toggle="button"  data-aos="zoom-in" data-aos-delay="300">
-                    <h3 class="title"><a href="">Accounting Charges</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch"data-bs-toggle="button" onclick="Accounting_Charges()"  id ="Accounting_Charges_btn"   data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Accounting_Charges"  id="Accounting_Charges" ><h3 class="title">Accounting Charges</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
-                    <h3 class="title"><a href="">Staff Welfare</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Staff_Welfare()"  id ="Staff_Welfare_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                  <input type="hidden" name ="Staff_Welfare"  id="Staff_Welfare" ><h3 class="title">Staff Welfare</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
-                  <h3 class="title"><a href="">Audit Fees</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Audit_Fees()"  id ="Audit_Fees_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Audit_Fees"  id="Audit_Fees" ><h3 class="title">Audit Fees</h3>
                 </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
-                    <h3 class="title"><a href="">Membership & Subscription Charges</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Membership_Subscription_Charges()"  id ="Membership_&_Subscription_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                  <input type="hidden" name ="Membership_&_Subscription_Charges"  id="Membership_&_Subscription_Charges" ><h3 class="title">Membership & Subscription Charges</h3>
                 </div>
-                  <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">  
-                    <h3 class="title"><a href="">Interest from Bank Savings Account</a></h3>
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Interest_from_Bank_Savings_Account()"  id ="Interest_from_Bank_Savings_Account_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">  
+                    <input type="hidden" name ="Interest_from_Bank_Savings_Account"  id="Interest_from_Bank_Savings_Account" ><h3 class="title">Interest from Bank Savings Account</h3>
                   </div>
-                <div class="btn btn-charges d-flex align-items-stretch" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
-                    <h3 class="title"><a href="">Miscellaneous Charges</a></h3>
+                <div class="btn btn-charges d-flex align-items-stretch" onclick="Miscellaneous_Charges()"  id ="Miscellaneous_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Miscellaneous_Charges"  id="Miscellaneous_Charges" ><h3 class="title">Miscellaneous Charges</h3>
                   </div>
               </div>
               <div class = "row justify-content-end">
@@ -212,6 +212,8 @@
       $( "#btn-charges" ).on( "click", function() {
         $( this ).toggleClass( "active" );
       });
+
+      
     </script>
 
   <!-- Vendor JS Files -->

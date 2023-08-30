@@ -5,7 +5,6 @@ from django.db import models
 
 
 class SocietyList(models.Model):
-    society_id = models.AutoField( primary_key = True, editable = True)
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
     societyName = models.CharField(max_length=500)
     regno = models.CharField(max_length=122)
@@ -20,7 +19,7 @@ class SocietyList(models.Model):
         return self.societyName
     
 class MembersList(models.Model):
-    member_id = models.AutoField( primary_key = True, editable = True)
+    # member_id = models.AutoField( primary_key = True, editable = True)
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
     memberSocietyName = models.ForeignKey(SocietyList,on_delete=models.CASCADE)
     Member_Name = models.CharField(max_length=500)
@@ -40,16 +39,38 @@ class MembersList(models.Model):
         return self.Member_Name
     
     
-# class ChargesList(models.Model):
-#     elcty = models.CharField(max_length=122)
-#     wtrbll = models.CharField(max_length=122)
-#     prkng = models.CharField(max_length=122)
-#     mncpl = models.CharField(max_length=122)
-#     snkng = models.CharField(max_length=122)
-#     nccpncy = models.CharField(max_length=122)
-#     pnlty = models.CharField(max_length=122)
-#     date_add_member = models.DateField()
-#     user = models.CharField(max_length=122,blank=True, null=True)
+class DefaultChargesList(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE) 
+    chargesSocietyName = models.ForeignKey(SocietyList,on_delete=models.CASCADE)
+    Water_Charges = models.CharField(max_length=122)
+    Municipal_Tax = models.CharField(max_length=122)
+    Maintainance_Charges = models.CharField(max_length=122)
+    Interest_from_Bank_Savings_Account = models.CharField(max_length=122)
+    Membership_Subscription_Charges = models.CharField(max_length=122)
+    Audit_Fees = models.CharField(max_length=122)
+    Staff_Welfare = models.CharField(max_length=122)
+    Accounting_Charges = models.CharField(max_length=122)
+    Postage_Courier_Charges = models.CharField(max_length=122)
+    Repair_Maintainence_Electrical = models.CharField(max_length=122)
+    Depreciation = models.CharField(max_length=122)
+    Meeting_Expenses = models.CharField(max_length=122)
+    Telephone_Charges = models.CharField(max_length=122)
+    Electricity_Charges = models.CharField(max_length=122)
+    Security_Charges = models.CharField(max_length=122)
+    Printing_Stationary = models.CharField(max_length=122)
+    Repair_Maintainence = models.CharField(max_length=122)
+    Conveyance = models.CharField(max_length=122)
+    Gardening_Expenses = models.CharField(max_length=122)
+    Bank_Charges = models.CharField(max_length=122)
+    Plumbing_Expenses = models.CharField(max_length=122)
+    Salary_to_Staff = models.CharField(max_length=122)
+    Service_Charges = models.CharField(max_length=122)
+    Sinking_Funds = models.CharField(max_length=122)
+    Repair_Funds = models.CharField(max_length=122)
+    Parking_Charges = models.CharField(max_length=122)
+    Property_Tax = models.CharField(max_length=122)
+    Miscellaneous_Charges = models.CharField(max_length=122)
+    Water_Charges_Paid  = models.CharField(max_length=122)
     
-#     def __str__(self):
-#         return self.Member_Name
+    def __str__(self):
+        return self.chargesSocietyName.societyName  

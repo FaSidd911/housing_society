@@ -278,3 +278,38 @@
 $("#toggleID").on("click", function() {
   $(this).toggleClass('orange');
 });
+
+
+/*
+	    Get Aria Toggle Value
+	*/
+
+  function Water_Charges() {document.getElementById("Water_Charges").value = document.getElementById("Water_Charges_btn").getAttribute('aria-pressed');}
+  function Municipal_Tax() {document.getElementById("Municipal_Tax").value = document.getElementById("Municipal_Tax_btn").getAttribute('aria-pressed');}
+  function Maintainance_Charges() {document.getElementById("Maintainance_Charges").value = document.getElementById("Maintainance_Charges_btn").getAttribute('aria-pressed');}
+  function Interest_from_Bank_Savings_Account() {document.getElementById("Interest_from_Bank_Savings_Account").value = document.getElementById("Interest_from_Bank_Savings_Account_btn").getAttribute('aria-pressed');}
+  function Membership_Subscription_Charges() {document.getElementById("Membership_&_Subscription_Charges").value = document.getElementById("Membership_&_Subscription_Charges_btn").getAttribute('aria-pressed');}
+  function Audit_Fees() {document.getElementById("Audit_Fees").value = document.getElementById("Audit_Fees_btn").getAttribute('aria-pressed');}
+  function Staff_Welfare() {document.getElementById("Staff_Welfare").value = document.getElementById("Staff_Welfare_btn").getAttribute('aria-pressed');}
+  function Accounting_Charges() {document.getElementById("Accounting_Charges").value = document.getElementById("Accounting_Charges_btn").getAttribute('aria-pressed');}
+  function Postage_Courier_Charges() {document.getElementById("Postage_&_Courier_Charges").value = document.getElementById("Postage_&_Courier_Charges_btn").getAttribute('aria-pressed');}
+  function Repair_Maintainence_Electrical() {document.getElementById("Repair_&_Maintainence_Electrical").value = document.getElementById("Repair_&_Maintainence_Electrical_btn").getAttribute('aria-pressed');}
+  function Depreciation() {document.getElementById("Depreciation").value = document.getElementById("Depreciation_btn").getAttribute('aria-pressed');}
+  function Meeting_Expenses() {document.getElementById("Meeting_Expenses").value = document.getElementById("Meeting_Expenses_btn").getAttribute('aria-pressed');}
+  function Telephone_Charges() {document.getElementById("Telephone_Charges").value = document.getElementById("Telephone_Charges_btn").getAttribute('aria-pressed');}
+  function Electricity_Charges() {document.getElementById("Electricity_Charges").value = document.getElementById("Electricity_Charges_btn").getAttribute('aria-pressed');}
+  function Security_Charges() {document.getElementById("Security_Charges").value = document.getElementById("Security_Charges_btn").getAttribute('aria-pressed');}
+  function Printing_Stationary() {document.getElementById("Printing_&_Stationary").value = document.getElementById("Printing_&_Stationary_btn").getAttribute('aria-pressed');}
+  function Repair_Maintainence() {document.getElementById("Repair_&_Maintainence").value = document.getElementById("Repair_&_Maintainence_btn").getAttribute('aria-pressed');}
+  function Conveyance() {document.getElementById("Conveyance").value = document.getElementById("Conveyance_btn").getAttribute('aria-pressed');}
+  function Gardening_Expenses() {document.getElementById("Gardening_Expenses").value = document.getElementById("Gardening_Expenses_btn").getAttribute('aria-pressed');}
+  function Bank_Charges() {document.getElementById("Bank_Charges").value = document.getElementById("Bank_Charges_btn").getAttribute('aria-pressed');}
+  function Plumbing_Expenses() {document.getElementById("Plumbing_Expenses").value = document.getElementById("Plumbing_Expenses_btn").getAttribute('aria-pressed');}
+  function Salary_to_Staff() {document.getElementById("Salary_to_Staff").value = document.getElementById("Salary_to_Staff_btn").getAttribute('aria-pressed');}
+  function Service_Charges() {document.getElementById("Service_Charges").value = document.getElementById("Service_Charges_btn").getAttribute('aria-pressed');}
+  function Sinking_Funds() {document.getElementById("Sinking_Funds").value = document.getElementById("Sinking_Funds_btn").getAttribute('aria-pressed');}
+  function Repair_Funds() {document.getElementById("Repair_Funds").value = document.getElementById("Repair_Funds_btn").getAttribute('aria-pressed');}
+  function Parking_Charges() {document.getElementById("Parking_Charges").value = document.getElementById("Parking_Charges_btn").getAttribute('aria-pressed');}
+  function Property_Tax() {document.getElementById("Property_Tax").value = document.getElementById("Property_Tax_btn").getAttribute('aria-pressed');}
+  function Miscellaneous_Charges() {document.getElementById("Miscellaneous_Charges").value = document.getElementById("Miscellaneous_Charges_btn").getAttribute('aria-pressed');}
+  function Water_Charges_Paid() {document.getElementById("Water_Charges_Paid").value = document.getElementById("Water_Charges_Paid_btn").getAttribute('aria-pressed');      }
