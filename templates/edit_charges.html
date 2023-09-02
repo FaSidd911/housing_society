@@ -1,0 +1,377 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>add charges</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+   <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+
+   <!-- Vendor CSS Files -->
+   <link href="{% static '/vendor/aos/aos.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">   
+   
+   <!--Bootsrap 4 CDN-->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+     
+   <!--Fontawesome CDN-->
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+ 
+ 
+   <!-- Template Main CSS File -->
+   <link href="{% static '/css/societystyle.css' %}" rel="stylesheet">
+ 
+ </head>
+ 
+ <body>
+
+      <!-- Sidebar -->
+      <nav class="sidebar">
+                  
+          <!-- close sidebar menu -->
+          <div class="dismiss">
+            <button class="btn btn-light" type="button" >
+              <i class="bi bi-list" ></i>
+            </button>
+          </div>
+
+          <div class="logo">
+            <h1 class="text-light">
+                <a href=""><span><b>Orange</b></span></a>
+            </h1>
+          </div>
+
+          <div class="dropdown">
+            <button class="btn btn-light btn-get-started scrollto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bx bx-plus bx-sm"></i>
+              <h4>Add New </h4>
+              <a class="bi bi-chevron-double-down"></a>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item " href="/add_new_society">Society</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Members</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/add_charges">Charges</a></li>
+            </ul>
+          </div>
+      </nav>  
+      <!-- Dark overlay -->
+        <div class="overlay"></div>
+      </div>
+      <!-- End sidebar -->
+
+   <!-- ======= Header ======= -->
+   <header id="header" class="fixed-top d-flex align-items-center">
+     <div class="container d-flex align-items-center justify-content-between">
+ 
+      <div class="logo">
+        <h1 class="text-light">
+        <!--<a href="index.html"><img src="{%static '/img/logo.png' %}" alt="" class="img-fluid"></a>-->
+           <a class="btn btn-light open-menu" href="#" role="button">
+            <i class="bi bi-list" href=""></i>
+           </a>
+            <a href=""><span><b>Orange</b></span></a>
+        </h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+      </div>
+ 
+       <nav id="navbar" class="navbar">
+         <ul>
+           <li><a class="getstarted scrollto" href="">Upgrade</a></li>
+         </ul>
+         <i class="bi bi-list mobile-nav-toggle"></i>
+       </nav><!-- .navbar -->
+ 
+     </div>
+   </header><!-- End Header -->
+
+
+   <!-- ======= Charges Section ======= -->
+    <section id="add-charges" class="d-flex align-items-top">
+        <div class="container">
+            <div class="row gy-4 justify-content-between">
+                <div class="col-lg-5  d-flex flex-column justify-content-top">
+                <h1>Select Charges</h1>
+                </div >
+            </div>
+            <form action="edit_value" method="POST">
+              {% csrf_token %}
+              <div class="btn-group flex-wrap justify-content-start text-start w-100 my-4">
+                {%if 'Municipal_Tax' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Municipal_Tax()"  id ="Municipal_Tax_btn" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <input type="hidden" name ="Municipal_Tax"  id="Municipal_Tax" value="True" ><h3 class="title">Municiple Charges</h3>  
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Municipal_Tax()"  id ="Municipal_Tax_btn" data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200"></div>
+                  <input type="hidden" name ="Municipal_Tax"  id="Municipal_Tax" ><h3 class="title">Municiple Charges</h3>  
+                  {%endif%}                     
+                </div>
+                {%if 'Water_Charges' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Water_Charges()"  id ="Water_Charges_btn"  data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <input type="hidden" name ="Water_Charges"  id="Water_Charges" value="True"><h3 class="title">Water Charges</h3>                       
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Water_Charges()"  id ="Water_Charges_btn"  data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                    <input type="hidden" name ="Water_Charges"  id="Water_Charges" ><h3 class="title">Water Charges</h3>                       
+                    {%endif%}    
+                </div>
+                {%if 'Maintainance_Charges' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Maintainance_Charges()"  id ="Maintainance_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Maintainance_Charges"  id="Maintainance_Charges" value="True"><h3 class="title">Maintainance Charges</h3>
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Maintainance_Charges()"  id ="Maintainance_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                      <input type="hidden" name ="Maintainance_Charges"  id="Maintainance_Charges" ><h3 class="title">Maintainance Charges</h3>
+                      {%endif%}
+                  </div>
+                {%if 'Service_Charges' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Service_Charges()"  id ="Service_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                  <input type="hidden" name ="Service_Charges"  id="Service_Charges" value="True"><h3 class="title">Service Charges</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Service_Charges()"  id ="Service_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Service_Charges"  id="Service_Charges" ><h3 class="title">Service Charges</h3>
+                    {%endif%} 
+                </div>
+                {%if 'Sinking_Funds' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Sinking_Funds()"  id ="Sinking_Funds_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Sinking_Funds"  id="Sinking_Funds" value="True"><h3 class="title">Sinking Funds</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Sinking_Funds()"  id ="Sinking_Funds_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Sinking_Funds"  id="Sinking_Funds" ><h3 class="title">Sinking Funds</h3>  
+                    {%endif%} 
+                  </div>
+                  {%if 'Repair_Funds' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Repair_Funds()"  id ="Repair_Funds_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Repair_Funds"  id="Repair_Funds" value="True" ><h3 class="title">Repair Funds</h3>
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Repair_Funds()"  id ="Repair_Funds_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                      <input type="hidden" name ="Repair_Funds"  id="Repair_Funds" ><h3 class="title">Repair Funds</h3>
+                      {%endif%} 
+                  </div>
+                  {%if 'Parking_Charges' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Parking_Charges()"  id ="Parking_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <input type="hidden" name ="Parking_Charges"  id="Parking_Charges" value="True" ><h3 class="title">Parking Charges</h3>
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Parking_Charges()"  id ="Parking_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                      <input type="hidden" name ="Parking_Charges"  id="Parking_Charges" ><h3 class="title">Parking Charges</h3>
+                      {%endif%} 
+                  </div>
+                  {%if 'Property_Tax' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Property_Tax()"  id ="Property_Tax_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                    <input type="hidden" name ="Property_Tax"  id="Property_Tax" value="True"><h3 class="title">Property Tax Paid</h3>                       
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Property_Tax()"  id ="Property_Tax_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                      <input type="hidden" name ="Property_Tax"  id="Property_Tax" ><h3 class="title">Property Tax Paid</h3>                       
+                      {%endif%} 
+                  </div>
+                  {%if 'Water_Charges_Paid' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Water_Charges_Paid()"  id ="Water_Charges_Paid_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Water_Charges_Paid"  id="Water_Charges_Paid" value="True"><h3 class="title">Water Charges Paid</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Water_Charges_Paid()"  id ="Water_Charges_Paid_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Water_Charges_Paid"  id="Water_Charges_Paid" ><h3 class="title">Water Charges Paid</h3>
+                    {%endif%}  
+                </div>	
+                {%if 'Repair_Maintainence_Maintainence_Charges' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Repair_Maintainence_Maintainence_Charges()"  id ="Repair_&_Maintainence_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400"> 
+                  <input type="hidden" name ="Repair_&_Maintainence_Maintainence_Charges" value="True"  id="Repair_&_Maintainence_Charges" ><h3 class="title">Repair & Maintainence Charges</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Repair_Maintainence_Maintainence_Charges()"  id ="Repair_&_Maintainence_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400"> 
+                    <input type="hidden" name ="Repair_&_Maintainence_Maintainence_Charges"  id="Repair_&_Maintainence_Charges" ><h3 class="title">Repair & Maintainence Charges</h3>
+                    {%endif%}  
+                </div>
+                {%if 'Conveyance' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Conveyance()"  id ="Conveyance_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300"> 
+                    <input type="hidden" name ="Conveyance"  id="Conveyance" value="True"><h3 class="title">Conveyance</h3>
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Conveyance()"  id ="Conveyance_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300"> 
+                      <input type="hidden" name ="Conveyance"  id="Conveyance" ><h3 class="title">Conveyance</h3>
+                      {%endif%}   
+                  </div>
+                  {%if 'Gardening_Expenses' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Gardening_Expenses()"  id ="Gardening_Expenses_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Gardening_Expenses"  id="Gardening_Expenses" value="True" ><h3 class="title">Gardening Expenses</h3>
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Gardening_Expenses()"  id ="Gardening_Expenses_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                      <input type="hidden" name ="Gardening_Expenses"  id="Gardening_Expenses" ><h3 class="title">Gardening Expenses</h3>
+                      {%endif%}   
+                  </div>
+                  {%if 'Bank_Charges' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Bank_Charges()"  id ="Bank_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <input type="hidden" name ="Bank_Charges"  id="Bank_Charges" value="True" ><h3 class="title">Bank Charges</h3>
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Bank_Charges()"  id ="Bank_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                      <input type="hidden" name ="Bank_Charges"  id="Bank_Charges" ><h3 class="title">Bank Charges</h3>
+                      {%endif%}   
+                  </div>
+                  {%if 'Plumbing_Expenses' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Plumbing_Expenses()"  id ="Plumbing_Expenses_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <input type="hidden" name ="Plumbing_Expenses"  id="Plumbing_Expenses" value="True"><h3 class="title">Plumbing Expenses</h3>                       
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Plumbing_Expenses()"  id ="Plumbing_Expenses_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                    <input type="hidden" name ="Plumbing_Expenses"  id="Plumbing_Expenses" ><h3 class="title">Plumbing Expenses</h3>                       
+                    {%endif%}  
+                </div>
+                {%if 'Salary_to_Staff' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Salary_to_Staff()"  id ="Salary_to_Staff_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Salary_to_Staff"  id="Salary_to_Staff" value="True"><h3 class="title">Salary to Staff</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Salary_to_Staff()"  id ="Salary_to_Staff_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Salary_to_Staff"  id="Salary_to_Staff" ><h3 class="title">Salary to Staff</h3>
+                    {%endif%}
+                </div>
+                {%if 'Printing_Stationary' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Printing_Stationary()"  id ="Printing_&_Stationary_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Printing_&_Stationary"  id="Printing_&_Stationary" value="True" ><h3 class="title">Printing & Stationary</h3>
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Printing_Stationary()"  id ="Printing_&_Stationary_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                      <input type="hidden" name ="Printing_&_Stationary"  id="Printing_&_Stationary" ><h3 class="title">Printing & Stationary</h3>
+                      {%endif%}                    
+                  </div>
+                {%if 'Security_Charges' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Security_Charges()"  id ="Security_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Security_Charges"  id="Security_Charges" value="True" ><h3 class="title">Security Charges</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Security_Charges()"  id ="Security_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Security_Charges"  id="Security_Charges" ><h3 class="title">Security Charges</h3>
+                    {%endif%}  
+                </div>
+                {%if 'Electricity_Charges' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Electricity_Charges()"  id ="Electricity_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Electricity_Charges"  id="Electricity_Charges" value="True" ><h3 class="title">Electricity Charges</h3>
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Electricity_Charges()"  id ="Electricity_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                      <input type="hidden" name ="Electricity_Charges"  id="Electricity_Charges" ><h3 class="title">Electricity Charges</h3>
+                      {%endif%}  
+                  </div>
+                  {%if 'Telephone_Charges' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Telephone_Charges()"  id ="Telephone_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                  <input type="hidden" name ="Telephone_Charges"  id="Telephone_Charges" value="True"><h3 class="title">Telephone Charges</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Telephone_Charges()"  id ="Telephone_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <input type="hidden" name ="Telephone_Charges"  id="Telephone_Charges" ><h3 class="title">Telephone Charges</h3>
+                    {%endif%}   
+                </div>
+                {%if 'Meeting_Expenses' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Meeting_Expenses()"  id ="Meeting_Expenses_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200"> 
+                  <input type="hidden" name ="Meeting_Expenses"  id="Meeting_Expenses" value="True" ><h3 class="title">Meeting Expenses</h3>                       
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Meeting_Expenses()"  id ="Meeting_Expenses_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200"> 
+                    <input type="hidden" name ="Meeting_Expenses"  id="Meeting_Expenses" ><h3 class="title">Meeting Expenses</h3>                       
+                    {%endif%}   
+                </div>
+                {%if 'Depreciation' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Depreciation()"  id ="Depreciation_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                  <input type="hidden" name ="Depreciation"  id="Depreciation" value="True" ><h3 class="title">Depreciation</h3>                       
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Depreciation()"  id ="Depreciation_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="200">
+                    <input type="hidden" name ="Depreciation"  id="Depreciation" ><h3 class="title">Depreciation</h3>                       
+                    {%endif%} 
+                </div>
+                {%if 'Repair_Maintainence_Electrical' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Repair_Maintainence_Electrical()"  id ="Repair_Maintainence_Electrical_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Repair_&_Maintainence_Electrical" value="True" id="Repair_&_Maintainence_Electrical" ><h3 class="title">Repair & Maintainence - Electrical</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Repair_Maintainence_Electrical()"  id ="Repair_Maintainence_Electrical_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Repair_&_Maintainence_Electrical"  id="Repair_&_Maintainence_Electrical" ><h3 class="title">Repair & Maintainence - Electrical</h3>
+                    {%endif%}  
+                </div>
+                {%if 'Postage_Courier_Charges' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Postage_Courier_Charges()"  id ="Postage_&_Courier_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                  <input type="hidden" name ="Postage_&_Courier_Charges"  id="Postage_&_Courier_Charges" value="True"><h3 class="title">Postage & Courier Charges</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Postage_Courier_Charges()"  id ="Postage_&_Courier_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Postage_&_Courier_Charges"  id="Postage_&_Courier_Charges" ><h3 class="title">Postage & Courier Charges</h3>
+                    {%endif%} 
+                </div>
+                {%if 'Accounting_Charges' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active"data-bs-toggle="button" onclick="Accounting_Charges()"  id ="Accounting_Charges_btn"   data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Accounting_Charges"  id="Accounting_Charges" value="True" ><h3 class="title">Accounting Charges</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch"data-bs-toggle="button" onclick="Accounting_Charges()"  id ="Accounting_Charges_btn"   data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Accounting_Charges"  id="Accounting_Charges" ><h3 class="title">Accounting Charges</h3>
+                    {%endif%} 
+                </div>
+                {%if 'Staff_Welfare' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Staff_Welfare()"  id ="Staff_Welfare_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                  <input type="hidden" name ="Staff_Welfare"  id="Staff_Welfare" value="True" ><h3 class="title">Staff Welfare</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Staff_Welfare()"  id ="Staff_Welfare_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="100">
+                    <input type="hidden" name ="Staff_Welfare"  id="Staff_Welfare" ><h3 class="title">Staff Welfare</h3>
+                    {%endif%}    
+                </div>
+                {%if 'Audit_Fees' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Audit_Fees()"  id ="Audit_Fees_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Audit_Fees"  id="Audit_Fees" value="True" ><h3 class="title">Audit Fees</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Audit_Fees()"  id ="Audit_Fees_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Audit_Fees"  id="Audit_Fees" ><h3 class="title">Audit Fees</h3>
+                    {%endif%} 
+                </div>
+                {%if 'Membership_Subscription_Charges' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Membership_Subscription_Charges()"  id ="Membership_&_Subscription_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                  <input type="hidden" name ="Membership_&_Subscription_Charges" value="True"  id="Membership_&_Subscription_Charges" ><h3 class="title">Membership & Subscription Charges</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Membership_Subscription_Charges()"  id ="Membership_&_Subscription_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">
+                    <input type="hidden" name ="Membership_&_Subscription_Charges"  id="Membership_&_Subscription_Charges" ><h3 class="title">Membership & Subscription Charges</h3>
+                    {%endif%}   
+                </div>
+                {%if 'Interest_from_Bank_Savings_Account' in selected_charges%}
+                  <div class="btn btn-charges d-flex align-items-stretch active" onclick="Interest_from_Bank_Savings_Account()"  id ="Interest_from_Bank_Savings_Account_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">  
+                    <input type="hidden" name ="Interest_from_Bank_Savings_Account" value="True" id="Interest_from_Bank_Savings_Account" ><h3 class="title">Interest from Bank Savings Account</h3>
+                    {%else%}
+                    <div class="btn btn-charges d-flex align-items-stretch" onclick="Interest_from_Bank_Savings_Account()"  id ="Interest_from_Bank_Savings_Account_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="400">  
+                      <input type="hidden" name ="Interest_from_Bank_Savings_Account"  id="Interest_from_Bank_Savings_Account" ><h3 class="title">Interest from Bank Savings Account</h3>
+                      {%endif%} 
+                  </div>
+                  {%if 'Miscellaneous_Charges' in selected_charges%}
+                <div class="btn btn-charges d-flex align-items-stretch active" onclick="Miscellaneous_Charges()"  id ="Miscellaneous_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                  <input type="hidden" name ="Miscellaneous_Charges"  id="Miscellaneous_Charges" value="True" ><h3 class="title">Miscellaneous Charges</h3>
+                  {%else%}
+                  <div class="btn btn-charges d-flex align-items-stretch" onclick="Miscellaneous_Charges()"  id ="Miscellaneous_Charges_btn"   data-bs-toggle="button" data-aos="zoom-in" data-aos-delay="300">
+                    <input type="hidden" name ="Miscellaneous_Charges"  id="Miscellaneous_Charges" ><h3 class="title">Miscellaneous Charges</h3>
+                    {%endif%} 
+                </div>
+              </div>
+              <div class = "row justify-content-end">
+                <div class="col-sm-2" >
+                  <button class="btn btn-submit" type="submit"> 
+                    Add Charges
+                  </button>
+                </div>
+              </div> 
+            </form>
+        </div>   
+    </section><!-- End charges Section -->
+    
+    <script>
+      $( "#btn-charges" ).on( "click", function() {
+        $( this ).toggleClass( "active" );
+      });
+
+      
+    </script>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static '/vendor/aos/aos.js' %}"></script>
+  <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static '/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static '/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static '/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static '/vendor/php-email-form/validate.js' %}"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="{% static '/js/main.js' %}"></script>
+  
+</body>
+
+</html>

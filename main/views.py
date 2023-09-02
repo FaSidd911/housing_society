@@ -23,7 +23,10 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
-
+# @login_required
+def homeAfterLogin(request):
+    print(request.user)
+    return render(request,'homeAfterLogin.html')
 
 def login(request):
     if request.method=='POST':
@@ -333,9 +336,8 @@ def add_charges(request):
 def add_value(request):
     context={}
     selected_charges={}
-    context['form']= ChargesForm()
     for key in request.POST:
-        if request.POST[key] != "":
+        if request.POST[key] != ""  and request.POST[key] != "false":
             selected_charges[key] = request.POST[key]
     selected_charges.pop("csrfmiddlewaretoken")
     context['selected_charges'] = selected_charges
@@ -347,6 +349,8 @@ def persist_society_details(request):
         selected_charges = request.session['selected_charges'] 
         soc_details = request.session['soc_details'] 
         user = request.user
+        for key in selected_charges.keys():
+            selected_charges[key] = request.POST[key]
         
         soc_details['user'] = user
         selected_charges['user'] = user
@@ -356,4 +360,62 @@ def persist_society_details(request):
         selected_charges['chargesSocietyName'] = SocietyList.objects.get(user = user , societyName=soc_details['societyName']) 
         selected_charges = DefaultChargesList(**selected_charges)
         selected_charges.save()
-        redirect('society_detail')
+        return redirect('/society_detail')
+    
+def edit_society(request,name):
+    edit_soc_details = SocietyList.objects.filter(user=request.user,societyName=name).values()
+    context = {}
+    context['soc_details'] = edit_soc_details[0]
+    return render(request,'edit_society_details.html',context)
+
+def save_edit_society(request,name):
+    if request.method == "POST":
+        soc_edit_details = {}
+        for key in request.POST:
+            soc_edit_details[key] = request.POST[key]
+        soc_edit_details.pop('csrfmiddlewaretoken')
+        SocietyList.objects.filter(user=request.user,societyName=name).update(**soc_edit_details)        
+    return redirect('/society_detail')
+
+def edit_charges(request,name):
+    item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+    edit_charges = DefaultChargesList.objects.filter(user=request.user,chargesSocietyName=item).values()
+    context={}
+    selected_charges={}
+    for key in edit_charges[0].keys():
+        if edit_charges[0][key] != "":
+            selected_charges[key] = edit_charges[0][key]
+    rem_list = ['id','user_id','chargesSocietyName_id']
+    for list_item in rem_list:
+        selected_charges.pop(list_item)
+    request.session['selected_charges']  = selected_charges
+    context['selected_charges'] = selected_charges
+    return render(request,'edit_charges.html',context)
+
+def edit_value(request, name):
+    context={}
+    selected_charges={}
+    for key in request.POST:
+        if request.POST[key] != "" and request.POST[key] != "false":
+            selected_charges[key] = request.POST[key]
+    selected_charges.pop("csrfmiddlewaretoken")
+    selected_charges_value = request.session['selected_charges'] 
+    keys_list = list(set(list(selected_charges.keys()) + list(selected_charges_value.keys())))
+    for item in keys_list:
+        if item not in selected_charges.keys():
+            selected_charges_value.pop(item)
+    for item in selected_charges.keys():
+        if item not in selected_charges_value.keys():
+            selected_charges_value[item]=''    
+    context['selected_charges'] = selected_charges_value
+    request.session['selected_charges_value'] = selected_charges_value
+    return render(request,'edit_value.html',context)
+
+def edit_society_values(request,name):
+    if request.method == "POST":
+        item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+        selected_charges = request.session['selected_charges_value']
+        for key in selected_charges.keys():
+            selected_charges[key] = request.POST[key]
+        DefaultChargesList.objects.filter(user = request.user , chargesSocietyName=item).update(**selected_charges) 
+        return redirect('/society_detail')

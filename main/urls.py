@@ -6,9 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.index),
-    path('index', views.index),
-    path('login', views.login,name='login'),
+
     path("addSociety", views.addSociety),
     path('society/<str:item_name>/',views.societyMembers, name='item'),
     path('society/<str:item_name>/societyMembers',views.societyMembers, name='item'),
@@ -18,7 +16,7 @@ urlpatterns = [
     path('homeAfterLogin',views.homeAfterLogin),
     path("editSociety/<str:name>/", views.editSociety, name='editSociety'),
     path("editSociety/<str:name>/editSociety", views.editSociety, name='editSociety'),
-    path("deleteSociety/<str:name>/", views.deleteSociety, name='deleteSociety'),
+    
     path("editMemberDetails/<str:name>/<str:memberName>/", views.editMemberDetails, name='editMemberDetails'),
     path("editMemberDetails/<str:name>/<str:memberName>/editMemberDetails", views.editMemberDetails, name='editMemberDetails'),
     path("deleteMember/<str:name>/<str:memberName>", views.deleteMember, name='deleteMember'),  
@@ -27,7 +25,9 @@ urlpatterns = [
     path('society/<str:name>/uploadMemberDetails',views.uploadMemberDetails, name='item'),
     
     #---------------------------------------------------------------------------------------------------
-    
+    path('', views.index),
+    path('index', views.index),
+    path('login', views.login,name='login'),
     path("society_detail", views.society_detail,name="society_detail"),
     path('add_new_society',views.add_new_society),
     path('upload_doc',views.upload_doc, name="upload_doc"),
@@ -36,6 +36,12 @@ urlpatterns = [
     path('add_charges', views.add_charges),
     path('add_value', views.add_value),
     path('persist_society_details', views.persist_society_details),
+    path("deleteSociety/<str:name>/", views.deleteSociety, name='deleteSociety'),
+    path("edit_scoiety/<str:name>/", views.edit_society, name='edit_society'),
+    path("edit_scoiety/<str:name>/save_edit_society", views.save_edit_society, name='save_edit_society'),
+    path("edit_charges/<str:name>/", views.edit_charges, name='edit_charges'),
+    path("edit_charges/<str:name>/edit_value", views.edit_value, name='edit_value'),
+    path("edit_charges/<str:name>/edit_society_values", views.edit_society_values, name='edit_society_values'),
     
 ]
 

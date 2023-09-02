@@ -106,7 +106,7 @@
           </div>
         </div>
         <div class = "row">
-          <form method="POST" action="persist_society_details">
+          <form method="POST" action="edit_society_values">
             {% csrf_token %}
             <table class="col-lg-5 flex-column table">
               <thead>
@@ -119,8 +119,8 @@
               <tbody>
                 {% for k,v in selected_charges.items %}
                   <tr>
-                    <td>{{ k }}</td>
-                    <td> <input type="text" name="{{k}}" class="form-control" id="enter_value" value="{{v}}" placeholder="Enter Value" required></td>
+                  <td>{{ k }}</td>
+                  <td> <input type="text" name="{{k}}" class="form-control" id="enter_value" value="{{v}}" placeholder="Enter Value" required></td>
                   <td>
                     <div class="dropdown">
                       <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
