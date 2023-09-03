@@ -120,11 +120,16 @@
       </div>
       <div class="layout justify-xl-space-between row">
         <div class="col-md-5">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Select Society">
-            <button type="button" class="btn btn-secondary">
-              <i class="bi bi-chevron-double-down"></i>
+          <div class="dropdown">
+            <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-three-dots-vertical" ></i>
             </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              {% for item in society_list %}
+              <li><a class="dropdown-item "  href="{% url 'member_detail' name=item %}">{{item}}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              {%endfor%}
+            </ul>
           </div>
         </div>
         <div class="col-md-3">
@@ -169,13 +174,13 @@
                   <i class="bi bi-three-dots-vertical" ></i>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item " href="#">Edit</a></li>
+                  <li><a class="dropdown-item " href="{% url 'editMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No %}">Edit</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="#">Upload Doc</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="#">Export</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                  <li><a class="dropdown-item" href="{% url 'deleteMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No %}">Delete</a></li>
                   </ul>
               </div>
               </td>

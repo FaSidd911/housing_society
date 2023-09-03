@@ -7,24 +7,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
 
-    path("addSociety", views.addSociety),
-    path('society/<str:item_name>/',views.societyMembers, name='item'),
-    path('society/<str:item_name>/societyMembers',views.societyMembers, name='item'),
     re_path(r"[^;]*logout", LogoutView.as_view(), name="logout"),
-    path('selectChargesFields',views.selectChargesFields),
-    path('addDefaultCharges',views.addDefaultCharges),
-    path('homeAfterLogin',views.homeAfterLogin),
-    path("editSociety/<str:name>/", views.editSociety, name='editSociety'),
-    path("editSociety/<str:name>/editSociety", views.editSociety, name='editSociety'),
-    
-    path("editMemberDetails/<str:name>/<str:memberName>/", views.editMemberDetails, name='editMemberDetails'),
-    path("editMemberDetails/<str:name>/<str:memberName>/editMemberDetails", views.editMemberDetails, name='editMemberDetails'),
-    path("deleteMember/<str:name>/<str:memberName>", views.deleteMember, name='deleteMember'),  
-    path('editMemberDetails/<str:name>/<str:memberName>/editSociety',views.editMemberDetails,name='editMemberDetails'),
-    path('editMemberDetails/<str:name>/<str:memberName>/societyMembers',views.editMemberDetails,name='editMemberDetails'),
-    path('society/<str:name>/uploadMemberDetails',views.uploadMemberDetails, name='item'),
-    
-    #---------------------------------------------------------------------------------------------------
     path('', views.index),
     path('index', views.index),
     path('login', views.login,name='login'),
@@ -45,7 +28,11 @@ urlpatterns = [
     path('add_member/<str:name>/',views.add_member,name = 'add_member'),
     path('add_member/<str:name>/add_member',views.add_member,name = 'add_member'),
     path('member_detail/<str:name>/',views.member_detail, name='member_detail'),
-    
+    path("deleteSociety/<str:memberSocietyName>/<str:building>/<str:FlatNo>", views.deleteMember, name='deleteMember'),
+    path("editMember/<str:memberSocietyName>/<str:building>/<str:FlatNo>", views.editMember, name='editMember'),
+    path("update_member", views.update_member, name='update_member'),
+
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
