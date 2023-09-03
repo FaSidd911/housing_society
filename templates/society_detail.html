@@ -194,7 +194,9 @@
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'upload_doc_temp' name=item.societyName %}">Upload Doc</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Export</a></li>
+                        <li><a class="dropdown-item" href="{% url 'add_member' name=item.societyName %}">Add Members</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'member_detail' name=item.societyName %}">Show Members</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'deleteSociety' name=item.societyName %}">Delete</a></li>
                       </ul>

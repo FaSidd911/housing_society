@@ -338,7 +338,10 @@ def add_value(request):
     selected_charges={}
     for key in request.POST:
         if request.POST[key] != ""  and request.POST[key] != "false":
-            selected_charges[key] = request.POST[key]
+            if request.POST[key] =='true':
+                selected_charges[key] = ''
+            else:
+                selected_charges[key] = request.POST[key]
     selected_charges.pop("csrfmiddlewaretoken")
     context['selected_charges'] = selected_charges
     request.session['selected_charges'] = selected_charges
@@ -419,3 +422,23 @@ def edit_society_values(request,name):
             selected_charges[key] = request.POST[key]
         DefaultChargesList.objects.filter(user = request.user , chargesSocietyName=item).update(**selected_charges) 
         return redirect('/society_detail')
+    
+def add_member(request,name):
+    if request.method == "POST":
+        mem_details = {}
+        for key in request.POST.keys():
+            mem_details[key] = request.POST[key]
+        item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+        mem_details['memberSocietyName'] = item
+        mem_details['user']=request.user
+        mem_details.pop("csrfmiddlewaretoken")
+        mem_details['date_add_member'] = datetime.today()
+        add_member = MembersList(**mem_details)
+        add_member.save()
+        return redirect('/member_detail')
+    return render(request,'add_member.html')
+
+def member_detail(request, name):
+    item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+    query_results = MembersList.objects.filter(user=request.user, memberSocietyName = item)
+    return render(request, 'member_detail.html',{'query_results':query_results})

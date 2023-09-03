@@ -42,6 +42,9 @@ urlpatterns = [
     path("edit_charges/<str:name>/", views.edit_charges, name='edit_charges'),
     path("edit_charges/<str:name>/edit_value", views.edit_value, name='edit_value'),
     path("edit_charges/<str:name>/edit_society_values", views.edit_society_values, name='edit_society_values'),
+    path('add_member/<str:name>/',views.add_member,name = 'add_member'),
+    path('add_member/<str:name>/add_member',views.add_member,name = 'add_member'),
+    path('member_detail/<str:name>/',views.member_detail, name='member_detail'),
     
 ]
 
