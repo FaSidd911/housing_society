@@ -218,6 +218,7 @@ def editMember(request,memberSocietyName,building,FlatNo):
     edit_soc_details = edit_soc_details[0]
     edit_soc_details.pop('date_add_member')
     context['mem_details'] = edit_soc_details
+    context['name']=memberSocietyName
     member_details = {}
     member_details['memberSocietyName'] = memberSocietyName
     member_details['building'] = building
