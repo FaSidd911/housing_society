@@ -1,10 +1,10 @@
-from django.shortcuts import render,redirect,HttpResponseRedirect
+from django.shortcuts import render,redirect,HttpResponseRedirect,HttpResponse
 from django.contrib.auth import  authenticate #add this
 from django.contrib.auth import login as auth_login,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from datetime import datetime
-from .models import SocietyList,MembersList,DefaultChargesList
+from .models import SocietyList,MembersList,DefaultChargesList,MemberChargesList
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
@@ -13,8 +13,6 @@ import json,os
 import pandas as pd
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-
-# Create your views here.
 
 def index(request):
     return render(request,'index.html')
@@ -46,55 +44,6 @@ def login(request):
     form = AuthenticationForm()
     return render(request, "login.html", {"login_form":form})
 
-
-    item = get_object_or_404(SocietyList,user=request.user, societyName=name) 
-    if request.method == 'POST': 
-            form = EditMembersForm(request.POST)
-            if form.is_valid():
-                members_dict = {}
-                for key, value in form.cleaned_data.items():
-                    members_dict[key]=value
-                # memberNameExists = MembersList.objects.filter(
-                #     user= request.user, 
-                #     memberSocietyName=  item,
-                #     Member_Name=members_dict['Member_Name'])
-                # if memberNameExists:
-                #     return HttpResponseRedirect('societyMembers')
-                MembersList.objects.filter(user=request.user,memberSocietyName=item, Member_Name=memberName).update(**members_dict)              
-                return HttpResponseRedirect('/society/'+ item.societyName)
-    
-    # query_results = MembersList.objects.filter(user=request.user,memberSocietyName=item, Member_Name=memberName)  
-    society_charges=item.charges_fields
-    society_charges = json.loads(society_charges.replace('\'','"'))
-    display_charges=['Member_Name','Flat_No','Opening_Balance','Closing_Balance']
-    for k,v in society_charges.items():
-        if v !='':
-            display_charges.append(k)
-    context={}
-    context['display_charges'] = display_charges
-    form = MembersForm(society_charges)
-
-    context = {
-        'item': name,
-        # 'query_results': query_results,
-        'form': form,
-        'display_charges' : display_charges
-     }
-    return render(request,'editSociety.html', context)
-
-def uploadMemberDetails(request,name):
-    if request.method == 'POST':
-        members_list_df = pd.read_csv(request.FILES['file'],index_col=False)
-        # contentOfFile = file1.read()
-    print(members_list_df.to_dict())
-    print()
-    
-#---------------------------------------------------------------------------------------------------    
-
-
-
-
-
 def society_detail(request):
     user = request.user      
     query_results = SocietyList.objects.filter(user=user)
@@ -124,54 +73,6 @@ def deleteSociety(request,name):
     SocietyList.objects.filter(user=request.user,societyName=name).delete()
     return HttpResponseRedirect('/society_detail')
 
-def upload_doc_temp(request,name):
-    request.session['Society_name'] = name
-    return HttpResponseRedirect('/upload_doc')
-
-def upload_doc(request):
-    path = settings.MEDIA_ROOT + '/' + request.user.username + '/' +  request.session['Society_name']
-    if not os.path.exists(path):
-            os.makedirs(path)
-    fs = FileSystemStorage(path)   
-    files = os.listdir(path)
-    file_names = {}
-    file_addr={}
-    for f in files:
-        if os.path.splitext(f)[0]=='Pan':
-            file_names['pan']= f
-            file_addr['pan']= path + '/' + f
-        if os.path.splitext(f)[0]=='GST':
-            file_names['gst']= f
-            file_addr['gst']= path + '/' + f
-        if os.path.splitext(f)[0]=='CTS':
-            file_names['cts']= f
-            file_addr['cts']= path + '/' + f
-        if os.path.splitext(f)[0]=='Others':
-            file_names['oth']= f
-            file_addr['oth']= path + '/' + f
-    context={
-        'file_addr':file_addr,
-        'file_names':file_names
-    } 
-    if request.method == 'POST':
-        if 'pan_card' in request.FILES.keys():
-            myfile = request.FILES['pan_card']        
-            file_name = "Pan." + myfile.name.split(".")[1]
-        elif 'gst' in request.FILES.keys():
-            myfile = request.FILES['gst']        
-            file_name = "GST." + myfile.name.split(".")[1]
-        elif 'cts' in request.FILES.keys():
-            myfile = request.FILES['cts']        
-            file_name = "CTS." + myfile.name.split(".")[1]
-        elif 'others' in request.FILES.keys():
-            myfile = request.FILES['others']        
-            file_name = "Others." + myfile.name.split(".")[1]
-        else:
-            return render(request,'upload_docs.html',context)
-        filename = fs.save(file_name, myfile)
-    return render(request,'upload_docs.html',context)
-
-
 def add_charges(request):
     return render(request,'add_charges.html')
 
@@ -194,9 +95,10 @@ def persist_society_details(request):
         selected_charges = request.session['selected_charges'] 
         soc_details = request.session['soc_details'] 
         user = request.user
+        charges_list = ['Member_Name', 'Flat_No', 'building', 'Contact_Number', 'Balance', 'PAN_Number', 'Aadhar_Number']
         for key in selected_charges.keys():
             selected_charges[key] = request.POST[key]
-        
+            charges_list.append(key)
         soc_details['user'] = user
         selected_charges['user'] = user
         soc_details['date_add_society'] = datetime.today()
@@ -205,6 +107,13 @@ def persist_society_details(request):
         selected_charges['chargesSocietyName'] = SocietyList.objects.get(user = user , societyName=soc_details['societyName']) 
         selected_charges = DefaultChargesList(**selected_charges)
         selected_charges.save()
+        path = settings.MEDIA_ROOT + '/' + request.user.username + '/' +  soc_details['societyName']
+        if not os.path.exists(path):
+            os.makedirs(path)
+        df = pd.DataFrame(columns=charges_list)
+        df.to_csv(path + r'/Member_Details.csv',index=False)
+        del request.session['soc_details']
+        del request.session['selected_charges']
         return redirect('/society_detail')
     
 def edit_society(request,name):
@@ -263,9 +172,13 @@ def edit_society_values(request,name):
         for key in selected_charges.keys():
             selected_charges[key] = request.POST[key]
         DefaultChargesList.objects.filter(user = request.user , chargesSocietyName=item).update(**selected_charges) 
+        del request.session['selected_charges_value']
+        del request.session['selected_charges']
         return redirect('/society_detail')
     
 def add_member(request,name):
+    context={}
+    context['name']= name
     if request.method == "POST":
         mem_details = {}
         for key in request.POST.keys():
@@ -278,7 +191,7 @@ def add_member(request,name):
         add_member = MembersList(**mem_details)
         add_member.save()
         return redirect('/member_detail/' + name)
-    return render(request,'add_member.html')
+    return render(request,'add_member.html',context )
 
 def member_detail(request, name):
     context = {}
@@ -290,6 +203,7 @@ def member_detail(request, name):
     society_list = SocietyList.objects.filter(user=request.user)
     context['query_results']=query_results
     context['society_list']=society_list
+    context['name'] = name
     return render(request, 'member_detail.html',context)
 
 def deleteMember(request,memberSocietyName,building,FlatNo):
@@ -320,4 +234,107 @@ def update_member(request):
         mem_details.pop('csrfmiddlewaretoken')
         item = get_object_or_404(SocietyList,user=request.user, societyName=sesion_mem_details['memberSocietyName'])
         MembersList.objects.filter(user=request.user,memberSocietyName=item,  building = sesion_mem_details['building'], Flat_No=sesion_mem_details['Flat_No']).update(**mem_details)
+        del request.session['member_details']
         return redirect('/member_detail/' + sesion_mem_details['memberSocietyName'])
+    
+def import_members(request,name):
+    context={}
+    context['name']  = name
+    if request.method == 'POST':
+        item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+        members_list_df = pd.read_csv(request.FILES['others'],index_col=False)
+        members_list_df = members_list_df.loc[:, ~members_list_df.columns.str.match('Unnamed')]
+        rem_list = ['Member_Name', 'Flat_No', 'building', 'Contact_Number', 'Balance', 'PAN_Number', 'Aadhar_Number']
+        mem_details_dict = members_list_df.to_dict(orient='records')
+        for mem_item in mem_details_dict:
+            charges_dict = mem_item.copy()
+            member_dict = mem_item.copy()
+            for key in rem_list:
+                del charges_dict[key]
+            for key  in rem_list:
+                if key not in rem_list:
+                    del member_dict[key]
+            del_keys = [ key for key in member_dict if key not in rem_list ]
+            for key in del_keys:
+                del member_dict[key]
+            member_dict['user'] = request.user
+            member_dict['memberSocietyName'] = item
+            member_dict['date_add_member'] = datetime.today()
+            add_member = MembersList(**member_dict)
+            add_member.save()
+            Member_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=item, Member_Name=member_dict['Member_Name'])
+            charges_dict['user'] = request.user
+            charges_dict['chargesSocietyName'] = item
+            charges_dict['chargesMemberName'] = Member_item
+            add_charges= MemberChargesList(**charges_dict)
+            add_charges.save()
+        return redirect('/member_detail/' + name)
+    return render(request, 'import_members.html',context )
+
+def download_file(request, name):
+    path = settings.MEDIA_ROOT + '/' + request.user.username + '/' + name + '/Member_Details.csv'
+    response = HttpResponse(open(path, 'rb').read())
+    response['Content-Type'] = 'text/plain'
+    response['Content-Disposition'] = 'attachment; filename=' + name + '.csv'
+    return response
+
+def upload_doc(request,name):
+    path = settings.MEDIA_ROOT + '/' + request.user.username + '/' +  name
+    if not os.path.exists(path):
+            os.makedirs(path)
+    fs = FileSystemStorage(path)   
+    files = os.listdir(path)
+    file_names = {'pan':' ',
+                  'gst':' ',
+                  'cts':' ',
+                  'oth':' '}
+    file_addr={}
+    for f in files:
+        if os.path.splitext(f)[0]=='Pan':
+            file_names['pan']= f 
+            file_addr['pan']= path + '/' + f
+        if os.path.splitext(f)[0]=='GST':
+            file_names['gst']= f 
+            file_addr['gst']= path + '/' + f
+        if os.path.splitext(f)[0]=='CTS':
+            file_names['cts']= f 
+            file_addr['cts']= path + '/' + f
+        if os.path.splitext(f)[0]=='Others':
+            file_names['oth']= f 
+            file_addr['oth']= path + '/' + f
+    context={
+        'file_addr':file_addr,
+        'file_names':file_names,
+        'name':name
+    } 
+    if request.method == 'POST':
+        if 'pan_card' in request.FILES.keys():
+            myfile = request.FILES['pan_card']        
+            file_name = "Pan." + myfile.name.split(".")[1]
+        elif 'gst' in request.FILES.keys():
+            myfile = request.FILES['gst']        
+            file_name = "GST." + myfile.name.split(".")[1]
+        elif 'cts' in request.FILES.keys():
+            myfile = request.FILES['cts']        
+            file_name = "CTS." + myfile.name.split(".")[1]
+        elif 'others' in request.FILES.keys():
+            myfile = request.FILES['others']        
+            file_name = "Others." + myfile.name.split(".")[1]
+        else:
+            return render(request,'upload_docs.html',context)
+        filename = fs.save(file_name, myfile)
+
+    return render(request,'upload_docs.html',context)
+
+def download_doc(request, name, doc):
+    path = settings.MEDIA_ROOT + '/' + request.user.username + '/' + name + '/' + doc
+    response = HttpResponse(path)
+    response['Content-Type'] = 'image/jpeg'
+    response['Content-Disposition'] = 'attachment; filename=' + doc
+    return response
+
+def show_member_detail(request):
+    return render(request,'show_member_detail.html')
+
+def charges_detail(request):
+    return render(request,'charges_detail.html')

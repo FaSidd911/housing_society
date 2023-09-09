@@ -13,9 +13,8 @@ urlpatterns = [
     path('login', views.login,name='login'),
     path("society_detail", views.society_detail,name="society_detail"),
     path('add_new_society',views.add_new_society),
-    path('upload_doc',views.upload_doc, name="upload_doc"),
-    path('upload_doc_temp',views.upload_doc_temp, name="upload_doc_temp"),
-    path('upload_doc_temp/<str:name>',views.upload_doc_temp, name="upload_doc_temp"),
+    path('upload_doc/<str:name>/',views.upload_doc, name="upload_doc"),
+    path('upload_doc/<str:name>/upload_doc',views.upload_doc, name="upload_doc"),
     path('add_charges', views.add_charges),
     path('add_value', views.add_value),
     path('persist_society_details', views.persist_society_details),
@@ -31,6 +30,13 @@ urlpatterns = [
     path("deleteSociety/<str:memberSocietyName>/<str:building>/<str:FlatNo>", views.deleteMember, name='deleteMember'),
     path("editMember/<str:memberSocietyName>/<str:building>/<str:FlatNo>", views.editMember, name='editMember'),
     path("update_member", views.update_member, name='update_member'),
+    path("import_members", views.import_members, name='import_members'),
+    path("import_members/<str:name>/", views.import_members, name='import_members'),
+    path("import_members/<str:name>/import_members", views.import_members, name='import_members'),
+    path("download_file/<str:name>/", views.download_file, name='download_file'),
+    path("download_doc/<str:name>/<str:doc>/", views.download_doc, name='download_doc'),
+    path('show_member_detail', views.show_member_detail),
+    path('charges_detail', views.charges_detail), 
 
 
 ]

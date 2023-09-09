@@ -37,41 +37,82 @@
  
  <body>
 
-      <!-- Sidebar -->
-      <nav class="sidebar">
+   <!-- Sidebar -->
+  <nav class="sidebar">
                   
-          <!-- close sidebar menu -->
-          <div class="dismiss">
-            <button class="btn btn-light" type="button" >
-              <i class="bi bi-list" ></i>
-            </button>
-          </div>
+    <!-- close sidebar menu -->
+    <div class="dismiss">
+      <button class="btn btn-light" type="button" >
+        <i class="bi bi-list" ></i>
+      </button>
+    </div>
 
-          <div class="logo">
-            <h1 class="text-light">
-                <a href=""><span><b>Orange</b></span></a>
-            </h1>
-          </div>
-
-          <div class="dropdown">
-            <button class="btn btn-light btn-get-started scrollto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bx bx-plus bx-sm"></i>
-              <h4>Add New </h4>
-              <a class="bi bi-chevron-double-down"></a>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item " href="/add_new_society">Society</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/add_member">Members</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/add_charges">Charges</a></li>
-            </ul>
-          </div>
-      </nav>  
-      <!-- Dark overlay -->
-        <div class="overlay"></div>
+    <div class="logo">
+      <h1 class="text-light">
+          <a href=""><span><b>Orange</b></span></a>
+      </h1>
+    </div>
+    <div class="border-top my-3"></div>
+    <div class="dropdown">
+      <button class="btn btn-light btn-get-started scrollto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bx bx-plus bx-sm"></i>
+        <h4>Add New </h4>
+        <a class="bi bi-chevron-double-down"></a>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <li><a class="dropdown-item" href="/add_new_society">Society</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/add_member">Members</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-houses-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/society_detail">Society Detail</a></h3>                       
       </div>
-      <!-- End sidebar -->
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-people-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/member_detail/ /">Member Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-currency-rupee"></i>
+        </div>
+        <h3 class="side-title"><a href="">Charges Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-file-earmark-text-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="">Bill</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-receipt-cutoff"></i>
+        </div>
+        <h3 class="side-title"><a href="">Receipt</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-recycle"></i>
+        </div>
+        <h3 class="side-title"><a href="">Ledger</a></h3>                       
+      </div>
+    </div>
+    <div class="border-top my-3"></div>
+    <div class = "button">
+        <button class="btn-logout" type="logout"> 
+          Logout
+        </button>
+    </div>
+  </nav>  
+  <!-- Dark overlay -->
+  <div class="overlay">
+  </div>
 
    <!-- ======= Header ======= -->
    <header id="header" class="fixed-top d-flex align-items-center">
@@ -107,7 +148,7 @@
           <h1>Member Details</h1>
         </div >
         <div class="col-lg-3 d-flex flex-column justify-content-left" >
-          <a href="/add_member" class="btn-get-started scrollto"> 
+          <a href=" " class="btn-get-started scrollto"> 
             <i class="bx bx-plus"></i>
               Add New Member
           </a>
@@ -118,19 +159,20 @@
           <h3> Search </h3>
         </div>
       </div>
-      <div class="layout justify-xl-space-between row">
-        <div class="col-md-5">
-          <div class="dropdown">
-            <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-three-dots-vertical" ></i>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              {% for item in society_list %}
-              <li><a class="dropdown-item "  href="{% url 'member_detail' name=item %}">{{item}}</a></li>
-              <li><hr class="dropdown-divider"></li>
-              {%endfor%}
-            </ul>
-          </div>
+      <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-md-2 ">
+          <div class="input-group">
+                <button class="btn btn-society" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Select Society
+                  <a class="bi bi-chevron-double-down"></a>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  {% for item in society_list %}
+                  <li><a class="dropdown-item "  href="{% url 'member_detail' name=item %}">{{item}}</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  {%endfor%}
+                </ul>
+           </div>
         </div>
         <div class="col-md-3">
           <div class="input-group">

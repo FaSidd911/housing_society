@@ -67,6 +67,20 @@ h6,
   opacity: 1;
 }
 
+.btn-group-vertical>.btn-group:after, 
+.btn-group-vertical>.btn-group:before,
+.btn-toolbar:after, .btn-toolbar:before, 
+.clearfix:after, .clearfix:before, .container-fluid:after,
+.container-fluid:before, .container:after, .container:before,
+.dl-horizontal dd:after, .dl-horizontal dd:before,
+.form-horizontal .form-group:after, .form-horizontal .form-group:before,
+.modal-footer:after, .modal-footer:before, .modal-header:after, 
+.modal-header:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, 
+.navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, 
+.pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+  display: none; 
+}
+
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
 --------------------------------------------------------------*/
@@ -120,6 +134,7 @@ h6,
 */
 .navbar {
   padding: 0;
+  margin: 0;
 }
 
 .navbar ul {
@@ -436,7 +451,7 @@ h6,
 
 @media (max-height: 600px) {
   #hero {
-    height: 120vh;
+    height: 90vh;
   }
 }
 
@@ -661,6 +676,10 @@ section {
   color: #7a6960;
 }
 
+.mt-3, .my-3 {
+  margin-top: 0rem!important;
+}
+
 .contact .info p {
   padding: 0 0 10px 60px;
   margin-bottom: 20px;
@@ -714,6 +733,7 @@ section {
 
 .contact .php-email-form .form-group {
   padding-bottom: 8px;
+  margin-bottom: 1rem;
 }
 
 .contact .php-email-form .error-message {
@@ -989,6 +1009,8 @@ section {
   background: #fef8f5;
   border-bottom: 2px solid #fcebe3;
   margin: 72px 0 -72px 0;
+  padding: 50px 0;
+  overflow: hidden;
 }
 
 .login .login-info {
@@ -999,6 +1021,7 @@ section {
   width: 100%;
   box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.12);
 }
+
 
 @media (max-width: 991px) {
   .login .login-img img {
@@ -1052,4 +1075,38 @@ section {
   
   .links{
   color: white;
+  }
+
+  .section-login {
+    text-align: center;
+    padding-bottom: 23px;
+  }
+  
+  .section-login h2 {
+    font-size: 24px;
+    font-weight: 700;
+    padding-bottom: 0;
+    line-height: 1px;
+    margin-bottom: 10px;
+    color: #c2b7b1;
+  }
+  
+  .section-login p {
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    position: relative;
+    font-size: 32px;
+    font-weight: 700;
+    color: #4e4039;
+  }
+  
+  .section-login p::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: #eb5d1e;
+    bottom: 0;
+    left: calc(50% - 30px);
   }

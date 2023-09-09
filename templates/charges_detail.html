@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Add Society</title>
+  <title>Charges Detail</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -28,13 +28,16 @@
    <!--Fontawesome CDN-->
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
  
+ 
    <!-- Template Main CSS File -->
    <link href="{% static '/css/societystyle.css' %}" rel="stylesheet">
 
+ 
  </head>
  
  <body>
-  <!-- Sidebar -->
+
+   <!-- Sidebar -->
   <nav class="sidebar">
                   
     <!-- close sidebar menu -->
@@ -108,139 +111,134 @@
     </div>
   </nav>  
   <!-- Dark overlay -->
-  <div class="overlay"></div>
+  <div class="overlay">
   </div>
-  <!-- End sidebar -->
 
-<!-- ======= Header ======= -->
+   <!-- ======= Header ======= -->
    <header id="header" class="fixed-top d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
+     <div class="container d-flex align-items-center justify-content-between">
+ 
       <div class="logo">
         <h1 class="text-light">
         <!--<a href="index.html"><img src="{%static '/img/logo.png' %}" alt="" class="img-fluid"></a>-->
-            <a class="btn btn-light open-menu" href="#" role="button">
+           <a class="btn btn-light open-menu" href="#" role="button">
             <i class="bi bi-list" href=""></i>
-            </a>
+           </a>
             <a href=""><span><b>Orange</b></span></a>
         </h1>
         <!-- Uncomment below if you prefer to use an image logo -->
       </div>
-
-        <nav id="navbar" class="navbar">
-          <ul>
-            <li><a class="getstarted scrollto" href="">Upgrade</a></li>
-          </ul>
-          <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
-      </div>
+ 
+       <nav id="navbar" class="navbar">
+         <ul>
+           <li><a class="getstarted scrollto" href="">Upgrade</a></li>
+         </ul>
+         <i class="bi bi-list mobile-nav-toggle"></i>
+       </nav><!-- .navbar -->
+ 
+     </div>
    </header><!-- End Header -->
 
-<!-- ======= add-society Section ======= -->
-   <section id="add-society" class="d-flex align-items-top">
 
+   <!-- ======= charges-detail Section ======= -->
+   <section id="charges-detail" class="d-flex align-items-top">
     <div class="container">
       <div class="row gy-4 justify-content-between">
         <div class="col-lg-5  d-flex flex-column justify-content-top">
-          <h1>Add New Society</h1>
+          <h1>Charges Detail</h1>
         </div >
       </div>
-      <form  method="POST" action="save_edit_society" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="date" >Date</label>
-                        <div class="input-group date" id="datePicker">
-                            <input type="date" class="form-control" id="datePicker1" disabled="True">
-                            <span class="input-group-append">
-                                <span class="input-group-text bg-white">
-                                    <i class="bi bi-calendar-event-fill"></i>
-                                </span>
-                            </span>
-                        </div>
-                </div>
-                <div class="form-group col-md-3">
-                  <label for="name">Society ID</label>
-                  <input type="text" name="Society_ID" class="form-control" id="Society_ID" placeholder="Society_ID" value = '001' disabled=" True">
-                </div>
-                <div class="col-md-6">
-                  <label for="name"></label>
-                  <div class="input-group">
-                      <span class="input-group-text">
-                          <span class="bi bi-houses-fill"></span>
-                      </span>
-                      <input type="text" name="societyName" class="form-control" id="Society_name" placeholder="Society_name" value="{{soc_details.societyName}}" disabled="True">
-                  </div>
-                </div>
+      <div class="row">
+        <div class="col-lg-3 d-flex flex-column "> 
+          <h3> Search </h3>
         </div>
-        <div class = "row">
-          <div class="form-group col-md-3">
-            <label for="number">PAN #</label>
-            <input type="text" name="panno" class="form-control" id="PAN_Number" placeholder="PAN_Number" required value="{{soc_details.panno}}">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="number">Registration #</label>
-            <input type="text" name="regno" class="form-control" id="Registration_Number" placeholder="Registration_Number" required value="{{soc_details.regno}}">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="number">GST #</label>
-            <input type="text" name="gstno" class="form-control" id="GST_Number" placeholder="GST_Number" required value="{{soc_details.gstno}}">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="number">CTS #</label>
-            <input type="text" name="ctsno" class="form-control" id="CTS_Number" placeholder="CTS_Number" required value="{{soc_details.ctsno}}">
-          </div>
+      </div>
+      <div class="row d-flex align-items-center justify-content-between">
+        <div class="col-md-2 ">
+          <div class="input-group">
+                <button class="btn btn-society" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Select Society
+                  <a class="bi bi-chevron-double-down"></a>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  {% for item in society_list %}
+                  <li><a class="dropdown-item "  href="{% url 'member_detail' name=item %}">{{item}}</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  {%endfor%}
+                </ul>
+           </div>
         </div>
-        <div class = "row">
-          <div class="form-group col-md-6">
-            <label for="address">Address</label>
-            <textarea class="form-control" rows="3" id="address" name="address">{{soc_details.address}}</textarea>
-          </div>
-        </div>
-        <div class = "row justify-content-end">
-          <div class="col-sm-2" >
-            <button class="btn btn-submit" type="submit"> 
-              Submit
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search ...">
+            <button type="button" class="btn btn-secondary">
+              <i class="bi-search"></i>
             </button>
           </div>
         </div> 
-      </form>
-    </div>  
+      </div>
+      <div class="table-responsive">
+        <table class="col-lg-11 flex-column table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Member Name</th>
+              <th scope="col">Building #</th>
+              <th scope="col">Flat #</th>
+              <th scope="col">Balance</th>
+              <th scope="col">Munciple Charges</th>
+              <th scope="col">Water Charges</th>
+              <th scope="col">Service Charges</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in query_results %}
+            <tr>
+              <th scope="row">Active</th>
+              <td>{{item.date_add_member}}</td>
+              <td>{{item.Member_Name}}</td>
+              <td>{{item.building}}</td>
+              <td>{{item.Flat_No}}</td>
+              <td>{{item.Balance}}</td>
+              <td>{{item.Contact_Number}}</td>
+              <td>{{item.PAN_Number}}</td>
+              <td>{{item.Aadhar_Number}}</td>
+              <td>
+              <div class="dropdown">
+                  <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-three-dots-vertical" ></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item " href="{% url 'editMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No %}">Edit</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Upload Doc</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Export</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'deleteMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No %}">Delete</a></li>
+                  </ul>
+              </div>
+              </td>
+            </tr>
+            {% endfor %}  
+          </tbody>
+        </table>
+      </div>
+      <div class="row d-flex justify-content-end">
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-light">
+                  <i class="bi bi-caret-left-fill"></i>
+                </button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-light">
+                    <i class="bi bi-caret-right-fill"></i>
+                </button>
+            </div>
+      </div>
+    </div>
+   </section>
 
-  </section>
-
-     <!-- datepicker files -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.1/js/bootstrap-datepicker.js"></script>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.1/css/bootstrap-datepicker.min.css" />
-     <script>
-      window.addEventListener('DOMContentLoaded', (event) => {
-          document.getElementById("datePicker1").valueAsDate = new Date();
-      });
-  </script>
-  
-  <script>
-      var date = new Date();
-      var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-      var optSimple = {
-        format: 'mm-dd-yyyy',
-        todayHighlight: true,
-        orientation: 'bottom right',
-        autoclose: true,
-        container: '#sandbox'
-      };
-
-      var optComponent = {
-        format: 'mm-dd-yyyy',
-        container: '#datePicker',
-        orientation: 'auto top',
-        todayHighlight: true,
-        autoclose: true
-      };
-
-      // COMPONENT
-      $( '#datePicker' ).datepicker( optComponent );
-
-  </script> 
   <!-- Vendor JS Files -->
   <script src="{% static '/vendor/aos/aos.js' %}"></script>
   <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -251,7 +249,7 @@
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="{% static '/js/main.js' %}"></script>
-
+  
 </body>
 
 </html>

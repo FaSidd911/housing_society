@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>HS_Society Details</title>
+  <title>Society Details</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -77,7 +77,7 @@
           <a href=""><span><b>Orange</b></span></a>
       </h1>
     </div>
-
+    <div class="border-top my-3"></div>
     <div class="dropdown">
       <button class="btn btn-light btn-get-started scrollto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="bx bx-plus bx-sm"></i>
@@ -85,18 +85,60 @@
         <a class="bi bi-chevron-double-down"></a>
       </button>
       <ul class="dropdown-menu dropdown-menu-dark">
-        <li><a class="dropdown-item " href="/add_new_society">Society</a></li>
+        <li><a class="dropdown-item" href="/add_new_society">Society</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="/add_member">Members</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="/add_charges">Charges</a></li>
       </ul>
     </div>
-</nav>  
-<!-- Dark overlay -->
-  <div class="overlay"></div>
-</div>
-<!-- End sidebar -->
+    <div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-houses-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/society_detail">Society Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-people-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/member_detail/ /">Member Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-currency-rupee"></i>
+        </div>
+        <h3 class="side-title"><a href="">Charges Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-file-earmark-text-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="">Bill</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-receipt-cutoff"></i>
+        </div>
+        <h3 class="side-title"><a href="">Receipt</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-recycle"></i>
+        </div>
+        <h3 class="side-title"><a href="">Ledger</a></h3>                       
+      </div>
+    </div>
+    <div class="border-top my-3"></div>
+    <div class = "button">
+        <button class="btn-logout" type="logout"> 
+          Logout
+        </button>
+    </div>
+  </nav>  
+  <!-- Dark overlay -->
+  <div class="overlay">
+  </div>
+  <!-- End sidebar -->
  
    <!-- ======= Header ======= -->
    <header id="header" class="fixed-top d-flex align-items-center">
@@ -105,7 +147,7 @@
        <div class="logo">
          <h1 class="text-light">
          <!--<a href="index.html"><img src="{%static '/img/logo.png' %}" alt="" class="img-fluid"></a>-->
-         <<a class="btn btn-light open-menu" href="#" role="button">
+          <a class="btn btn-light open-menu" href="#" role="button">
           <i class="bi bi-list" href=""></i>
          </a>
              <a href=""><span><b>Orange</b></span></a>
@@ -192,9 +234,11 @@
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item "  href="{% url 'edit_charges' name=item.societyName %}">Edit Charges</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'upload_doc_temp' name=item.societyName %}">Upload Doc</a></li>
+                        <li><a class="dropdown-item" href="{% url 'upload_doc' name=item.societyName %}">Upload Doc</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'add_member' name=item.societyName %}">Add Members</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'import_members' name=item.societyName %}">Import Members</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'member_detail' name=item.societyName %}">Show Members</a></li>
                         <li><hr class="dropdown-divider"></li>

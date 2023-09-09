@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Add Society</title>
+  <title>Upload Doc</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -44,19 +44,97 @@
  </head>
  
  <body>
- 
+    <!-- Sidebar -->
+  <nav class="sidebar">
+                  
+    <!-- close sidebar menu -->
+    <div class="dismiss">
+      <button class="btn btn-light" type="button" >
+        <i class="bi bi-list" ></i>
+      </button>
+    </div>
+
+    <div class="logo">
+      <h1 class="text-light">
+          <a href=""><span><b>Orange</b></span></a>
+      </h1>
+    </div>
+    <div class="border-top my-3"></div>
+    <div class="dropdown">
+      <button class="btn btn-light btn-get-started scrollto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bx bx-plus bx-sm"></i>
+        <h4>Add New </h4>
+        <a class="bi bi-chevron-double-down"></a>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <li><a class="dropdown-item" href="/add_new_society">Society</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/add_member">Members</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-houses-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/society_detail">Society Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-people-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/member_detail/ /">Member Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-currency-rupee"></i>
+        </div>
+        <h3 class="side-title"><a href="">Charges Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-file-earmark-text-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="">Bill</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-receipt-cutoff"></i>
+        </div>
+        <h3 class="side-title"><a href="">Receipt</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-recycle"></i>
+        </div>
+        <h3 class="side-title"><a href="">Ledger</a></h3>                       
+      </div>
+    </div>
+    <div class="border-top my-3"></div>
+    <div class = "button">
+        <button class="btn-logout" type="logout"> 
+          Logout
+        </button>
+    </div>
+  </nav>  
+  <!-- Dark overlay -->
+  <div class="overlay">
+  </div>
+  <!-- End sidebar -->
    <!-- ======= Header ======= -->
    <header id="header" class="fixed-top d-flex align-items-center">
-     <div class="container d-flex align-items-center justify-content-between">
- 
-       <div class="logo">
-         <h1 class="text-light">
-         <!--<a href="index.html"><img src="{%static '/img/logo.png' %}" alt="" class="img-fluid"></a>-->
-         <a class="bi bi-list" href=""></a>
-             <a href=""><span><b>Orange</b></span></a>
-         </h1>
-         <!-- Uncomment below if you prefer to use an image logo -->
-       </div>
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1 class="text-light">
+        <!--<a href="index.html"><img src="{%static '/img/logo.png' %}" alt="" class="img-fluid"></a>-->
+         <a class="btn btn-light open-menu" href="#" role="button">
+         <i class="bi bi-list" href=""></i>
+        </a>
+            <a href=""><span><b>Orange</b></span></a>
+        </h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+      </div>
  
        <nav id="navbar" class="navbar">
          <ul>
@@ -69,10 +147,22 @@
    </header><!-- End Header -->
 
 
-   <!-- ======= add-society Section ======= -->
-   <section id="add-society" class="d-flex align-items-top">
+   <!-- ======= Upload_doc Section ======= -->
+   <section id="upload-doc" class="d-flex align-items-top">
 
     <div class="container">
+      <div class="row">
+        <div class="col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div class="icon-box d-flex align-self-stretch">
+            <div class="icon col-md-3">
+              <h4 class="society-name"><a href="">Society Name : </a></h4>
+            </div>
+            <div class="name d-flex align-items-center">
+              <p> Volupasdhjk</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row gy-4 justify-content-between">
         <div class="col-lg-5  d-flex flex-column justify-content-top">
           <h1>Upload Documents</h1>
@@ -89,14 +179,15 @@
                </div>
               </form>
         </div>
-        <div class = "col-sm-4">
+        <div class = "col-sm-4 d-flex align-items-center ">
+          <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
           <p>&nbsp</p>
-             <div class="justify-content-center">
-              {%if file_names.pan != "" %}                
-              <p><a href= {{file_addr.pan}} download="">{{file_names.pan}}</a></p>
-              {% endif %}
-             </div>
-      </div>  
+          <div class="justify-content-center">
+            {%if file_names.pan != "" %}                
+            <p><a href= "{% url 'download_doc' name=name doc=file_names.pan %}">{{file_names.pan}}</a></p>
+            {% endif %}
+          </div>
+        </div> 
       </div>
       <div class = "row">
             <div class = "col-md-6">
@@ -109,11 +200,12 @@
                    </div>
                   </form>
             </div>
-            <div class = "col-sm-4">
+            <div class = "col-sm-4 d-flex align-items-center ">
+              <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
               <p>&nbsp</p>
                  <div class="justify-content-center">
                   {%if file_names.gst != "" %}                
-                  <p><a href= {{file_addr.gst}} download="">{{file_names.gst}}</a></p>
+                  <p><a href= "{% url 'download_doc' name=name doc=file_names.gst %}">{{file_names.gst}}</a></p>
               {% endif %}
                  </div>
           </div> 
@@ -129,11 +221,12 @@
                  </div>
                 </form>
           </div>
-          <div class = "col-sm-4">
+          <div class = "col-sm-4 d-flex align-items-center ">
+            <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
             <p>&nbsp</p>
                <div class="justify-content-center">
                 {%if file_names.cts != "" %}                
-                <p><a href= {{file_addr.cts}} download="">{{file_names.cts}}</a></p>
+                <p><a href= "{% url 'download_doc' name=name doc=file_names.cts %}">{{file_names.cts}}</a></p>
             {% endif %}
                </div>
         </div> 
@@ -149,21 +242,22 @@
                </div>
               </form>
         </div>
-        <div class = "col-sm-4">
+        <div class = "col-sm-4 d-flex align-items-center ">
+          <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
           <p>&nbsp</p>
              <div class="justify-content-center">
               {%if file_names.oth != "" %}                
-              <p><a href= {{file_addr.oth}} download="">{{file_names.oth}}</a></p>
+              <p><a href= "{% url 'download_doc' name=name doc=file_names.oth %}">{{file_names.oth}}</a></p>
           {% endif %}
              </div>
       </div> 
-      </div>
-        <div class = "row justify-content-end">
-          <div class="col-sm-2" >
-            
-          </div>
-        </div> 
-    </div>  
+      <div class = "row justify-content-end">
+        <div class="col-sm-2" >
+          <button class="btn btn-submit" type="submit"> 
+            Submit
+          </button>
+        </div>
+      </div> 
 
   </section>
   <script>
@@ -199,6 +293,8 @@
   <script src="{% static '/vendor/php-email-form/validate.js' %}"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="{% static '/js/main.js' %}"></script>
+
   
 
 </body>
