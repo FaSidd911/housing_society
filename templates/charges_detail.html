@@ -82,7 +82,7 @@
         <div class="sideicon">
             <i class="bi bi-currency-rupee"></i>
         </div>
-        <h3 class="side-title"><a href="">Charges Detail</a></h3>                       
+        <h3 class="side-title"><a href="/charges_detail/ /">Charges Detail</a></h3>                       
       </div>
       <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
         <div class="sideicon">
@@ -162,7 +162,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark">
                   {% for item in society_list %}
-                  <li><a class="dropdown-item "  href="{% url 'member_detail' name=item %}">{{item}}</a></li>
+                  <li><a class="dropdown-item "  href="{% url 'charges_detail' name=item %}">{{item}}</a></li>
                   <li><hr class="dropdown-divider"></li>
                   {%endfor%}
                 </ul>
@@ -181,46 +181,17 @@
         <table class="col-lg-11 flex-column table table-bordered">
           <thead>
             <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Member Name</th>
-              <th scope="col">Building #</th>
-              <th scope="col">Flat #</th>
-              <th scope="col">Balance</th>
-              <th scope="col">Munciple Charges</th>
-              <th scope="col">Water Charges</th>
-              <th scope="col">Service Charges</th>
+              {% for k, v in mem_chg_details.items %}
+              <th scope="col">{{k}}</th>
+              {% endfor %} 
             </tr>
           </thead>
           <tbody>
-            {% for item in query_results %}
             <tr>
-              <th scope="row">Active</th>
-              <td>{{item.date_add_member}}</td>
-              <td>{{item.Member_Name}}</td>
-              <td>{{item.building}}</td>
-              <td>{{item.Flat_No}}</td>
-              <td>{{item.Balance}}</td>
-              <td>{{item.Contact_Number}}</td>
-              <td>{{item.PAN_Number}}</td>
-              <td>{{item.Aadhar_Number}}</td>
-              <td>
-              <div class="dropdown">
-                  <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="bi bi-three-dots-vertical" ></i>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item " href="{% url 'editMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No %}">Edit</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Upload Doc</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Export</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{% url 'deleteMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No %}">Delete</a></li>
-                  </ul>
-              </div>
-              </td>
-            </tr>
+            {% for k, v in mem_chg_details.items %}            
+              <td>{{v}}</td>             
             {% endfor %}  
+          </tr>
           </tbody>
         </table>
       </div>

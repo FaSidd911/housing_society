@@ -337,5 +337,28 @@ def download_doc(request, name, doc):
 def show_member_detail(request):
     return render(request,'show_member_detail.html')
 
-def charges_detail(request):
-    return render(request,'charges_detail.html')
+def charges_detail(request, name):
+    context = {}
+    if name ==' ':
+        item = get_object_or_404(SocietyList,user=request.user, societyName=SocietyList.objects.filter(user=request.user)[0].societyName)
+    else:
+        item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+    query_results = MembersList.objects.filter(user=request.user, memberSocietyName = item)
+    mem_chg_details = {}
+    for soc_members in query_results:
+        mem_chg_details['Member_Name'] = soc_members.Member_Name
+        mem_chg_details['building'] = soc_members.building
+        mem_chg_details['Flat_No'] = soc_members.Flat_No
+        mem_chg_details['Balance'] = soc_members.Balance
+    query_results = DefaultChargesList.objects.filter(user = request.user , chargesSocietyName=item)
+    for soc_chg in query_results:
+        fields =  soc_chg._meta.get_fields()
+        for i in fields:
+            if i.attname not in ['id', 'user_id', 'chargesSocietyName_id']:
+                if getattr(soc_chg, i.attname) != '':
+                    mem_chg_details[i.attname] = getattr(soc_chg, i.attname)         
+    society_list = SocietyList.objects.filter(user=request.user)
+    context['mem_chg_details']=mem_chg_details
+    context['society_list']=society_list
+    context['name'] = name
+    return render(request, 'charges_detail.html',context)

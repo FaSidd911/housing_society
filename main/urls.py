@@ -36,7 +36,7 @@ urlpatterns = [
     path("download_file/<str:name>/", views.download_file, name='download_file'),
     path("download_doc/<str:name>/<str:doc>/", views.download_doc, name='download_doc'),
     path('show_member_detail', views.show_member_detail),
-    path('charges_detail', views.charges_detail), 
+    path('charges_detail/<str:name>/', views.charges_detail, name='charges_detail'), 
 
 
 ]
