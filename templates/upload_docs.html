@@ -158,7 +158,7 @@
               <h4 class="society-name"><a href="">Society Name : </a></h4>
             </div>
             <div class="name d-flex align-items-center">
-              <p> {{name}}</p>
+              <a> {{name}}</a>
             </div>
           </div>
         </div>
@@ -177,113 +177,90 @@
                  <input type="file" class="form-control" name= "pan_card" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" mandatory>
                  <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
                </div>
-              </form>
-        </div>
-        <div class = "col-sm-4 d-flex align-items-center ">
-          <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
-          <p>&nbsp</p>
-          <div class="justify-content-center">
-            {%if file_names.pan != "" %}                
-            <p><a href= "{% url 'download_doc' name=name doc=file_names.pan %}">{{file_names.pan}}</a></p>
-            {% endif %}
-          </div>
-        </div> 
+            </form>
+         </div>
+          <div class = "col-sm-4 d-flex align-items-center ">
+            <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
+            <p>&nbsp</p>
+            <div class="doc d-flex justify-content-center">
+              {%if file_names.pan != "" %}                
+              <p><a href= "{% url 'download_doc' name=name doc=file_names.pan %}">{{file_names.pan}}</a></p>
+              {% endif %}
+            </div>
+          </div> 
       </div>
       <div class = "row">
-            <div class = "col-md-6">
-                <label for="Upload_doc">Upload Document - GST </label>
-                <form method="post" action="upload_doc" enctype="multipart/form-data">
-                  {% csrf_token %}
-                   <div class="input-group">
-                     <input type="file" class="form-control" name= "gst" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                     <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
-                   </div>
-                  </form>
-            </div>
-            <div class = "col-sm-4 d-flex align-items-center ">
-              <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
-              <p>&nbsp</p>
-                 <div class="justify-content-center">
-                  {%if file_names.gst != "" %}                
-                  <p><a href= "{% url 'download_doc' name=name doc=file_names.gst %}">{{file_names.gst}}</a></p>
-              {% endif %}
-                 </div>
-          </div> 
-          </div>
-          <div class = "row">
-            <div class = "col-md-6">
-              <label for="Upload_doc">Upload Document - CTS </label>
+          <div class = "col-md-6">
+              <label for="Upload_doc">Upload Document - GST </label>
               <form method="post" action="upload_doc" enctype="multipart/form-data">
                 {% csrf_token %}
-                 <div class="input-group">
-                   <input type="file" class="form-control" name= "cts" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                   <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
-                 </div>
+                  <div class="input-group">
+                    <input type="file" class="form-control" name= "gst" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
+                  </div>
                 </form>
           </div>
           <div class = "col-sm-4 d-flex align-items-center ">
             <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
             <p>&nbsp</p>
-               <div class="justify-content-center">
-                {%if file_names.cts != "" %}                
-                <p><a href= "{% url 'download_doc' name=name doc=file_names.cts %}">{{file_names.cts}}</a></p>
+                <div class="doc d-flex justify-content-center">
+                {%if file_names.gst != "" %}                
+                <p><a href= "{% url 'download_doc' name=name doc=file_names.gst %}">{{file_names.gst}}</a></p>
             {% endif %}
-               </div>
-        </div> 
-        </div>
-        <div class = "row">
+                </div>
+          </div> 
+      </div>
+      <div class = "row">
           <div class = "col-md-6">
-            <label for="Upload_doc">Upload Document - Other </label>
+            <label for="Upload_doc">Upload Document - CTS </label>
             <form method="post" action="upload_doc" enctype="multipart/form-data">
               {% csrf_token %}
-               <div class="input-group">
-                 <input type="file" class="form-control" name= "others" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                 <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
-               </div>
+                <div class="input-group">
+                  <input type="file" class="form-control" name= "cts" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                  <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
+                </div>
               </form>
+          </div>
+          <div class = "col-sm-4 d-flex align-items-center ">
+            <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
+            <p>&nbsp</p>
+              <div class="doc d-flex justify-content-center">
+                {%if file_names.cts != "" %}                
+                <p><a href= "{% url 'download_doc' name=name doc=file_names.cts %}">{{file_names.cts}}</a></p>
+                {% endif %}
+              </div>
+          </div> 
+      </div>
+      <div class = "row">
+        <div class = "col-md-6">
+          <label for="Upload_doc">Upload Document - Other </label>
+          <form method="post" action="upload_doc" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="input-group">
+                <input type="file" class="form-control" name= "others" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
+              </div>
+          </form>
         </div>
         <div class = "col-sm-4 d-flex align-items-center ">
           <i class="bi bi-filetype-pdf" style="font-size:40px;color:Orange;margin-top: 15px;padding-left: 30px;"></i>
           <p>&nbsp</p>
-             <div class="justify-content-center">
-              {%if file_names.oth != "" %}                
-              <p><a href= "{% url 'download_doc' name=name doc=file_names.oth %}">{{file_names.oth}}</a></p>
-          {% endif %}
-             </div>
-      </div> 
+          <div class="doc d-flex justify-content-center">
+            {%if file_names.oth != "" %}                
+            <p><a href= "{% url 'download_doc' name=name doc=file_names.oth %}">{{file_names.oth}}</a></p>
+            {% endif %}
+          </div>
+        </div> 
+      </div>
       <div class = "row justify-content-end">
         <div class="col-sm-2" >
-          <button class="btn btn-submit" type="submit"> 
-            Submit
+          <button class="btn btn-submit" type="back"> 
+            Back
           </button>
         </div>
       </div> 
 
   </section>
-  <script>
-      var date = new Date();
-      var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-      var optSimple = {
-        format: 'mm-dd-yyyy',
-        todayHighlight: true,
-        orientation: 'bottom right',
-        autoclose: true,
-        container: '#sandbox'
-      };
-
-      var optComponent = {
-        format: 'mm-dd-yyyy',
-        container: '#datePicker',
-        orientation: 'auto top',
-        todayHighlight: true,
-        autoclose: true
-      };
-
-      // COMPONENT
-      $( '#datePicker' ).datepicker( optComponent );
-
-  </script> 
   <!-- Vendor JS Files -->
   <script src="{% static '/vendor/aos/aos.js' %}"></script>
   <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
