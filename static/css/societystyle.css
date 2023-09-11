@@ -1515,6 +1515,12 @@ transition: 0.3s;
   color: #111;
 }
 
+#upload-doc .doc p {
+  margin: 0;
+  padding-top: 20px;
+}
+
+
 #upload-doc .icon {
   -ms-flex: 0 0 25%;
   flex: 0 0 25%;
