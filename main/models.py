@@ -24,6 +24,7 @@ class MembersList(models.Model):
     Member_Name = models.CharField(max_length=500)
     Flat_No = models.CharField(max_length=122) 
     building = models.CharField(max_length=122)
+    wing = models.CharField(max_length=122)
     Contact_Number = models.CharField(max_length=122)
     Balance = models.CharField(max_length=122)
     PAN_Number = models.CharField(max_length=122)

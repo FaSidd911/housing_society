@@ -168,9 +168,16 @@ def edit_value(request, name):
 def edit_society_values(request,name):
     if request.method == "POST":
         item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+        charges_list_dict = get_object_or_404(DefaultChargesList,user=request.user,  chargesSocietyName=item)
         selected_charges = request.session['selected_charges_value']
         for key in selected_charges.keys():
             selected_charges[key] = request.POST[key]
+        rem_charge_value_list=[]
+        for field in charges_list_dict._meta.fields:
+            if field.name not in selected_charges.keys() and field.name not in ['id', 'user_id', 'chargesSocietyName', 'user'] and getattr(charges_list_dict, field.name)  != '':
+                rem_charge_value_list.append(field.name)
+        for i in rem_charge_value_list:
+            selected_charges[i] = ''
         DefaultChargesList.objects.filter(user = request.user , chargesSocietyName=item).update(**selected_charges) 
         del request.session['selected_charges_value']
         del request.session['selected_charges']
@@ -344,21 +351,25 @@ def charges_detail(request, name):
     else:
         item = get_object_or_404(SocietyList,user=request.user, societyName=name)
     query_results = MembersList.objects.filter(user=request.user, memberSocietyName = item)
-    mem_chg_details = {}
+    query_results_charges = DefaultChargesList.objects.filter(user = request.user , chargesSocietyName=item)
+    mem_chg_details_list = []
     for soc_members in query_results:
+        mem_chg_details = {}
         mem_chg_details['Member_Name'] = soc_members.Member_Name
         mem_chg_details['building'] = soc_members.building
         mem_chg_details['Flat_No'] = soc_members.Flat_No
-        mem_chg_details['Balance'] = soc_members.Balance
-    query_results = DefaultChargesList.objects.filter(user = request.user , chargesSocietyName=item)
-    for soc_chg in query_results:
-        fields =  soc_chg._meta.get_fields()
-        for i in fields:
-            if i.attname not in ['id', 'user_id', 'chargesSocietyName_id']:
-                if getattr(soc_chg, i.attname) != '':
-                    mem_chg_details[i.attname] = getattr(soc_chg, i.attname)         
+        mem_chg_details['Balance'] = soc_members.Balance       
+        for soc_chg in query_results_charges:
+            fields =  soc_chg._meta.get_fields()
+            for i in fields:
+                if i.attname not in ['id', 'user_id', 'chargesSocietyName_id']:
+                    if getattr(soc_chg, i.attname) != '':
+                        mem_chg_details[i.attname] = getattr(soc_chg, i.attname) 
+        mem_chg_details_list.append(mem_chg_details) 
+    column_list =  list(mem_chg_details_list[0].keys())
     society_list = SocietyList.objects.filter(user=request.user)
-    context['mem_chg_details']=mem_chg_details
+    context['mem_chg_details']=mem_chg_details_list
     context['society_list']=society_list
     context['name'] = name
+    context['column_list'] = column_list
     return render(request, 'charges_detail.html',context)
