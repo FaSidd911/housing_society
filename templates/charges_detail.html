@@ -157,7 +157,7 @@
         <div class="col-md-2 ">
           <div class="input-group">
                 <button class="btn btn-society" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Select Society
+                  {{name}}
                   <a class="bi bi-chevron-double-down"></a>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark">
@@ -191,8 +191,19 @@
             {% for item in mem_chg_details %}  
             <tr> 
               {% for k,v in item.items %}         
-              <td>{{v}}</td>             
+              <td>{{v}}</td>            
               {% endfor %}
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical" ></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item "  href="{% url 'charges_value_edit' name=name mem_bldng=item.building mem_flat=item.Flat_No mem_wing=item.wing%}">Edit Charges</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                  </ul>
+                </div>
+              </td> 
             </tr> 
             {% endfor %}   
           

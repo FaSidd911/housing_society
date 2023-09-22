@@ -6,41 +6,9 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Member Details</title>
+  <title>add charges</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
-    <!--Data Table-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript"  src=" https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
-  
-       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
-        <script>
-          function myFunction() {
-            var input, filter, table, tr, td, cell, i, j;
-            input = document.getElementById("search");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("memTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 1; i < tr.length; i++) {
-              // Hide the row initially.
-              tr[i].style.display = "none";
-            
-              td = tr[i].getElementsByTagName("td");
-              for (var j = 0; j < td.length; j++) {
-                cell = tr[i].getElementsByTagName("td")[j];
-                if (cell) {
-                  if (cell.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                    break;
-                  } 
-                }
-              }
-            }
-          }
-        </script>
 
    <!-- Google Fonts -->
    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
@@ -63,13 +31,12 @@
  
    <!-- Template Main CSS File -->
    <link href="{% static '/css/societystyle.css' %}" rel="stylesheet">
-
  
  </head>
  
  <body>
 
-   <!-- Sidebar -->
+  <!-- Sidebar -->
   <nav class="sidebar">
                   
     <!-- close sidebar menu -->
@@ -170,113 +137,61 @@
  
      </div>
    </header><!-- End Header -->
-
-
-   <!-- ======= member-detail Section ======= -->
-   <section id="member-detail" class="d-flex align-items-top">
-    <div class="container">
-      <div class="row gy-4 justify-content-between">
-        <div class="col-lg-5  d-flex flex-column justify-content-top">
-          <h1>Member Details</h1>
-        </div >
-        <div class="col-lg-3 d-flex flex-column justify-content-left" >
-          <a href="{% url 'add_member' name=name %}" class="btn-get-started scrollto"> 
-            <i class="bx bx-plus"></i>
-              Add New Member
-          </a>
+   
+    <!-- ======= Enter Value Section ======= -->
+    <section id="add-value" class="d-flex align-items-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 d-flex flex-column "> 
+            <h3> Enter value for selected charges </h3>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-3 d-flex flex-column "> 
-          <h3> Search </h3>
+        <div class = "row">
+          <form method="POST" action="{% url 'charges_value_edit_submit' name=name mem_bldng=edit_charges_dict.building mem_flat=edit_charges_dict.Flat_No mem_wing=edit_charges_dict.wing%}">
+            {% csrf_token %}
+            <table class="col-lg-5 flex-column table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Value</th> 
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for k,v in edit_charges_dict.items %}
+                  <tr>
+                    {% if k not in list %}
+                  <td>{{ k }}</td>
+                  <td> <input type="text" name="{{k}}" class="form-control" id="enter_value" value="{{v}}" placeholder="Enter Value" required></td>
+                  <td>
+                    <div class="dropdown">
+                      <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical" ></i>
+                      </button>
+                    </div>
+                  </td>
+                  {%endif%}
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
         </div>
-      </div>
-      <div class="row d-flex align-items-center justify-content-between">
-        <div class="col-md-3 ">
-          <div class="input-group">
-                <button class="btn btn-society" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                 {{name}}
-                  <a class="bi bi-chevron-double-down"></a>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-dark">
-                  {% for item in society_list %}
-                  <li><a class="dropdown-item "  href="{% url 'member_detail' name=item %}">{{item}}</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  {%endfor%}
-                </ul>
-           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search ..." id="search" onkeyup="myFunction()">
-            <button type="button" class="btn btn-secondary">
-              <i class="bi-search"></i>
+        <div class = "row justify-content-end">
+          <div class="col-sm-2" >
+            <button class="btn btn-submit" type="submit"> 
+              Submit
             </button>
           </div>
-        </div> 
-      </div>
-      <div>
-        <table class="col-lg-11 flex-column table " id="memTable">
-          <thead>
-            <tr>
-              <th scope="col">Status</th>
-              <th scope="col">Date</th>
-              <th scope="col">Member Name</th>
-              <th scope="col">Building #</th>
-              <th scope="col">Flat #</th>
-              <th scope="col">Balance</th>
-              <th scope="col">Contact #</th>
-              <th scope="col">PAN Number</th>
-              <th scope="col">Aadhar Number</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in query_results %}
-            <tr>
-              <th scope="row">Active</th>
-              <td>{{item.date_add_member}}</td>
-              <td>{{item.Member_Name}}</td>
-              <td>{{item.building}}</td>
-              <td>{{item.Flat_No}}</td>
-              <td>{{item.Balance}}</td>
-              <td>{{item.Contact_Number}}</td>
-              <td>{{item.PAN_Number}}</td>
-              <td>{{item.Aadhar_Number}}</td>
-              <td>
-              <div class="dropdown">
-                  <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="bi bi-three-dots-vertical" ></i>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item " href="{% url 'editMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No wing=item.wing %}">Edit</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Upload Doc</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Export</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{% url 'deleteMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No wing=item.wing %}">Delete</a></li>
-                  </ul>
-              </div>
-              </td>
-            </tr>
-            {% endfor %}  
-          </tbody>
-        </table>
-      </div>
-      <div class="row d-flex justify-content-end">
-            <div class="col-sm-1">
-                <button type="button" class="btn btn-light">
-                  <i class="bi bi-caret-left-fill"></i>
-                </button>
-            </div>
-            <div class="col-sm-1">
-                <button type="button" class="btn btn-light">
-                    <i class="bi bi-caret-right-fill"></i>
-                </button>
-            </div>
-      </div>
-    </div>
-   </section>
+        </div>
+      </form>
+       </div>
+    </section>
+    
+    <script>
+      $( "#btn-charges" ).on( "click", function() {
+        $( this ).toggleClass( "active" );
+      });
+    </script>
 
   <!-- Vendor JS Files -->
   <script src="{% static '/vendor/aos/aos.js' %}"></script>

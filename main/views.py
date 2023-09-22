@@ -21,10 +21,6 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
-
-    print(request.user)
-    return render(request,'homeAfterLogin.html')
-
 def login(request):
     if request.method=='POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -95,7 +91,7 @@ def persist_society_details(request):
         selected_charges = request.session['selected_charges'] 
         soc_details = request.session['soc_details'] 
         user = request.user
-        charges_list = ['Member_Name', 'Flat_No', 'building', 'Contact_Number', 'Balance', 'PAN_Number', 'Aadhar_Number']
+        charges_list = ['Member_Name', 'Flat_No', 'building', 'wing', 'Contact_Number', 'Balance', 'PAN_Number', 'Aadhar_Number']
         for key in selected_charges.keys():
             selected_charges[key] = request.POST[key]
             charges_list.append(key)
@@ -197,6 +193,21 @@ def add_member(request,name):
         mem_details['date_add_member'] = datetime.today()
         add_member = MembersList(**mem_details)
         add_member.save()
+        default_charges = get_object_or_404(DefaultChargesList,user=request.user, chargesSocietyName=item)
+        default_charges_dict={}
+        for i in default_charges._meta.get_fields():
+            if i.attname not in ['id', 'user_id', 'chargesSocietyName_id']:
+                if getattr(default_charges, i.attname) != '':
+                    default_charges_dict[i.attname] = getattr(default_charges, i.attname)
+        Member_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=item, Member_Name=mem_details['Member_Name'])
+        default_charges_dict['user'] = request.user
+        default_charges_dict['chargesSocietyName'] = item
+        default_charges_dict['chargesMemberName'] = Member_item
+        default_charges_dict['building'] = Member_item.building
+        default_charges_dict['Flat_No'] = Member_item.Flat_No
+        default_charges_dict['wing'] = Member_item.wing
+        add_charges= MemberChargesList(**default_charges_dict)
+        add_charges.save() 
         return redirect('/member_detail/' + name)
     return render(request,'add_member.html',context )
 
@@ -213,14 +224,14 @@ def member_detail(request, name):
     context['name'] = name
     return render(request, 'member_detail.html',context)
 
-def deleteMember(request,memberSocietyName,building,FlatNo):
+def deleteMember(request,memberSocietyName,building,FlatNo, wing):
     item = get_object_or_404(SocietyList,user=request.user, societyName=memberSocietyName)
-    MembersList.objects.filter(user=request.user, memberSocietyName = item, building = building, Flat_No=FlatNo ).delete()
+    MembersList.objects.filter(user=request.user, memberSocietyName = item, building = building, Flat_No=FlatNo, wing=wing).delete()
     return redirect('/member_detail/' + memberSocietyName)
 
-def editMember(request,memberSocietyName,building,FlatNo):
+def editMember(request,memberSocietyName,building,FlatNo, wing):
     item = get_object_or_404(SocietyList,user=request.user, societyName=memberSocietyName)
-    edit_soc_details = MembersList.objects.filter(user=request.user,memberSocietyName=item,  building = building, Flat_No=FlatNo).values()
+    edit_soc_details = MembersList.objects.filter(user=request.user,memberSocietyName=item,  building = building, Flat_No=FlatNo, wing=wing).values()
     context = {}
     edit_soc_details = edit_soc_details[0]
     edit_soc_details.pop('date_add_member')
@@ -241,7 +252,11 @@ def update_member(request):
         sesion_mem_details = request.session['member_details']
         mem_details.pop('csrfmiddlewaretoken')
         item = get_object_or_404(SocietyList,user=request.user, societyName=sesion_mem_details['memberSocietyName'])
-        MembersList.objects.filter(user=request.user,memberSocietyName=item,  building = sesion_mem_details['building'], Flat_No=sesion_mem_details['Flat_No']).update(**mem_details)
+        MembersList.objects.filter(
+            user=request.user,memberSocietyName=item,  
+            building = sesion_mem_details['building'], 
+            Flat_No=sesion_mem_details['Flat_No'], 
+            wing = sesion_mem_details['wing']).update(**mem_details)
         del request.session['member_details']
         return redirect('/member_detail/' + sesion_mem_details['memberSocietyName'])
     
@@ -252,7 +267,7 @@ def import_members(request,name):
         item = get_object_or_404(SocietyList,user=request.user, societyName=name)
         members_list_df = pd.read_csv(request.FILES['others'],index_col=False)
         members_list_df = members_list_df.loc[:, ~members_list_df.columns.str.match('Unnamed')]
-        rem_list = ['Member_Name', 'Flat_No', 'building', 'Contact_Number', 'Balance', 'PAN_Number', 'Aadhar_Number']
+        rem_list = ['Member_Name', 'Flat_No', 'building', 'wing', 'Contact_Number', 'Balance', 'PAN_Number', 'Aadhar_Number']
         mem_details_dict = members_list_df.to_dict(orient='records')
         for mem_item in mem_details_dict:
             charges_dict = mem_item.copy()
@@ -270,7 +285,10 @@ def import_members(request,name):
             member_dict['date_add_member'] = datetime.today()
             add_member = MembersList(**member_dict)
             add_member.save()
-            Member_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=item, Member_Name=member_dict['Member_Name'])
+            Member_item = get_object_or_404(MembersList,user=request.user, 
+                                            memberSocietyName=item, building=member_dict['building'], 
+                                            Flat_No=member_dict['Flat_No'],
+                                            wing = member_dict['wing'])
             charges_dict['user'] = request.user
             charges_dict['chargesSocietyName'] = item
             charges_dict['chargesMemberName'] = Member_item
@@ -351,25 +369,60 @@ def charges_detail(request, name):
     else:
         item = get_object_or_404(SocietyList,user=request.user, societyName=name)
     query_results = MembersList.objects.filter(user=request.user, memberSocietyName = item)
-    query_results_charges = DefaultChargesList.objects.filter(user = request.user , chargesSocietyName=item)
+    query_results_charges = MemberChargesList.objects.filter(user = request.user , chargesSocietyName=item)
     mem_chg_details_list = []
     for soc_members in query_results:
         mem_chg_details = {}
         mem_chg_details['Member_Name'] = soc_members.Member_Name
         mem_chg_details['building'] = soc_members.building
         mem_chg_details['Flat_No'] = soc_members.Flat_No
+        mem_chg_details['wing'] = soc_members.wing
         mem_chg_details['Balance'] = soc_members.Balance       
         for soc_chg in query_results_charges:
-            fields =  soc_chg._meta.get_fields()
-            for i in fields:
-                if i.attname not in ['id', 'user_id', 'chargesSocietyName_id']:
-                    if getattr(soc_chg, i.attname) != '':
-                        mem_chg_details[i.attname] = getattr(soc_chg, i.attname) 
+            if soc_chg.chargesMemberName.Member_Name == soc_members.Member_Name:
+                fields =  soc_chg._meta.get_fields()
+                for i in fields:
+                    if i.attname not in ['id', 'user_id', 'chargesSocietyName_id','chargesMemberName_id']:
+                        if getattr(soc_chg, i.attname) != '':
+                            mem_chg_details[i.attname] = getattr(soc_chg, i.attname) 
         mem_chg_details_list.append(mem_chg_details) 
     column_list =  list(mem_chg_details_list[0].keys())
     society_list = SocietyList.objects.filter(user=request.user)
     context['mem_chg_details']=mem_chg_details_list
     context['society_list']=society_list
-    context['name'] = name
+    context['name'] = item.societyName
     context['column_list'] = column_list
     return render(request, 'charges_detail.html',context)
+
+def charges_value_edit(request,name,mem_bldng,mem_flat,mem_wing):
+    item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+    mem_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=item, building=mem_bldng,Flat_No=mem_flat,  )
+    query_results_charges = get_object_or_404(MemberChargesList,user=request.user, 
+                                              chargesSocietyName=item, 
+                                              building=mem_bldng,
+                                              Flat_No=mem_flat, 
+                                              wing=mem_wing)
+    edit_charges_dict={}
+    context={}
+    for i in query_results_charges._meta.get_fields():
+        if i.attname not in ['id', 'user_id', 'chargesSocietyName_id','chargesMemberName_id']:
+            if getattr(query_results_charges, i.attname) != '':
+                edit_charges_dict[i.attname] = getattr(query_results_charges, i.attname)
+    context['edit_charges_dict']=edit_charges_dict
+    context['name']=name
+    context['list'] = ['building','Flat_No', 'wing']    
+    return render(request,'charges_value_edit.html',context)
+
+def charges_value_edit_submit(request,name,mem_bldng, mem_flat, mem_wing):
+    if request.method == "POST":
+        charges_details = {}
+        for key in request.POST.keys():
+            charges_details[key] = request.POST[key]
+        charges_details.pop('csrfmiddlewaretoken')
+        item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+        MemberChargesList.objects.filter(user=request.user,
+                                         chargesSocietyName=item,   
+                                         building=mem_bldng,
+                                        Flat_No=mem_flat, 
+                                        wing=mem_wing).update(**charges_details)
+    return redirect('/charges_detail/' + name + '/')
