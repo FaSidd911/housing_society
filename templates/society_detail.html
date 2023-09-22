@@ -267,7 +267,7 @@
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'import_members' name=item.societyName %}">Import Members</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'member_detail' name=item.societyName %}">Show Members</a></li>
+                        <li><a class="dropdown-item" href="{% url 'show_member_detail' name=item.societyName %}">Show Members</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'deleteSociety' name=item.societyName %}">Delete</a></li>
                       </ul>

@@ -27,6 +27,7 @@ urlpatterns = [
     path('add_member/<str:name>/',views.add_member,name = 'add_member'),
     path('add_member/<str:name>/add_member',views.add_member,name = 'add_member'),
     path('member_detail/<str:name>/',views.member_detail, name='member_detail'),
+    path('show_member_detail/<str:name>/',views.show_member_detail, name='show_member_detail'),
     path("deleteSociety/<str:memberSocietyName>/<str:building>/<str:FlatNo>/<str:wing>", views.deleteMember, name='deleteMember'),
     path("editMember/<str:memberSocietyName>/<str:building>/<str:FlatNo>/<str:wing>", views.editMember, name='editMember'),
     path("update_member", views.update_member, name='update_member'),

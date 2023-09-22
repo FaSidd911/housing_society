@@ -213,16 +213,26 @@ def add_member(request,name):
 
 def member_detail(request, name):
     context = {}
+    society_list = SocietyList.objects.filter(user=request.user)
+    context['society_list']=society_list
+    context['name'] = name
     if name ==' ':
-        item = get_object_or_404(SocietyList,user=request.user, societyName=SocietyList.objects.filter(user=request.user)[0].societyName)
+        return render(request, 'member_detail.html',context)
     else:
         item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+    query_results = MembersList.objects.filter(user=request.user, memberSocietyName = item)
+    context['query_results']=query_results
+    return render(request, 'member_detail.html',context)
+
+def show_member_detail(request, name):
+    context = {}    
+    item = get_object_or_404(SocietyList,user=request.user, societyName=name)
     query_results = MembersList.objects.filter(user=request.user, memberSocietyName = item)
     society_list = SocietyList.objects.filter(user=request.user)
     context['query_results']=query_results
     context['society_list']=society_list
     context['name'] = name
-    return render(request, 'member_detail.html',context)
+    return render(request, 'show_member_detail.html',context)
 
 def deleteMember(request,memberSocietyName,building,FlatNo, wing):
     item = get_object_or_404(SocietyList,user=request.user, societyName=memberSocietyName)
@@ -359,13 +369,12 @@ def download_doc(request, name, doc):
     response['Content-Disposition'] = 'attachment; filename=' + doc
     return response
 
-def show_member_detail(request):
-    return render(request,'show_member_detail.html')
-
 def charges_detail(request, name):
     context = {}
+    society_list = SocietyList.objects.filter(user=request.user)
+    context['society_list']=society_list
     if name ==' ':
-        item = get_object_or_404(SocietyList,user=request.user, societyName=SocietyList.objects.filter(user=request.user)[0].societyName)
+        return render(request, 'charges_detail.html',context)
     else:
         item = get_object_or_404(SocietyList,user=request.user, societyName=name)
     query_results = MembersList.objects.filter(user=request.user, memberSocietyName = item)
@@ -387,11 +396,9 @@ def charges_detail(request, name):
                             mem_chg_details[i.attname] = getattr(soc_chg, i.attname) 
         mem_chg_details_list.append(mem_chg_details) 
     column_list =  list(mem_chg_details_list[0].keys())
-    society_list = SocietyList.objects.filter(user=request.user)
     context['mem_chg_details']=mem_chg_details_list
-    context['society_list']=society_list
-    context['name'] = item.societyName
     context['column_list'] = column_list
+    context['name'] = item.societyName
     return render(request, 'charges_detail.html',context)
 
 def charges_value_edit(request,name,mem_bldng,mem_flat,mem_wing):
