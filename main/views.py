@@ -255,6 +255,7 @@ def editMember(request,memberSocietyName,building,FlatNo, wing):
     member_details['memberSocietyName'] = memberSocietyName
     member_details['building'] = building
     member_details['Flat_No'] = FlatNo
+    member_details['wing'] = wing
     request.session['member_details'] = member_details
     return render(request,'edit_member.html',context)
 
