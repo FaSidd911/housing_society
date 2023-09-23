@@ -46,14 +46,15 @@ def society_detail(request):
 
 def add_new_society(request):
     user = request.user
+    context={}
     if request.method == "POST":
         soc_details = {}
         societyName= request.POST.get('Society_name')
         soc_details['societyName'] = societyName
         societyNameExists = SocietyList.objects.filter(user= user, societyName=societyName)
-        print(societyNameExists)
         if societyNameExists:
-            return HttpResponseRedirect(request.path_info)
+            messages.error(request,"Society Name already exists")
+            return render(request, 'add_new_society.html',context)
         soc_details['panno'] = request.POST.get('PAN_Number')
         soc_details['regno'] = request.POST.get('Registration_Number')
         soc_details['gstno'] = request.POST.get('GST_Number')
@@ -190,6 +191,10 @@ def add_member(request,name):
         mem_details['user']=request.user
         mem_details.pop("csrfmiddlewaretoken")
         mem_details['date_add_member'] = datetime.today()
+        Member_item = MembersList.objects.filter(user=request.user, memberSocietyName=item, building = mem_details['building'], Flat_No=mem_details['Flat_No'], wing=mem_details['wing'] )
+        if  Member_item.values_list():
+            messages.error(request,"Member for the given Flat No. already exists")
+            return render(request,'add_member.html',context )
         add_member = MembersList(**mem_details)
         add_member.save()
         default_charges = get_object_or_404(DefaultChargesList,user=request.user, chargesSocietyName=item)
@@ -198,7 +203,7 @@ def add_member(request,name):
             if i.attname not in ['id', 'user_id', 'chargesSocietyName_id']:
                 if getattr(default_charges, i.attname) != '':
                     default_charges_dict[i.attname] = getattr(default_charges, i.attname)
-        Member_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=item, Member_Name=mem_details['Member_Name'])
+        Member_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=item, building = mem_details['building'], Flat_No=mem_details['Flat_No'], wing=mem_details['wing'] )
         default_charges_dict['user'] = request.user
         default_charges_dict['chargesSocietyName'] = item
         default_charges_dict['chargesMemberName'] = Member_item
@@ -387,7 +392,7 @@ def charges_detail(request, name):
         mem_chg_details['wing'] = soc_members.wing
         mem_chg_details['Balance'] = soc_members.Balance       
         for soc_chg in query_results_charges:
-            if soc_chg.chargesMemberName.Member_Name == soc_members.Member_Name:
+            if soc_chg.chargesMemberName.building == soc_members.building and soc_chg.chargesMemberName.Flat_No == soc_members.Flat_No and soc_chg.chargesMemberName.wing == soc_members.wing:
                 fields =  soc_chg._meta.get_fields()
                 for i in fields:
                     if i.attname not in ['id', 'user_id', 'chargesSocietyName_id','chargesMemberName_id']:
