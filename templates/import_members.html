@@ -6,9 +6,12 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Add Society</title>
+  <title>Import Members</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+
+    <!-- Favicons -->
+  <link href="{% static '/img/favicon.png' %}" rel="icon">
 
    <!-- Google Fonts -->
    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
@@ -44,19 +47,99 @@
  </head>
  
  <body>
- 
+
+    <!-- Sidebar -->
+  <nav class="sidebar">
+                  
+    <!-- close sidebar menu -->
+    <div class="dismiss">
+      <button class="btn btn-light" type="button" >
+        <i class="bi bi-list" ></i>
+      </button>
+    </div>
+
+    <div class="logo">
+      <h1 class="text-light">
+          <a href=""><span><b>Orange</b></span></a>
+      </h1>
+    </div>
+    <div class="border-top my-3"></div>
+    <div class="dropdown">
+      <button class="btn btn-light btn-get-started scrollto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bx bx-plus bx-sm"></i>
+        <h4>Add New </h4>
+        <a class="bi bi-chevron-double-down"></a>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <li><a class="dropdown-item" href="/add_new_society">Society</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/add_member">Members</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-houses-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/society_detail">Society Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-people-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/member_detail/ /">Member Detail</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-currency-rupee"></i>
+        </div>
+        <h3 class="side-title"><a href="/charges_detail/ /">Charges Detail</a></h3>                      
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-file-earmark-text-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="">Bill</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-receipt-cutoff"></i>
+        </div>
+        <h3 class="side-title"><a href="">Receipt</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-recycle"></i>
+        </div>
+        <h3 class="side-title"><a href="">Ledger</a></h3>                       
+      </div>
+    </div>
+    <div class="border-top my-3"></div>
+    <div class = "button">
+        <button class="btn-logout" type="logout"> 
+          Logout
+        </button>
+    </div>
+  </nav>  
+  <!-- Dark overlay -->
+  <div class="overlay">
+  </div>
+  <!-- End sidebar -->
+
    <!-- ======= Header ======= -->
-   <header id="header" class="fixed-top d-flex align-items-center">
-     <div class="container d-flex align-items-center justify-content-between">
- 
-       <div class="logo">
-         <h1 class="text-light">
-         <!--<a href="index.html"><img src="{%static '/img/logo.png' %}" alt="" class="img-fluid"></a>-->
-         <a class="bi bi-list" href=""></a>
-             <a href=""><span><b>Orange</b></span></a>
-         </h1>
-         <!-- Uncomment below if you prefer to use an image logo -->
-       </div>
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1 class="text-light">
+        <!--<a href="index.html"><img src="{%static '/img/logo.png' %}" alt="" class="img-fluid"></a>-->
+         <a class="btn btn-light open-menu" href="#" role="button">
+         <i class="bi bi-list" href=""></i>
+        </a>
+            <a href=""><span><b>Orange</b></span></a>
+        </h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+      </div>
  
        <nav id="navbar" class="navbar">
          <ul>
@@ -66,67 +149,60 @@
        </nav><!-- .navbar -->
  
      </div>
-   </header><!-- End Header -->
+  </header><!-- End Header -->
 
 
-   <!-- ======= add-society Section ======= -->
-   <section id="add-society" class="d-flex align-items-top">
+   <!-- ======= import_members Section ======= -->
+  <section id="import-member" class="d-flex align-items-top">
 
-    <div class="container">
+   <div class="container">
+      <div class="row">
+        <div class="col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div class="icon-box d-flex align-self-stretch">
+            <div class="icon col-md-3">
+              <h4 class="society-name"><a href="">Society Name : </a></h4>
+            </div>
+            <div class="name d-flex align-items-center">
+              <a> {{name}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row gy-4 justify-content-between">
         <div class="col-lg-5  d-flex flex-column justify-content-top">
-          <h1>Upload Documents</h1>
-        </div >
-      </div>   
-        <div class = "row">
-          <div class = "col-md-6">
-            <label for="Upload_doc">Upload Document - Other </label>
-            <form method="POST" action="import_members" enctype="multipart/form-data">
-              {% csrf_token %}
-               <div class="input-group">
-                 <input type="file" class="form-control" name= "others" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                 <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
-                 <a href="{% url 'download_file' name=name%}"><i class="fa fa-file-excel-o" style="font-size:40px;color:Orange;margin: 0 0 0 40px;"></i></a>
-               </div>
-              </form>
+          <h1>Import Members</h1>
+        </div>
+      </div>
+      <div class="row">
+        <h5>Follow below steps :</h5>
+        <p> 1. Download Sample file by clicking on icon. </p>
+        <a href="{% url 'download_file' name=name%}"><i class="fa fa-file-excel-o" style="font-size:40px;color:Orange;margin: 5px 0 15px 100px;"></i></a>
+        <p> 2. Fill downloaded excel file with proper Member details with charges in given format. </p>
+        <p> 3. Choose updated file and click on upload. </p> 
+        <div class = "col-md-5">
+          <label for="Upload_doc">Upload Document</label>
+          <form method="POST" action="import_members" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="input-group">
+              <input type="file" class="form-control" name= "others" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+              <button class="btn btn-upload" type="submit" id="inputGroupFileAddon04">Upload</button>
+            </div>
+          </form>
         </div>
         <div class = "col-sm-4">
           <p>&nbsp</p>
-
-      </div> 
+        </div>
       </div>
-        <div class = "row justify-content-end">
-          <div class="col-sm-2" >
-            
-          </div>
-        </div> 
+      <div class = "row justify-content-end">
+        <div class="col-sm-2" >
+          <button class="btn btn-submit" type="back"> 
+            Back
+          </button>
+        </div>
+      </div> 
     </div>  
 
   </section>
-  <script>
-      var date = new Date();
-      var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-      var optSimple = {
-        format: 'mm-dd-yyyy',
-        todayHighlight: true,
-        orientation: 'bottom right',
-        autoclose: true,
-        container: '#sandbox'
-      };
-
-      var optComponent = {
-        format: 'mm-dd-yyyy',
-        container: '#datePicker',
-        orientation: 'auto top',
-        todayHighlight: true,
-        autoclose: true
-      };
-
-      // COMPONENT
-      $( '#datePicker' ).datepicker( optComponent );
-
-  </script> 
   <!-- Vendor JS Files -->
   <script src="{% static '/vendor/aos/aos.js' %}"></script>
   <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -136,7 +212,7 @@
   <script src="{% static '/vendor/php-email-form/validate.js' %}"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  
+  <script src="{% static '/js/main.js' %}"></script>
 
 </body>
 

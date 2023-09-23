@@ -9,6 +9,9 @@
   <title>add value</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+   
+  <!-- Favicons -->
+  <link href="{% static '/img/favicon.png' %}" rel="icon">
 
    <!-- Google Fonts -->
    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
@@ -143,13 +146,13 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 d-flex flex-column "> 
-            <h3> Enter value for selected charges </h3>
+            <h4> Enter value for selected charges </h4>
           </div>
         </div>
         <div class = "row">
           <form method="POST" action="persist_society_details">
             {% csrf_token %}
-            <table class="col-lg-5 flex-column table">
+            <table class="col-lg-5 flex-column table table-hover">
               <thead>
                 <tr>
                   <th scope="col">Name</th>
