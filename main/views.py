@@ -378,6 +378,7 @@ def charges_detail(request, name):
     society_list = SocietyList.objects.filter(user=request.user)
     context['society_list']=society_list
     if name ==' ':
+        messages.error(request,"No Records")
         return render(request, 'charges_detail.html',context)
     else:
         item = get_object_or_404(SocietyList,user=request.user, societyName=name)
