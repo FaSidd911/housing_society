@@ -8,7 +8,6 @@ from .models import SocietyList,MembersList,DefaultChargesList,MemberChargesList
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
-from .forms import ChargesForm,MembersForm,EditSocietyForm,EditMembersForm
 import json,os
 import pandas as pd
 from django.conf import settings
