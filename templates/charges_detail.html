@@ -210,6 +210,14 @@
           </div>
         </div> 
       </div>
+      {% for message in messages %}
+                    
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+                          {{ message }}
+                    </div>
+
+                {% endfor %}
       <div class="table-responsive">
         <table class="col-lg-11 flex-column table table-bordered" id="chgTable">
           <thead>
