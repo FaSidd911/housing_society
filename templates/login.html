@@ -91,20 +91,28 @@
                   <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-user"></i></span>
                   </div class="form-control">
-                  <!-- <input type="text" class="form-control" placeholder="username">  -->
-                  {{login_form.username|as_crispy_field:"bootstrap5"}}	
+                  <input type="text" name="username" style="height:40px" class="form-control" placeholder="username">  
+                  <!-- {{login_form.username|as_crispy_field}}	 -->
               </div>
               <label for="name">Your Password</label>
               <div class="input-group form-group">
                   <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-key"></i></span>
                   </div class="form-control">
-                  <!-- <input type="password" class="form-control" placeholder="password"> -->
-                  {{login_form.password|as_crispy_field:"bootstrap5"}}	
+                  <input type="password" name = "password" style="height:40px" class="form-control" placeholder="password">
+                  <!-- {{login_form.password|as_crispy_field}}	 -->
               </div>
               <div class="form-group">
                   <input type="submit" class="btn login_btn">
               </div>
+                              {% for message in messages %}
+                    
+                    <div class="alert alert-danger">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+                          {{ message }}
+                    </div>
+
+                {% endfor %}
               <div class="d-flex ">
                 <a href="#">Forgot your password?</a>
               </div>

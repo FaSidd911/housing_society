@@ -10,6 +10,38 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
+    <!--Data Table-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript"  src=" https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+  
+       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
+        <script>
+          function myFunction() {
+            var input, filter, table, tr, td, cell, i, j;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("memTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 1; i < tr.length; i++) {
+              // Hide the row initially.
+              tr[i].style.display = "none";
+            
+              td = tr[i].getElementsByTagName("td");
+              for (var j = 0; j < td.length; j++) {
+                cell = tr[i].getElementsByTagName("td")[j];
+                if (cell) {
+                  if (cell.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                    break;
+                  } 
+                }
+              }
+            }
+          }
+        </script>
+
    <!-- Google Fonts -->
    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
@@ -145,10 +177,10 @@
     <div class="container">
       <div class="row gy-4 justify-content-between">
         <div class="col-lg-5  d-flex flex-column justify-content-top">
-          <h1>Show Members</h1>
+          <h1>Show Member Details</h1>
         </div >
         <div class="col-lg-3 d-flex flex-column justify-content-left" >
-          <a href="/add_member" class="btn-get-started scrollto"> 
+          <a href="{% url 'add_member' name=name %}" class="btn-get-started scrollto"> 
             <i class="bx bx-plus"></i>
               Add New Member
           </a>
@@ -162,7 +194,7 @@
       <div class="row d-flex align-items-center justify-content-end">
         <div class="col-md-4">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search ...">
+            <input type="text" class="form-control" placeholder="Search ..." id="search" onkeyup="myFunction()">
             <button type="button" class="btn btn-secondary">
               <i class="bi-search"></i>
             </button>
@@ -170,13 +202,14 @@
         </div> 
       </div>
       <div>
-        <table class="col-lg-11 flex-column table">
+        <table class="col-lg-11 flex-column table " id="memTable">
           <thead>
             <tr>
               <th scope="col">Status</th>
               <th scope="col">Date</th>
               <th scope="col">Member Name</th>
               <th scope="col">Building #</th>
+              <th scope="col">Wing</th>
               <th scope="col">Flat #</th>
               <th scope="col">Balance</th>
               <th scope="col">Contact #</th>
@@ -191,6 +224,7 @@
               <td>{{item.date_add_member}}</td>
               <td>{{item.Member_Name}}</td>
               <td>{{item.building}}</td>
+              <td>{{item.wing}}</td>
               <td>{{item.Flat_No}}</td>
               <td>{{item.Balance}}</td>
               <td>{{item.Contact_Number}}</td>
@@ -202,13 +236,13 @@
                   <i class="bi bi-three-dots-vertical" ></i>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item " href="{% url 'editMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No %}">Edit</a></li>
+                  <li><a class="dropdown-item " href="{% url 'editMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No wing=item.wing %}">Edit</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="#">Upload Doc</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="#">Export</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{% url 'deleteMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No %}">Delete</a></li>
+                  <li><a class="dropdown-item" href="{% url 'deleteMember' memberSocietyName=item.memberSocietyName building=item.building FlatNo=item.Flat_No wing=item.wing %}">Delete</a></li>
                   </ul>
               </div>
               </td>

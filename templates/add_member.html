@@ -214,6 +214,14 @@
                 <input type="text" name="wing" class="form-control" id="wing" placeholder="wing name" required>
             </div>
           </div>
+          {% for message in messages %}
+    
+              <div class="alert alert-danger">
+                  <a class="close" href="#" data-bs-dismiss="alert">×</a>
+                    {{ message }}
+              </div>
+
+          {% endfor %}
           <div class = "row justify-content-end">
               <div class="col-sm-2" >
                   <button class="btn btn-submit" type="submit"> 
