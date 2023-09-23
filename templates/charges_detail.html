@@ -10,6 +10,9 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
+  <!-- Favicons -->
+  <link href="{% static '/img/favicon.png' %}" rel="icon">
+
       <!--Data Table-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
@@ -182,12 +185,12 @@
         </div >
       </div>
       <div class="row">
-        <div class="col-lg-3 d-flex flex-column "> 
-          <h3> Search </h3>
+        <div class="col-lg-8 d-flex flex-column "> 
+          <h4>Select Society</h4>
         </div>
       </div>
-      <div class="row d-flex align-items-center justify-content-between">
-        <div class="col-md-2 ">
+      <div class="row d-flex justify-content-between">
+        <div class="col-md-3 p-2">
           <div class="input-group">
                 <button class="btn btn-society" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   {{name}}
@@ -201,9 +204,26 @@
                 </ul>
            </div>
         </div>
-        <div class="col-md-4">
-          <div class="input-group"> 
-            <input type="text" class="form-control" placeholder="Search ..." id="search" onkeyup="myFunction()">
+        <div class="col-md-2 p-2">
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Select Month</option>
+            <option value="1">Jan</option>
+            <option value="2">Feb</option>
+            <option value="3">Mar</option>
+            <option value="4">Apr</option>
+            <option value="5">May</option>
+            <option value="6">Jun</option>
+            <option value="7">Jul</option>
+            <option value="8">Aug</option>
+            <option value="9">Sep</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+          </select>
+        </div>
+        <div class="col-md-4 ml-auto p-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search ...">
             <button type="button" class="btn btn-secondary">
               <i class="bi-search"></i>
             </button>

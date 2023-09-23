@@ -11,6 +11,8 @@
   <meta content="" name="keywords">
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
+  <!-- Favicons -->
+  <link href="{% static '/img/favicon.png' %}" rel="icon">
 
   <!--Data Table-->
   <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
@@ -55,10 +57,6 @@
    <link href="{% static '/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
    <link href="{% static '/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">   
 
-
-
-
-
    <!--Bootsrap 4 CDN-->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
      
@@ -68,8 +66,6 @@
  
    <!-- Template Main CSS File -->
    <link href="{% static '/css/societystyle.css' %}" rel="stylesheet">
-
-
     
 
     <!--Export table buttons-->
@@ -81,12 +77,6 @@
 
 <!--Export table button CSS-->
 
-
-
-   
-
-
- 
  </head>
  
  <body>
@@ -246,7 +236,7 @@
                   <th scope="row">{{item.status}}</th>
                   <td>{{item.date_add_society}}</td>
                   <td>{{item.societyName}}</td>
-                  <td>{{item.address}}</td>
+                  <td class="address">{{item.address}}</td>
                   <td>{{item.regno}}</td>
                   <td>{{item.ctsno}}</td>
                   <td>{{item.panno}}</td>
@@ -293,7 +283,6 @@
     </div>
   
   </section>
-
   <!-- Vendor JS Files -->
   <script src="{% static '/vendor/aos/aos.js' %}"></script>
   <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
