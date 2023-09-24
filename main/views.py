@@ -4,11 +4,11 @@ from django.contrib.auth import login as auth_login,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from datetime import datetime
-from .models import SocietyList,MembersList,DefaultChargesList,MemberChargesList
+from .models import SocietyList,MembersList,DefaultChargesList,MemberChargesList,MonthlyMemberChargesList
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
-import json,os
+import json,os,calendar
 import pandas as pd
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -211,7 +211,15 @@ def add_member(request,name):
         default_charges_dict['Flat_No'] = Member_item.Flat_No
         default_charges_dict['wing'] = Member_item.wing
         add_charges= MemberChargesList(**default_charges_dict)
-        add_charges.save() 
+        add_charges.save()
+        # monthly_charges_dict = default_charges_dict.copy()
+        # monthly_charges_dict['MonthlychargesSocietyName'] = item
+        # monthly_charges_dict['MonthlychargesMemberName'] = Member_item
+        # monthly_charges_dict['date_monthly_charges'] = datetime.today()
+        # del monthly_charges_dict['chargesSocietyName']
+        # del monthly_charges_dict['chargesMemberName']
+        # add_monthly_charges= MonthlyMemberChargesList(**monthly_charges_dict)
+        # add_monthly_charges.save() 
         return redirect('/member_detail/' + name)
     return render(request,'add_member.html',context )
 
@@ -374,7 +382,7 @@ def download_doc(request, name, doc):
     response['Content-Disposition'] = 'attachment; filename=' + doc
     return response
 
-def charges_detail(request, name):
+def charges_detail(request, name, mnth):
     context = {}
     society_list = SocietyList.objects.filter(user=request.user)
     context['society_list']=society_list
@@ -384,27 +392,44 @@ def charges_detail(request, name):
     else:
         item = get_object_or_404(SocietyList,user=request.user, societyName=name)
     query_results = MembersList.objects.filter(user=request.user, memberSocietyName = item)
-    query_results_charges = MemberChargesList.objects.filter(user = request.user , chargesSocietyName=item)
+    query_results_charges = MonthlyMemberChargesList.objects.filter(user = request.user , MonthlychargesSocietyName=item)
     mem_chg_details_list = []
+    date_list = []
     for soc_members in query_results:
         mem_chg_details = {}
         mem_chg_details['Member_Name'] = soc_members.Member_Name
         mem_chg_details['building'] = soc_members.building
         mem_chg_details['Flat_No'] = soc_members.Flat_No
         mem_chg_details['wing'] = soc_members.wing
-        mem_chg_details['Balance'] = soc_members.Balance       
+        mem_chg_details['Balance'] = soc_members.Balance   
         for soc_chg in query_results_charges:
-            if soc_chg.chargesMemberName.building == soc_members.building and soc_chg.chargesMemberName.Flat_No == soc_members.Flat_No and soc_chg.chargesMemberName.wing == soc_members.wing:
-                fields =  soc_chg._meta.get_fields()
-                for i in fields:
-                    if i.attname not in ['id', 'user_id', 'chargesSocietyName_id','chargesMemberName_id']:
-                        if getattr(soc_chg, i.attname) != '':
-                            mem_chg_details[i.attname] = getattr(soc_chg, i.attname) 
-        mem_chg_details_list.append(mem_chg_details) 
+            date_list.append(calendar.month_name[soc_chg.date_monthly_charges.month] + ' - ' + str(soc_chg.date_monthly_charges.year))
+            if mnth == '0':
+                mnth = 'August - 2023'
+            if (calendar.month_name[soc_chg.date_monthly_charges.month] + ' - ' + str(soc_chg.date_monthly_charges.year)) == mnth:
+                chg_details={}
+                if soc_chg.MonthlychargesMemberName.building == soc_members.building and soc_chg.MonthlychargesMemberName.Flat_No == soc_members.Flat_No and soc_chg.MonthlychargesMemberName.wing == soc_members.wing:
+                    fields =  soc_chg._meta.get_fields()
+                    for i in fields:
+                        if i.attname not in [ 'id', 'user_id', 'MonthlychargesSocietyName_id','MonthlychargesMemberName_id']:
+                            if getattr(soc_chg, i.attname) != '':
+                                if i.attname=='date_monthly_charges':
+                                    chg_details[i.attname] = calendar.month_name[getattr(soc_chg, i.attname).month] + ' - ' + str(getattr(soc_chg, i.attname).year)
+                                else:
+                                    chg_details[i.attname] = getattr(soc_chg, i.attname)
+                final_dict = dict(mem_chg_details)
+                final_dict.update(chg_details) 
+                mem_chg_details_list.append(final_dict)
+                del chg_details
+    if mnth=='0':
+        messages.error(request,"No Records")
+        return render(request, 'charges_detail.html',context)         
     column_list =  list(mem_chg_details_list[0].keys())
     context['mem_chg_details']=mem_chg_details_list
     context['column_list'] = column_list
     context['name'] = item.societyName
+    context['date_list'] = date_list
+    context['mnth'] = mnth
     return render(request, 'charges_detail.html',context)
 
 def charges_value_edit(request,name,mem_bldng,mem_flat,mem_wing):

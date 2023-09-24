@@ -37,7 +37,7 @@ urlpatterns = [
     path("download_file/<str:name>/", views.download_file, name='download_file'),
     path("download_doc/<str:name>/<str:doc>/", views.download_doc, name='download_doc'),
     path('show_member_detail', views.show_member_detail),
-    path('charges_detail/<str:name>/', views.charges_detail, name='charges_detail'), 
+    path('charges_detail/<str:name>/<str:mnth>', views.charges_detail, name='charges_detail'), 
     path('charges_value_edit/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>', views.charges_value_edit, name='charges_value_edit'), 
     path('charges_value_edit_submit/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>', views.charges_value_edit_submit, name='charges_value_edit_submit'), 
 
