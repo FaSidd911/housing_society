@@ -118,7 +118,7 @@
         <div class="sideicon">
             <i class="bi bi-currency-rupee"></i>
         </div>
-        <h3 class="side-title"><a href="/charges_detail/ /">Charges Detail</a></h3>                       
+        <h3 class="side-title"><a href="/charges_detail/ /0">Charges Detail</a></h3>                       
       </div>
       <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
         <div class="sideicon">
@@ -198,29 +198,30 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark">
                   {% for item in society_list %}
-                  <li><a class="dropdown-item "  href="{% url 'charges_detail' name=item %}">{{item}}</a></li>
+                  <li><a class="dropdown-item "  href="{% url 'charges_detail' name=item mnth=0%}">{{item}}</a></li>
                   <li><hr class="dropdown-divider"></li>
                   {%endfor%}
                 </ul>
            </div>
+           
         </div>
+      {%if name%} 
         <div class="col-md-2 p-2">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Select Month</option>
-            <option value="1">Jan</option>
-            <option value="2">Feb</option>
-            <option value="3">Mar</option>
-            <option value="4">Apr</option>
-            <option value="5">May</option>
-            <option value="6">Jun</option>
-            <option value="7">Jul</option>
-            <option value="8">Aug</option>
-            <option value="9">Sep</option>
-            <option value="10">Oct</option>
-            <option value="11">Nov</option>
-            <option value="12">Dec</option>
-          </select>
+          <div class="input-group">
+            <button class="btn btn-society" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{mnth}}
+              <a class="bi bi-chevron-double-down"></a>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              {% for date_item in date_list %}
+              <li><a class="dropdown-item "  href="{% url 'charges_detail' name=name mnth=date_item%}">{{date_item}}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              {%endfor%}
+            </ul>
+       </div>
+          
         </div>
+        {%endif%}
         <div class="col-md-4 ml-auto p-2">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search ...">
