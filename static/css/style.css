@@ -1013,6 +1013,26 @@ section {
   overflow: hidden;
 }
 
+#login label {
+  font-family: "Open Sans", sans-serif;
+  color: #212529;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+#login .fas {
+  padding: 0 0 0 6px;
+}
+
+.fa-2x {
+  font-size: 1.5em;
+}
+
+#login .form-group {
+  margin-bottom: 2rem;
+}
+
 .login .login-info {
   border-top: 3px solid #eb5d1e;
   border-bottom: 3px solid #eb5d1e;
@@ -1041,72 +1061,80 @@ section {
   background-color: #eb5d1e;
   color: black;
   border:0 !important;
-  }
+}
   
-  input:focus{
+input:focus {
   outline: 0 0 0 0  !important;
   box-shadow: 0 0 0 0 !important;
   
-  }
+}
   
-  .remember{
+.remember{
   color: black;
-  }
+}
   
-  .remember input
-  {
+.remember input
+{
   width: 20px;
   height: 20px;
   margin-left: 15px;
   margin-right: 5px;
-  }
+}
   
-  .login_btn{
-  color: black;
-  background-color: #eb5d1e;
-  width: 90px;
-  margin: 1rem 1rem 0rem 0rem;
-  }
-  
-  .login_btn:hover{
-  color: black;
-  background-color: white;
-  }
-  
-  .links{
-  color: white;
-  }
 
-  .section-login {
-    text-align: center;
-    padding-bottom: 23px;
-  }
+#login .login_btn,
+#login .login_btn:focus {
+  margin-top: 10px;
+  background: #eb5d1e;
+  color: #fff;
+  padding: 5px 5px;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 0.5px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 4px 12px 4px 12px;
+}
+
+#login .login_btn:hover,
+#login .login_btn:focus:hover {
+  color: #fff;
+  background: #ee7843;
+}
   
-  .section-login h2 {
-    font-size: 24px;
-    font-weight: 700;
-    padding-bottom: 0;
-    line-height: 1px;
-    margin-bottom: 10px;
-    color: #c2b7b1;
-  }
+.links{
+  color: white;
+}
+
+.section-login {
+  text-align: center;
+  padding-bottom: 23px;
+}
   
-  .section-login p {
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    position: relative;
-    font-size: 32px;
-    font-weight: 700;
-    color: #4e4039;
-  }
-  
-  .section-login p::after {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 60px;
-    height: 2px;
-    background: #eb5d1e;
-    bottom: 0;
-    left: calc(50% - 30px);
-  }
+.section-login h2 {
+  font-size: 24px;
+  font-weight: 700;
+  padding-bottom: 0;
+  line-height: 1px;
+  margin-bottom: 10px;
+  color: #c2b7b1;
+}
+
+.section-login p {
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  position: relative;
+  font-size: 32px;
+  font-weight: 700;
+  color: #4e4039;
+}
+
+.section-login p::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: #eb5d1e;
+  bottom: 0;
+  left: calc(50% - 30px);
+}
