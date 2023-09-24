@@ -183,6 +183,47 @@
         <div class="col-lg-5  d-flex flex-column justify-content-top">
           <h1>Charges Detail</h1>
         </div >
+        <!-- Button trigger modal -->
+        <div class="col-lg-3 d-flex flex-column justify-content-left" >
+          <a href="#" class="btn-get-started scrollto" data-bs-toggle="modal" data-bs-target="#exampleModal"> 
+            <i class="bx bx-plus"></i>
+            Generate Charges
+          </a>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="generateLabel">Generate Charges for selected Month</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Please select month:</p>
+                <div class="col-md-5">
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>Select Month</option>
+                    <option value="1">Jan</option>
+                    <option value="2">Feb</option>
+                    <option value="3">Mar</option>
+                    <option value="4">Apr</option>
+                    <option value="5">May</option>
+                    <option value="6">Jun</option>
+                    <option value="7">Jul</option>
+                    <option value="8">Aug</option>
+                    <option value="9">Sep</option>
+                    <option value="10">Oct</option>
+                    <option value="11">Nov</option>
+                    <option value="12">Dec</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Generate</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-lg-8 d-flex flex-column "> 
@@ -232,9 +273,8 @@
       </div>
       {% for message in messages %}
                     
-                    <div class="alert alert-success">
-                        <a class="close" href="#" data-dismiss="alert">×</a>
-                          {{ message }}
+                    <div class="fs-4 d-flex justify-content-center" style= " padding: 20px 0px 20px 0px;">
+                      {{ message }}
                     </div>
 
                 {% endfor %}
