@@ -3,7 +3,7 @@ from django.contrib.auth import  authenticate #add this
 from django.contrib.auth import login as auth_login,logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from datetime import datetime
+from datetime import datetime, timedelta
 from .models import SocietyList,MembersList,DefaultChargesList,MemberChargesList,MonthlyMemberChargesList
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
@@ -405,7 +405,9 @@ def charges_detail(request, name, mnth):
         for soc_chg in query_results_charges:
             date_list.append(calendar.month_name[soc_chg.date_monthly_charges.month] + ' - ' + str(soc_chg.date_monthly_charges.year))
             if mnth == '0':
-                mnth = 'August - 2023'
+                for soc in society_list:
+                    if soc.societyName == name:
+                        mnth =  calendar.month_name[soc.date_add_society.month] + ' - ' + str(soc.date_add_society.year)
             if (calendar.month_name[soc_chg.date_monthly_charges.month] + ' - ' + str(soc_chg.date_monthly_charges.year)) == mnth:
                 chg_details={}
                 if soc_chg.MonthlychargesMemberName.building == soc_members.building and soc_chg.MonthlychargesMemberName.Flat_No == soc_members.Flat_No and soc_chg.MonthlychargesMemberName.wing == soc_members.wing:
@@ -419,20 +421,28 @@ def charges_detail(request, name, mnth):
                                     chg_details[i.attname] = getattr(soc_chg, i.attname)
                 final_dict = dict(mem_chg_details)
                 final_dict.update(chg_details) 
-                mem_chg_details_list.append(final_dict)
+                if  chg_details:
+                    mem_chg_details_list.append(final_dict)
                 del chg_details
     if mnth=='0':
+        for soc in society_list:
+            if soc.societyName == name:
+                context['generate_date_list'] = [calendar.month_name[soc.date_add_society.month] + ' - ' + str(soc.date_add_society.year)]
+        context['name'] = item.societyName
         messages.error(request,"No Records")
         return render(request, 'charges_detail.html',context)         
     column_list =  list(mem_chg_details_list[0].keys())
     context['mem_chg_details']=mem_chg_details_list
     context['column_list'] = column_list
     context['name'] = item.societyName
-    context['date_list'] = date_list
+    context['date_list'] = set(date_list)
     context['mnth'] = mnth
+    if calendar.month_name[datetime.now().date().month] + ' - ' + str(datetime.now().date().year) not in date_list:
+        if (datetime.now().date() - soc.date_add_society)<=timedelta(31):
+            context['generate_date_list'] = [calendar.month_name[datetime.now().date().month] + ' - ' + str(datetime.now().date().year)]
     return render(request, 'charges_detail.html',context)
 
-def charges_value_edit(request,name,mem_bldng,mem_flat,mem_wing):
+def charges_value_edit(request,name,mem_bldng,mem_flat,mem_wing,mnth):
     item = get_object_or_404(SocietyList,user=request.user, societyName=name)
     mem_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=item, building=mem_bldng,Flat_No=mem_flat,  )
     query_results_charges = get_object_or_404(MemberChargesList,user=request.user, 
@@ -448,6 +458,7 @@ def charges_value_edit(request,name,mem_bldng,mem_flat,mem_wing):
                 edit_charges_dict[i.attname] = getattr(query_results_charges, i.attname)
     context['edit_charges_dict']=edit_charges_dict
     context['name']=name
+    request.session['mnth'] =mnth
     context['list'] = ['building','Flat_No', 'wing']    
     return render(request,'charges_value_edit.html',context)
 
@@ -458,9 +469,39 @@ def charges_value_edit_submit(request,name,mem_bldng, mem_flat, mem_wing):
             charges_details[key] = request.POST[key]
         charges_details.pop('csrfmiddlewaretoken')
         item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+        mnth = request.session['mnth']
         MemberChargesList.objects.filter(user=request.user,
                                          chargesSocietyName=item,   
                                          building=mem_bldng,
                                         Flat_No=mem_flat, 
                                         wing=mem_wing).update(**charges_details)
-    return redirect('/charges_detail/' + name + '/')
+        MonthlyMemberChargesList.objects.filter(user=request.user,
+                                         MonthlychargesSocietyName=item,   
+                                         building=mem_bldng,
+                                        Flat_No=mem_flat, 
+                                        wing=mem_wing,
+                                        date_monthly_charges = datetime.strptime( '01 ' + mnth.split(' - ')[0] + ', ' + mnth.split(' - ')[1] , "%d %B, %Y" )
+                                        ).update(**charges_details)
+    del request.session['mnth']
+    return redirect('/charges_detail/' + name + '/'+ mnth)
+
+def generate_charges(request,name):
+    item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+    member_charges = MemberChargesList.objects.filter(user=request.user, chargesSocietyName=item).values()
+    abbr_to_num = {name: num for num, name in enumerate(calendar.month_name) if num} 
+    mnth = request.POST['mnth']
+    date_monthly_charges = datetime.strptime( '01 ' + mnth.split(' - ')[0] + ', ' + mnth.split(' - ')[1] , "%d %B, %Y" )
+    for member in member_charges:        
+        charges_details = {}
+        for key in member.keys():
+            if member[key] != "" and key not in ['id', 'user_id', 'chargesSocietyName_id', 'chargesMemberName_id']:
+                charges_details[key] = member[key]
+        member_item = get_object_or_404(MembersList,user=request.user, building=charges_details['building'], Flat_No=charges_details['Flat_No'], wing=charges_details['wing'])
+        charges_details['MonthlychargesMemberName'] = member_item
+        charges_details['MonthlychargesSocietyName'] = item
+        charges_details['user'] = request.user
+        charges_details['date_monthly_charges'] = date_monthly_charges
+        add_monthly_charges = MonthlyMemberChargesList(**charges_details)
+        add_monthly_charges.save()
+        del charges_details        
+    return redirect('/charges_detail/' + name + '/'+ mnth)

@@ -25,7 +25,7 @@ urlpatterns = [
     path("edit_charges/<str:name>/edit_value", views.edit_value, name='edit_value'),
     path("edit_charges/<str:name>/edit_society_values", views.edit_society_values, name='edit_society_values'),
     path('add_member/<str:name>/',views.add_member,name = 'add_member'),
-    path('add_member/<str:name>/add_member',views.add_member,name = 'add_member'),
+    path('add_member/<str:name>/member_detail/ /',views.add_member,name = 'add_member'),
     path('member_detail/<str:name>/',views.member_detail, name='member_detail'),
     path('show_member_detail/<str:name>/',views.show_member_detail, name='show_member_detail'),
     path("deleteSociety/<str:memberSocietyName>/<str:building>/<str:FlatNo>/<str:wing>", views.deleteMember, name='deleteMember'),
@@ -38,8 +38,9 @@ urlpatterns = [
     path("download_doc/<str:name>/<str:doc>/", views.download_doc, name='download_doc'),
     path('show_member_detail', views.show_member_detail),
     path('charges_detail/<str:name>/<str:mnth>', views.charges_detail, name='charges_detail'), 
-    path('charges_value_edit/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>', views.charges_value_edit, name='charges_value_edit'), 
+    path('charges_value_edit/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>/<str:mnth>', views.charges_value_edit, name='charges_value_edit'), 
     path('charges_value_edit_submit/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>', views.charges_value_edit_submit, name='charges_value_edit_submit'), 
+    path('generate_charges/<str:name>', views.generate_charges, name='generate_charges'), 
 
 
 ]
