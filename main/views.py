@@ -437,9 +437,15 @@ def charges_detail(request, name, mnth):
     context['name'] = item.societyName
     context['date_list'] = set(date_list)
     context['mnth'] = mnth
-    if calendar.month_name[datetime.now().date().month] + ' - ' + str(datetime.now().date().year) not in date_list:
-        if (datetime.now().date() - soc.date_add_society)<=timedelta(31):
-            context['generate_date_list'] = [calendar.month_name[datetime.now().date().month] + ' - ' + str(datetime.now().date().year)]
+    days = datetime.now().date() - timedelta((datetime.now().date() - item.date_add_society).days)
+    month = calendar.month_name[days.month] + ' - ' + str(days.year)
+    nxt_month = month
+    n=0
+    while nxt_month  in date_list:        
+        nxt_month = (datetime.strptime( '01 ' + month.split(' - ')[0] + ', ' + month.split(' - ')[1] , "%d %B, %Y" ) + timedelta(n))
+        n = n+31
+        nxt_month = calendar.month_name[nxt_month.month] + ' - ' + str(nxt_month.year)
+    context['generate_date_list'] = [nxt_month]
     return render(request, 'charges_detail.html',context)
 
 def charges_value_edit(request,name,mem_bldng,mem_flat,mem_wing,mnth):

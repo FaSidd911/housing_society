@@ -154,4 +154,4 @@ class MonthlyMemberChargesList(models.Model):
     date_monthly_charges = models.DateField()
     
     def __str__(self):
-        return self.MonthlychargesMemberName.Member_Name  + '_' +  self.MonthlychargesMemberName.building + '_' +  self.MonthlychargesMemberName.Flat_No + '_' +  self.MonthlychargesMemberName.wing
+        return self.MonthlychargesMemberName.Member_Name  + '_' +  self.MonthlychargesMemberName.building + '_' +  self.MonthlychargesMemberName.Flat_No + '_' +  self.MonthlychargesMemberName.wing + '_' + str(self.date_monthly_charges.month) + '_' + str(self.date_monthly_charges.year)
