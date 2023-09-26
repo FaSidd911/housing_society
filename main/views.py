@@ -427,7 +427,8 @@ def charges_detail(request, name, mnth):
     if mnth=='0':
         for soc in society_list:
             if soc.societyName == name:
-                context['generate_date_list'] = [calendar.month_name[soc.date_add_society.month] + ' - ' + str(soc.date_add_society.year)]
+                if query_results:
+                    context['generate_date_list'] = [calendar.month_name[soc.date_add_society.month] + ' - ' + str(soc.date_add_society.year)]
         context['name'] = item.societyName
         messages.error(request,"No Records")
         return render(request, 'charges_detail.html',context)         
@@ -441,7 +442,7 @@ def charges_detail(request, name, mnth):
     month = calendar.month_name[days.month] + ' - ' + str(days.year)
     nxt_month = month
     n=0
-    while nxt_month  in date_list:        
+    while nxt_month  in date_list and nxt_month not in [calendar.month_name[(datetime.now().date() + timedelta(31)).month] + ' - ' + str((datetime.now().date() + timedelta(31)).year)]:        
         nxt_month = (datetime.strptime( '01 ' + month.split(' - ')[0] + ', ' + month.split(' - ')[1] , "%d %B, %Y" ) + timedelta(n))
         n = n+31
         nxt_month = calendar.month_name[nxt_month.month] + ' - ' + str(nxt_month.year)
@@ -496,7 +497,10 @@ def generate_charges(request,name):
     member_charges = MemberChargesList.objects.filter(user=request.user, chargesSocietyName=item).values()
     abbr_to_num = {name: num for num, name in enumerate(calendar.month_name) if num} 
     mnth = request.POST['mnth']
-    date_monthly_charges = datetime.strptime( '01 ' + mnth.split(' - ')[0] + ', ' + mnth.split(' - ')[1] , "%d %B, %Y" )
+    try:
+        date_monthly_charges = datetime.strptime( '01 ' + mnth.split(' - ')[0] + ', ' + mnth.split(' - ')[1] , "%d %B, %Y" )
+    except:
+        return redirect('/charges_detail/' + name + '/'+ '0')
     for member in member_charges:        
         charges_details = {}
         for key in member.keys():
