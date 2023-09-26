@@ -315,6 +315,9 @@ def import_members(request,name):
             charges_dict['user'] = request.user
             charges_dict['chargesSocietyName'] = item
             charges_dict['chargesMemberName'] = Member_item
+            charges_dict['building'] = member_dict['building']
+            charges_dict['Flat_No'] = member_dict['Flat_No']
+            charges_dict['wing'] = member_dict['wing']
             add_charges= MemberChargesList(**charges_dict)
             add_charges.save()
         return redirect('/member_detail/' + name)
