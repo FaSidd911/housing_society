@@ -207,7 +207,9 @@
                   <select class="form-select" aria-label="Default select example" name="mnth">
                     <option selected>Select Month</option>
                     {%for item in generate_date_list%}
+                    {%if item not in ''%}
                     <option value="{{item}}">{{item}}</option>
+                    {%endif%}
                     {%endfor%}
                   </select>
                 

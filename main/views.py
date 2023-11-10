@@ -449,6 +449,8 @@ def charges_detail(request, name, mnth):
         nxt_month = (datetime.strptime( '01 ' + month.split(' - ')[0] + ', ' + month.split(' - ')[1] , "%d %B, %Y" ) + timedelta(n))
         n = n+31
         nxt_month = calendar.month_name[nxt_month.month] + ' - ' + str(nxt_month.year)
+    if nxt_month == calendar.month_name[(datetime.now().date() + timedelta(31)).month] + ' - ' + str((datetime.now().date() + timedelta(31)).year):
+        nxt_month = ''
     context['generate_date_list'] = [nxt_month]
     return render(request, 'charges_detail.html',context)
 
