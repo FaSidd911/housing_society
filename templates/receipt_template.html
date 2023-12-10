@@ -1,0 +1,125 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>receipt-template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+  <!-- Favicons -->
+  <link href="{% static '/img/favicon.png' %}" rel="icon">
+
+  <!--Data Table-->
+  <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript"  src=" https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+   <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+
+   <!-- Vendor CSS Files -->
+   <link href="{% static '/vendor/aos/aos.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">   
+
+   <!--Bootsrap 4 CDN-->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+     
+   <!--Fontawesome CDN-->
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+ 
+   <!-- Template Main CSS File -->
+   <link href="{% static '/css/societystyle.css' %}" rel="stylesheet">
+
+ </head>
+ <body>
+    <section id="receipt-template" class="d-flex align-items-top">
+        <div class="container">
+            <div class="page-header d-flex align-items-center justify-content-center">
+                <div class="col-12 d-flex flex-column "> 
+                    <div class="text-center">
+                        <span class="text-default-d3 text-150"><b> {{soc_name}} </b></span><br>
+                        {{soc_address}} <br>
+                        <span class="text-600 text-90">Registration_No:</span> {{soc_reg}}
+                    </div>
+                </div>
+            </div>
+            <hr class="row brc-default-l1 mx-n1 mb-4" />
+            <div class="row">
+                <div class="text-center">
+                    <span class="text-default-d3 text-150"><b><u>RECEIPT</b></u></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 my-1">
+                    <div class=" my-2"></i> <span class="text-600 text-90">Receipt No:</span> #1564</div>
+                </div>
+                <div class="col-sm-6 my-1">
+                    <div class="text-end my-2"></i> <span class="text-600 text-90">Receipt Date:</span> {{bill_generated_date}} </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 my-1">
+                    <div class="my-2"></i> <span class="text-600 text-90">Received with thanks from:</span>
+                        <span class="text-default-d3 text-120"><b> {{mem_name}} </b></span>
+                    </div>
+                </div>
+                <div class="col-sm-6 my-1">
+                    <div class="text-end my-2"></i> <span class="text-600 text-90">Wing/Flat No:</span> {{flat_wing}} </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="my-2"><span class="text-600 text-90">Rs. </span> {{grand_total_in_words}} Only.</div>
+            </div>
+            <div class="row">
+                <div class="my-2 mb-5 pb-1"><span class="text-600 text-90">Vide Cash/Cheque. </span>#45791 State Bank of India
+                <br>
+                <br>
+                </div>
+            </div>
+            <hr class="row brc-default-l1" />
+            <div class="row">
+                <div class="col-6 col-sm-6 page-tools">
+                    <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Rupees">
+                        <span class="mr-5 text-120 w-2">Rs. </span> 
+                        <span class="ml-5 text-120"> {{grand_total}} </span>
+                    </a>
+                    <br><span class="text-70">Subject to Realisation of Cheque.</span>
+                </div>
+               <div class="col-6 col-sm-6 d-flex justify-content-end align-content-around flex-wrap text-grey-d2 text-95 mt-2 mt-lg-0 p-0">
+                    <b>For {{soc_name}} </b>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div>Hon. Secretary / Treasurer</div>
+                </div>
+            </div>
+         </div>
+     </section>
+ <!-- Vendor JS Files -->
+ <script src="{% static '/vendor/aos/aos.js' %}"></script>
+ <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+ <script src="{% static '/vendor/glightbox/js/glightbox.min.js' %}"></script>
+ <script src="{% static '/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+ <script src="{% static '/vendor/swiper/swiper-bundle.min.js' %}"></script>
+ <script src="{% static '/vendor/php-email-form/validate.js' %}"></script>
+ <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="{% static '/js/main.js' %}"></script>
+ 
+ 
+</body>
+
+
+</html>

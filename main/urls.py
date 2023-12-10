@@ -41,7 +41,10 @@ urlpatterns = [
     path('charges_value_edit/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>/<str:mnth>', views.charges_value_edit, name='charges_value_edit'), 
     path('charges_value_edit_submit/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>', views.charges_value_edit_submit, name='charges_value_edit_submit'), 
     path('generate_charges/<str:name>', views.generate_charges, name='generate_charges'), 
-
+    path('generate_bill/<str:name>/<str:mnth>', views.generate_bill, name='generate_bill'), 
+    path('view_member_bill/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>/<str:mnth>', views.view_member_bill, name='view_member_bill'), 
+    path('receipt_template/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>/<str:mnth>', views.receipt_template, name='receipt_template'), 
+    path('bill_to_pdf/<str:name>/<str:mem_bldng>/<str:mem_flat>/<str:mem_wing>/<str:mnth>', views.bill_to_pdf ,name='bill_to_pdf'),
 
 ]
 

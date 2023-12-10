@@ -10,8 +10,11 @@ from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
 import json,os,calendar
 import pandas as pd
+from num2words import num2words
+import pdfkit
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.template.loader import get_template
 
 def index(request):
     return render(request,'index.html')
@@ -456,7 +459,7 @@ def charges_detail(request, name, mnth):
 
 def charges_value_edit(request,name,mem_bldng,mem_flat,mem_wing,mnth):
     item = get_object_or_404(SocietyList,user=request.user, societyName=name)
-    mem_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=item, building=mem_bldng,Flat_No=mem_flat,  )
+    mem_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=item, building=mem_bldng,Flat_No=mem_flat, wing=mem_wing )
     query_results_charges = get_object_or_404(MemberChargesList,user=request.user, 
                                               chargesSocietyName=item, 
                                               building=mem_bldng,
@@ -520,3 +523,166 @@ def generate_charges(request,name):
         add_monthly_charges.save()
         del charges_details        
     return redirect('/charges_detail/' + name + '/'+ mnth)
+
+
+def get_bill_reciept_details(request,name,mem_bldng,mem_flat,mem_wing,mnth):
+    context={}
+    charges_dict={} 
+    soc_item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+    mem_item = get_object_or_404(MembersList,user=request.user, memberSocietyName=soc_item, building=mem_bldng,Flat_No=mem_flat, wing=mem_wing )
+    query_results_charges = get_object_or_404(MonthlyMemberChargesList,user=request.user, 
+                                              MonthlychargesSocietyName=soc_item, 
+                                              building=mem_bldng,
+                                              Flat_No=mem_flat, 
+                                              wing=mem_wing,
+                                              date_monthly_charges = datetime.strptime( mnth.split(' - ')[1] + '-' + str(list(calendar.month_name).index(mnth.split(' - ')[0])) + '-' + '01' , "%Y-%m-%d")
+                                              )
+    context['soc_name'] = soc_item.societyName
+    context['soc_address'] = soc_item.address
+    context['soc_reg'] = soc_item.regno
+    context['mem_name']= mem_item.Member_Name
+    context['building'] = mem_item.building
+    context['flat_wing'] = mem_item.wing + '-' + mem_item.Flat_No
+    context['flat'] = mem_item.Flat_No
+    context['mnth'] = mnth  
+    context['arrears'] = mem_item.Balance
+    total = 0
+    for i in query_results_charges._meta.get_fields():
+        if i.attname not in ['id', 'user_id', 'MonthlychargesSocietyName_id','MonthlychargesMemberName_id', 'building', 'Flat_No', 'wing']:
+            if getattr(query_results_charges, i.attname) != '':
+                charges_dict[i.attname] = getattr(query_results_charges, i.attname)
+                if i.attname not in ['date_monthly_charges']:
+                    total+= int(getattr(query_results_charges, i.attname))    
+    context['bill_generated_date'] = datetime.now().date().strftime("%d/%m/%Y")
+    context['bill_due_date'] = ('25/' + str(charges_dict['date_monthly_charges'].month) + '/' + str(charges_dict['date_monthly_charges'].year))
+    charges_dict.pop('date_monthly_charges')
+    context['total'] = total
+    context['grand_total'] =   total + int(mem_item.Balance)
+    context['grand_total_in_words'] = num2words( total + int(mem_item.Balance)).title()
+    return context, charges_dict
+
+def generate_bill(request, name, mnth):
+    context = {}
+    society_list = SocietyList.objects.filter(user=request.user)
+    context['society_list']=society_list
+    if name ==' ':
+        messages.error(request,"No Records")
+        return render(request, 'generate_bill.html',context)
+    else:
+        item = get_object_or_404(SocietyList,user=request.user, societyName=name)
+    query_results = MembersList.objects.filter(user=request.user, memberSocietyName = item)
+    query_results_charges = MonthlyMemberChargesList.objects.filter(user = request.user , MonthlychargesSocietyName=item)
+    mem_chg_details_list = []
+    date_list = []
+    for soc_members in query_results:
+        mem_chg_details = {}
+        mem_chg_details['Member_Name'] = soc_members.Member_Name
+        mem_chg_details['building'] = soc_members.building
+        mem_chg_details['wing'] = soc_members.wing
+        mem_chg_details['Flat_No'] = soc_members.Flat_No
+        # mem_chg_details['Balance'] = soc_members.Balance   
+        for soc_chg in query_results_charges:
+            date_list.append(calendar.month_name[soc_chg.date_monthly_charges.month] + ' - ' + str(soc_chg.date_monthly_charges.year))
+            if mnth == '0':
+                for soc in society_list:
+                    if soc.societyName == name:
+                        mnth =  calendar.month_name[soc.date_add_society.month] + ' - ' + str(soc.date_add_society.year)
+            if (calendar.month_name[soc_chg.date_monthly_charges.month] + ' - ' + str(soc_chg.date_monthly_charges.year)) == mnth:
+                chg_details={}
+                if soc_chg.MonthlychargesMemberName.building == soc_members.building and soc_chg.MonthlychargesMemberName.Flat_No == soc_members.Flat_No and soc_chg.MonthlychargesMemberName.wing == soc_members.wing:
+                    fields =  soc_chg._meta.get_fields()
+                    for i in fields:
+                        if i.attname not in [ 'id', 'user_id', 'MonthlychargesSocietyName_id','MonthlychargesMemberName_id']:
+                            if getattr(soc_chg, i.attname) != '':
+                                if i.attname=='date_monthly_charges':
+                                    chg_details[i.attname] = calendar.month_name[getattr(soc_chg, i.attname).month] + ' - ' + str(getattr(soc_chg, i.attname).year)
+                                else:
+                                    chg_details[i.attname] = getattr(soc_chg, i.attname)
+                final_dict = dict(mem_chg_details)
+                final_dict['Date'] = mnth
+                # final_dict.update(chg_details) 
+                if  chg_details:
+                    mem_chg_details_list.append(final_dict)
+                del chg_details
+    if mnth=='0':
+        for soc in society_list:
+            if soc.societyName == name:
+                if query_results:
+                    context['generate_date_list'] = [calendar.month_name[soc.date_add_society.month] + ' - ' + str(soc.date_add_society.year)]
+        context['name'] = item.societyName
+        messages.error(request,"No Records")
+        return render(request, 'generate_bill.html',context)         
+    column_list =  list(mem_chg_details_list[0].keys())
+    context['mem_chg_details']=mem_chg_details_list
+    context['column_list'] = column_list
+    context['name'] = item.societyName
+    context['date_list'] = set(date_list)
+    context['mnth'] = mnth
+    days = datetime.now().date() - timedelta((datetime.now().date() - item.date_add_society).days)
+    month = calendar.month_name[days.month] + ' - ' + str(days.year)
+    nxt_month = month
+    n=0
+    while nxt_month  in date_list and nxt_month not in [calendar.month_name[(datetime.now().date() + timedelta(31)).month] + ' - ' + str((datetime.now().date() + timedelta(31)).year)]:        
+        nxt_month = (datetime.strptime( '01 ' + month.split(' - ')[0] + ', ' + month.split(' - ')[1] , "%d %B, %Y" ) + timedelta(n))
+        n = n+31
+        nxt_month = calendar.month_name[nxt_month.month] + ' - ' + str(nxt_month.year)
+    if nxt_month == calendar.month_name[(datetime.now().date() + timedelta(31)).month] + ' - ' + str((datetime.now().date() + timedelta(31)).year):
+        nxt_month = ''
+    context['generate_date_list'] = [nxt_month]
+    return render(request, 'generate_bill.html',context)
+
+def view_member_bill(request,name,mem_bldng,mem_flat,mem_wing,mnth):
+    context, charges_dict = get_bill_reciept_details(request,name,mem_bldng,mem_flat,mem_wing,mnth)
+    charges_dict_1 = dict(list(charges_dict.items())[len(charges_dict)//2:]) 
+    charges_dict_2= dict(list(charges_dict.items())[:len(charges_dict)//2])
+    if len(charges_dict_1) != len(charges_dict_2):
+        charges_dict_2[''] = ''
+    context['charges_dict_1'] = charges_dict_1
+    context['charges_dict_2']  = charges_dict_2
+    return render(request, 'billing_template.html',context)
+
+def receipt_template(request,name,mem_bldng,mem_flat,mem_wing,mnth):
+    context, charges_dict = get_bill_reciept_details(request,name,mem_bldng,mem_flat,mem_wing,mnth)
+    return render(request,'receipt_template.html',context)
+
+def reciept_to_pdf(request,name,mem_bldng,mem_flat,mem_wing,mnth):
+    context, charges_dict = get_bill_reciept_details(request,name,mem_bldng,mem_flat,mem_wing,mnth)
+    template = get_template('../templates/receipt_template.html')
+    html = template.render(context)
+    options = {
+          'encoding': 'UTF-8',
+          'javascript-delay':'10', #Optional
+          'enable-local-file-access': None, #To be able to access CSS
+          'page-size': 'A2',
+          'custom-header' : [
+              ('Accept-Encoding', 'gzip')
+          ],
+      }
+    config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+    file_content = pdfkit.from_string(html, False, configuration=config, options=options)
+    response = HttpResponse(file_content, content_type='application/pdf')
+    return response
+
+def bill_to_pdf(request,name,mem_bldng,mem_flat,mem_wing,mnth):
+    context, charges_dict = get_bill_reciept_details(request,name,mem_bldng,mem_flat,mem_wing,mnth)
+    charges_dict_1 = dict(list(charges_dict.items())[len(charges_dict)//2:]) 
+    charges_dict_2= dict(list(charges_dict.items())[:len(charges_dict)//2])
+    if len(charges_dict_1) != len(charges_dict_2):
+        charges_dict_2[''] = ''
+    context['charges_dict_1'] = charges_dict_1
+    context['charges_dict_2']  = charges_dict_2
+    template = get_template('../templates/billing_template.html')
+    html = template.render(context)
+    options = {
+          'encoding': 'UTF-8',
+          'javascript-delay':'10', #Optional
+          'enable-local-file-access': None, #To be able to access CSS
+          'page-size': 'A2',
+          'custom-header' : [
+              ('Accept-Encoding', 'gzip')
+          ],
+      }
+    config = pdfkit.configuration(wkhtmltopdf=r'./wkhtmltopdf/bin/wkhtmltopdf.exe')
+    file_content = pdfkit.from_string(html, False, configuration=config, options=options)
+    response = HttpResponse(file_content, content_type='application/pdf')
+    return response

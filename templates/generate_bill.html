@@ -1,0 +1,317 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Generate Bill</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+  <!-- Favicons -->
+  <link href="{% static '/img/favicon.png' %}" rel="icon">
+
+  <!--Data Table-->
+  <script type="text/javascript"  src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript"  src=" https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+   <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+
+   <!-- Vendor CSS Files -->
+   <link href="{% static '/vendor/aos/aos.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+   <link href="{% static '/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">   
+
+   <!--Bootsrap 4 CDN-->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+     
+   <!--Fontawesome CDN-->
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+ 
+   <!-- Template Main CSS File -->
+   <link href="{% static '/css/societystyle.css' %}" rel="stylesheet">
+
+ </head>
+ <body>
+    <!-- Sidebar -->
+  <nav class="sidebar">
+                  
+    <!-- close sidebar menu -->
+    <div class="dismiss">
+      <button class="btn btn-light" type="button" >
+        <i class="bi bi-list" ></i>
+      </button>
+    </div>
+
+    <div class="logo">
+      <h1 class="text-light">
+          <a href=""><span><b>Orange</b></span></a>
+      </h1>
+    </div>
+    <div class="border-top my-3"></div>
+    <div class="dropdown">
+      <button class="btn btn-light btn-get-started scrollto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bx bx-plus bx-sm"></i>
+        <h4>Add New </h4>
+        <a class="bi bi-chevron-double-down"></a>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <li><a class="dropdown-item" href="/add_new_society">Society</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/add_member">Members</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-houses-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/society_detail">Society Detail</a></h3>                       
+      </div> 
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/member_detail/ /">Member Detail</a></h3>               
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-currency-rupee"></i>
+        </div>
+        <h3 class="side-title"><a href="/charges_detail/ /0">Charges Detail</a></h3>                      
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-file-earmark-text-fill"></i>
+        </div>
+        <h3 class="side-title"><a href="/generate_bill/ /0">Bill</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-receipt-cutoff"></i>
+        </div>
+        <h3 class="side-title"><a href="">Receipt</a></h3>                       
+      </div>
+      <div class="btn btn-sidebar d-flex align-items-stretch" type="button">
+        <div class="sideicon">
+            <i class="bi bi-recycle"></i>
+        </div>
+        <h3 class="side-title"><a href="">Ledger</a></h3>                       
+      </div>
+    </div>
+    <div class="border-top my-3"></div>
+    <div class = "button">
+        <button class="btn-logout" type="logout"> 
+          Logout
+        </button>
+    </div>
+  </nav>  
+  <!-- Dark overlay -->
+  <div class="overlay">
+  </div>
+  <!-- End sidebar -->
+ 
+   <!-- ======= Header ======= -->
+   <header id="header" class="fixed-top d-flex align-items-center">
+     <div class="container d-flex align-items-center justify-content-between">
+ 
+       <div class="logo">
+         <h1 class="text-light">
+         <!--<a href="index.html"><img src="{%static '/img/logo.png' %}" alt="" class="img-fluid"></a>-->
+          <a class="btn btn-light open-menu" href="#" role="button">
+          <i class="bi bi-list" href=""></i>
+         </a>
+             <a href=""><span><b>Orange</b></span></a>
+         </h1>
+         <!-- Uncomment below if you prefer to use an image logo -->
+       </div>
+ 
+       <nav id="navbar" class="navbar">
+         <ul>
+           <li><a class="getstarted scrollto" href="">Upgrade</a></li>
+         </ul>
+         <i class="bi bi-list mobile-nav-toggle"></i>
+       </nav><!-- .navbar -->
+ 
+     </div>
+   </header><!-- End Header -->
+
+   <!-- ======= generate-bill Section ======= -->
+   <section id="generate-bill" class="d-flex align-items-top">
+
+    <div class="container">
+      <div class="row gy-4 justify-content-between">
+        <div class="col-lg-5  d-flex flex-column justify-content-top">
+            <h1>Bill Details</h1>
+        </div >
+        <!-- Button trigger modal -->
+        {%if name%} 
+        <div class="col-lg-3 d-flex flex-column justify-content-left" >
+          <a href="#" class="btn-get-started scrollto" data-bs-toggle="modal" data-bs-target="#exampleModal"> 
+            <i class="bx bx-plus"></i>
+            Generate Bill
+          </a>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="generateLabel">Generate Bill for selected Month</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form method="POST">
+              <div class="modal-body">
+                <p>Please select month:</p>
+                <div class="col-md-5"> 
+                  {% csrf_token %} 
+                  <select class="form-select" aria-label="Default select example" name="mnth">
+                    <option selected>Select Month</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Generate</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+        {%endif%}
+      </div>
+      <div class="row">
+        <div class="col-lg-8 d-flex flex-column "> 
+          <h4>Select Society</h4>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-between">
+        <div class="col-md-3 p-2">
+          <div class="input-group">
+            <button class="btn btn-society" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{name}}
+              <a class="bi bi-chevron-double-down"></a>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              {% for item in society_list %}
+                  <li><a class="dropdown-item "  href="{% url 'generate_bill' name=item mnth=0%}">{{item}}</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  {%endfor%}
+            </ul>
+          </div>
+        </div>
+        {%if name%} 
+        <div class="col-md-2 p-2">
+          <div class="input-group">
+            <button class="btn btn-society" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{mnth}}
+              <a class="bi bi-chevron-double-down"></a>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              {% for date_item in date_list %}
+              <li><a class="dropdown-item "  href="{% url 'generate_bill' name=name mnth=date_item%}">{{date_item}}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              {%endfor%}
+            </ul>
+         </div>
+        </div>
+        {%endif%}
+        <div class="col-md-4 ml-auto p-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search ...">
+            <button type="button" class="btn btn-secondary">
+              <i class="bi-search"></i>
+            </button>
+          </div>
+        </div> 
+      </div>
+      {% for message in messages %}
+                    
+                    <div class="fs-4 d-flex justify-content-center" style= " padding: 20px 0px 20px 0px;">
+                      {{ message }}
+                    </div>
+
+                {% endfor %}
+      <div>
+        {%if name%} 
+        <table class="col-lg-6 flex-column table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Member Name</th>
+              <th scope="col">Bldng No.</th>
+              <th scope="col">Wing</th> 
+              <th scope="col">Flat No.</th> 
+              <th scope="col">Date</th> 
+              <th scope="col">Bill</th> 
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in mem_chg_details %}  
+            <tr>
+              <th scope="row">1</th>
+              {% for k,v in item.items %}         
+              <td>{{v}}</td>            
+              {% endfor %}
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical" ></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item "  href="{% url 'view_member_bill' name=name mem_bldng=item.building mem_flat=item.Flat_No mem_wing=item.wing mnth=mnth%}" >View Bill</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item "  href="{% url 'receipt_template' name=name mem_bldng=item.building mem_flat=item.Flat_No mem_wing=item.wing mnth=mnth%}" >View Reciept</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item " href="{% url 'bill_to_pdf' name=name mem_bldng=item.building mem_flat=item.Flat_No mem_wing=item.wing mnth=mnth%}" >Export</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}   
+          </tbody>
+        </table>
+        {%endif%}
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-sm-1">
+          <button type="button" class="btn btn-light">
+            <i class="bi bi-caret-left-fill"></i>
+        </button>
+        </div>
+        <div class="col-sm-1">
+          <button type="button" class="btn btn-light">
+            <i class="bi bi-caret-right-fill"></i>
+        </button>
+        </div>
+      </div>
+    </div>
+  
+  </section>
+
+ <!-- Vendor JS Files -->
+ <script src="{% static '/vendor/aos/aos.js' %}"></script>
+ <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+ <script src="{% static '/vendor/glightbox/js/glightbox.min.js' %}"></script>
+ <script src="{% static '/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+ <script src="{% static '/vendor/swiper/swiper-bundle.min.js' %}"></script>
+ <script src="{% static '/vendor/php-email-form/validate.js' %}"></script>
+ <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="{% static '/js/main.js' %}"></script>
+ 
+ 
+</body>
+
+
+</html>
